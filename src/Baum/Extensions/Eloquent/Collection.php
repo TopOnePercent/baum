@@ -7,14 +7,19 @@ class Collection extends BaseCollection {
 
   public function toHierarchy() {
     $dict = $this->getDictionary();
-
-    // Enforce sorting by $orderColumn setting in Baum\Node instance
-    uasort($dict, function($a, $b){
-        return ($a->getOrder() >= $b->getOrder()) ? 1 : -1;
-    });
-
     return new BaseCollection($this->hierarchical($dict));
   }
+
+    public function toSortedHierarchy() {
+        $dict = $this->getDictionary();
+
+        // Enforce sorting by $orderColumn setting in Baum\Node instance
+        uasort($dict, function($a, $b){
+            return ($a->getOrder() >= $b->getOrder()) ? 1 : -1;
+        });
+
+        return new BaseCollection($this->hierarchical($dict));
+    }
 
   protected function hierarchical($result) {
     foreach($result as $key => $node)
