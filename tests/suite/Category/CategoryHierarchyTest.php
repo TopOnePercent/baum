@@ -35,7 +35,7 @@ class CategoryHierarchyTest extends CategoryTestCase {
     $roots = OrderedCategory::roots()->get();
 
     $this->assertCount(3, $roots);
-    $this->assertEquals($category, $roots->first());
+    $this->assertEquals($category->getAttributes(), $roots->first()->getAttributes());
   }
 
   public function testRootStatic() {
@@ -184,16 +184,16 @@ class CategoryHierarchyTest extends CategoryTestCase {
 
     $node = $this->categories('Child 2');
 
-    $descendancy = $node->descendants()->lists('id');
+    $descendancy = $node->descendants()->lists('id')->toArray();
 
     $this->assertEmpty($node->descendants()->limitDepth(0)->lists('id'));
     $this->assertEquals($node, $node->descendantsAndSelf()->limitDepth(0)->first());
 
-    $this->assertEquals(array_slice($descendancy, 0, 3), $node->descendants()->limitDepth(3)->lists('id'));
-    $this->assertEquals(array_slice($descendancy, 0, 5), $node->descendants()->limitDepth(5)->lists('id'));
-    $this->assertEquals(array_slice($descendancy, 0, 7), $node->descendants()->limitDepth(7)->lists('id'));
+    $this->assertEquals(array_slice($descendancy, 0, 3), $node->descendants()->limitDepth(3)->lists('id')->toArray());
+    $this->assertEquals(array_slice($descendancy, 0, 5), $node->descendants()->limitDepth(5)->lists('id')->toArray());
+    $this->assertEquals(array_slice($descendancy, 0, 7), $node->descendants()->limitDepth(7)->lists('id')->toArray());
 
-    $this->assertEquals($descendancy, $node->descendants()->limitDepth(1000)->lists('id'));
+    $this->assertEquals($descendancy, $node->descendants()->limitDepth(1000)->lists('id')->toArray());
   }
 
   public function testGetAncestorsAndSelf() {
