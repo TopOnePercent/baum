@@ -92,7 +92,7 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase {
     $node->lft = 10;
     $node->reload();
 
-    $this->assertEquals($this->categories('Some node'), $node);
+    $this->assertEquals($this->categories('Some node')->getAttributes(), $node->getAttributes());
   }
 
   public function testReloadResetsChangesOnDeletedNodes() {

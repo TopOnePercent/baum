@@ -35,7 +35,7 @@ class ClusterHierarchyTest extends ClusterTestCase {
     $roots = OrderedCluster::roots()->get();
 
     $this->assertCount(3, $roots);
-    $this->assertEquals($cluster, $roots->first());
+    $this->assertEquals($cluster->getAttributes(), $roots->first()->getAttributes());
   }
 
   public function testRootStatic() {
@@ -193,9 +193,11 @@ class ClusterHierarchyTest extends ClusterTestCase {
     $this->assertEmpty($node->descendants()->limitDepth(0)->lists('id'));
     $this->assertEquals($node, $node->descendantsAndSelf()->limitDepth(0)->first());
 
-    $this->assertEquals(array_slice($descendancy, 0, 3), $node->descendants()->limitDepth(3)->lists('id'));
-    $this->assertEquals(array_slice($descendancy, 0, 5), $node->descendants()->limitDepth(5)->lists('id'));
-    $this->assertEquals(array_slice($descendancy, 0, 7), $node->descendants()->limitDepth(7)->lists('id'));
+    $result = $node->descendants()->limitDepth(3)->lists('id');
+
+    $this->assertEquals(array_slice($descendancy->toArray(), 0, 3), $node->descendants()->limitDepth(3)->lists('id')->toArray());
+    $this->assertEquals(array_slice($descendancy->toArray(), 0, 5), $node->descendants()->limitDepth(5)->lists('id')->toArray());
+    $this->assertEquals(array_slice($descendancy->toArray(), 0, 7), $node->descendants()->limitDepth(7)->lists('id')->toArray());
 
     $this->assertEquals($descendancy, $node->descendants()->limitDepth(1000)->lists('id'));
   }
