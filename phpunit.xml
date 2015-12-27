@@ -23,7 +23,9 @@
         <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="false">
             <directory suffix=".php">src</directory>
             <exclude>
-                <directory>src/Baum/Generators/stubs</directory>
+                <directory>src/Baum/Providers</directory>
+                <directory>src/Baum/Generators</directory>
+                <directory>src/Baum/Console</directory>
             </exclude>
         </whitelist>
     </filter>
