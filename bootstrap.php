@@ -8,8 +8,10 @@ require __DIR__.'/vendor/autoload.php';
 /**
  * Initialize Capsule
  */
+$config = require(__DIR__.'/tests/config/database.php');
+
 $capsule = new Illuminate\Database\Capsule\Manager;
-$capsule->addConnection(require(__DIR__.'/tests/config/database.php'));
+$capsule->addConnection($config);
 $capsule->setEventDispatcher(new Illuminate\Events\Dispatcher(new Illuminate\Container\Container));
 $capsule->bootEloquent();
 $capsule->setAsGlobal();
