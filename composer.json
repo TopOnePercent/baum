@@ -9,7 +9,13 @@
       "name": "Estanislau Trepat",
       "email": "estanis@etrepat.com",
       "homepage": "http://etrepat.com"
+    },
+    {
+      "name": "Gary Pearman",
+      "email": "gaz@red-robot.co.uk",
+      "homepage": "http://red-robot.co.uk"
     }
+
   ],
   "require": {
     "php": ">=5.5.9",
