@@ -9,5 +9,8 @@ before_script:
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction
 
+after_script:
+  - php vendor/bin/coveralls -v
+
 script:
   - vendor/bin/phpunit --verbose
