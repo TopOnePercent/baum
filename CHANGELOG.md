@@ -1,3 +1,13 @@
+## 1.1.2
+_Mar 4 2015_
+* API changes
+  - Removed 'force' parameter from `Node->rebuild`
+  - Removed unused 'excludeDeleted' parameter from `Node->newNestedSetQuery`
+* Bug fixes
+  - `Node::all` now uses columns parameter in get call
+* Documentation changes
+  - Soft delete now not advised
+
 ## 1.1.1
 _Mar 4 2015_
 * bug fixes

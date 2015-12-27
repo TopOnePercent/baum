@@ -329,11 +329,10 @@ abstract class Node extends Model {
   /**
    * Get a new "scoped" query builder for the Node's model.
    *
-   * @param  bool  $excludeDeleted
    * @return \Illuminate\Database\Eloquent\Builder|static
    */
-  public function newNestedSetQuery($excludeDeleted = true) {
-    $builder = $this->newQuery($excludeDeleted)->orderBy($this->getQualifiedOrderColumnName());
+  public function newNestedSetQuery() {
+    $builder = $this->newQuery()->orderBy($this->getQualifiedOrderColumnName());
 
     if ( $this->isScoped() ) {
       foreach($this->scoped as $scopeFld)
@@ -442,13 +441,11 @@ abstract class Node extends Model {
   /**
    * Rebuilds the structure of the current Nested Set.
    *
-   * @param  bool $force
    * @return void
    */
-  public static function rebuild($force = false) {
+  public static function rebuild() {
     $builder = new SetBuilder(new static);
-
-    $builder->rebuild($force);
+    $builder->rebuild();
   }
 
   /**

@@ -597,24 +597,12 @@ Simple example usage, given a `Category` node class:
 Category::rebuild()
 ```
 
-Valid trees (per the `isValidNestedSet` method) will not get rebuilt. To force the index rebuilding process simply call the rebuild method with `true` as the first parameter:
-
-```php
-Category::rebuild(true);
-```
+No checks are made to see if the tree is already valid, meaning a call to rebuild will always rebuild the tree, whether it is valid or not. If you don't want this behaviour, don't call rebuild if isValidNestedSet returns true.
 
 <a name="soft-deletes"></a>
 ### Soft deletes
 
-Baum comes with **limited support** for soft-delete operations. What I mean
-by *limited* is that the testing is still limited and the *soft delete*
-functionality is changing in the upcoming 4.2 version of the framework, so use
-this feature wisely.
-
-For now, you may consider a **safe** `restore()` operation to be one of:
-
-* Restoring a leaf node
-* Restoring a whole sub-tree in which the parent is not soft-deleted
+Using soft deletes / `restore()` is not recommeded and may cause problems if a tree has been modified after a soft delete operation.
 
 <a name="seeding"></a>
 ### Seeding/Mass-assignment
