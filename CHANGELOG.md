@@ -1,5 +1,5 @@
 ## 1.1.2
-_Mar 4 2015_
+_Dec 27 2015_
 * API changes
   - Removed 'force' parameter from `Node->rebuild`
   - Removed unused 'excludeDeleted' parameter from `Node->newNestedSetQuery`
