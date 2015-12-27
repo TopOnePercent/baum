@@ -1,4 +1,4 @@
-# Baum ![Travis CI build status](https://travis-ci.org/gazsp/baum.svg?branch=master)
+# Baum <a href="https://travis-ci.org/gazsp/baum"><img src="https://travis-ci.org/gazsp/baum.svg?branch=master"></a>
 
 ## Forked from [etrepat/baum](https://github.com/etrepat/baum) - Continuing development and fixing failing unit tests on Laravel 5.x
 
