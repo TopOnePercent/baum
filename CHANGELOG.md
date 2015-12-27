@@ -1,4 +1,4 @@
-## 1.1.2
+## 1.1.3
 _Dec 27 2015_
 * API changes
   - Removed 'force' parameter from `Node->rebuild`
@@ -7,6 +7,9 @@ _Dec 27 2015_
   - `Node::all` now uses columns parameter in get call
 * Documentation changes
   - Soft delete now not advised
+
+## 1.1.3
+* ???
 
 ## 1.1.1
 _Mar 4 2015_
