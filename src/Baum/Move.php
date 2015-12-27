@@ -129,14 +129,16 @@ class Move {
     // select the rows between the leftmost & the rightmost boundaries and apply a lock
     $this->applyLockBetween($a, $d);
 
-    $connection = $this->node->getConnection();
-    $grammar    = $connection->getQueryGrammar();
+    $connection     = $this->node->getConnection();
+    $grammar        = $connection->getQueryGrammar();
 
     $currentId      = $this->quoteIdentifier($this->node->getKey());
     $parentId       = $this->quoteIdentifier($this->parentId());
+
     $leftColumn     = $this->node->getLeftColumnName();
     $rightColumn    = $this->node->getRightColumnName();
     $parentColumn   = $this->node->getParentColumnName();
+
     $wrappedLeft    = $grammar->wrap($leftColumn);
     $wrappedRight   = $grammar->wrap($rightColumn);
     $wrappedParent  = $grammar->wrap($parentColumn);
