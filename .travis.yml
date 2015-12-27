@@ -10,7 +10,7 @@ before_script:
   - travis_retry composer install --no-interaction
 
 after_script:
-  - php vendor/bin/coveralls -v
+  - travis_retry php vendor/bin/coveralls -v
 
 script:
   - vendor/bin/phpunit --verbose
