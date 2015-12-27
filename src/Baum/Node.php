@@ -364,7 +364,7 @@ abstract class Node extends Model {
 
     return $instance->newQuery()
                     ->orderBy($instance->getQualifiedOrderColumnName())
-                    ->get();
+                    ->get($columns);
   }
 
   /**

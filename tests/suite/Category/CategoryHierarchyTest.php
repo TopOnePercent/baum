@@ -9,6 +9,13 @@ class CategoryHierarchyTest extends CategoryTestCase {
     $this->assertEquals($results, $expected);
   }
 
+  public function testAllStaticSomeColumns() {
+    $results = Category::all(['id','name'])->toArray();
+    $expected = Category::query()->select(['id', 'name'])->orderBy('lft')->get()->toArray();
+
+    $this->assertEquals($results, $expected);
+  }
+
   public function testAllStaticWithCustomOrder() {
     $results = OrderedCategory::all();
     $expected = OrderedCategory::query()->orderBy('name')->get();
