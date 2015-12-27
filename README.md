@@ -1,6 +1,6 @@
-# Baum
+# Baum ![Travis CI build status](https://travis-ci.org/gazsp/baum.svg?branch=master)
 
-## Forked from [etrepat/baum](https://github.com/etrepat/baum) - Continuing development and fixing failing unit tests.
+## Forked from [etrepat/baum](https://github.com/etrepat/baum) - Continuing development and fixing failing unit tests on Laravel 5.x
 
 **If you find a bug, please file an issue and submit a pull request with a failing unit test**
 
