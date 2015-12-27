@@ -10,7 +10,7 @@ class CategoryHierarchyTest extends CategoryTestCase {
   }
 
   public function testAllStaticSomeColumns() {
-    $results = Category::all(['id','name'])->toArray();
+    $results = Category::all(['id', 'name'])->toArray();
     $expected = Category::query()->select(['id', 'name'])->orderBy('lft')->get()->toArray();
 
     $this->assertEquals($results, $expected);
