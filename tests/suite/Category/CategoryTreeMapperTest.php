@@ -22,12 +22,14 @@ class CategoryTreeMapperTest extends BaumTestCase {
       )),
       array('id' => 9, 'name' => 'D')
     );
+
     $this->assertTrue(Category::buildTree($tree));
     $this->assertTrue(Category::isValidNestedSet());
 
     $hierarchy = Category::all()->toHierarchy()->toArray();
     $this->assertArraysAreEqual($tree, array_ints_keys(hmap($hierarchy, array('id', 'name'))));
   }
+
 
   public function testBuildTreePrunesAndInserts() {
     $tree = array(
@@ -49,9 +51,7 @@ class CategoryTreeMapperTest extends BaumTestCase {
     // Postgres fix
     if ( DB::connection()->getDriverName() === 'pgsql' ) {
       $tablePrefix = DB::connection()->getTablePrefix();
-
       $sequenceName = $tablePrefix . 'categories_id_seq';
-
       DB::connection()->statement('ALTER SEQUENCE ' . $sequenceName . ' RESTART WITH 10');
     }
 
@@ -92,6 +92,68 @@ class CategoryTreeMapperTest extends BaumTestCase {
     $hierarchy = Category::all()->toHierarchy()->toArray();
     $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, array('id', 'name'))));
   }
+
+
+  public function testBuildTreeMoveNodes() {
+    // Create a tree
+    $updated = array(
+      array('id' => 1, 'name' => 'A'),
+      array('id' => 2, 'name' => 'B'),
+      array('id' => 3, 'name' => 'C', 'children' => array(
+        array('id' => 4, 'name' => 'C.1', 'children' => array(
+          array('id' => 5, 'name' => 'C.1.1'),
+          array('id' => 6, 'name' => 'C.1.2')
+        )),
+        array('id' => 7, 'name' => 'C.2')
+      )),
+      array('id' => 9, 'name' => 'D')
+    );
+    $this->assertTrue(Category::buildTree($updated));
+    $this->assertTrue(Category::isValidNestedSet());
+
+    // Add some nodes
+    $updated = array(
+      array('id' => 1, 'name' => 'A'),
+      array('id' => 2, 'name' => 'B'),
+      array('id' => 3, 'name' => 'C', 'children' => array(
+        array('id' => 4, 'name' => 'C.1', 'children' => array(
+          array('id' => 5, 'name' => 'C.1.1'),
+          array('id' => 6, 'name' => 'C.1.2')
+        )),
+        array('id' => 7, 'name' => 'C.2', 'children' => array(
+          array('name' => 'C.2.1'),
+          array('name' => 'C.2.2')
+        ))
+      )),
+      array('id' => 9, 'name' => 'D')
+    );
+    $this->assertTrue(Category::buildTree($updated));
+    $this->assertTrue(Category::isValidNestedSet());
+
+    // Move node 7 to be child of node 2
+    $updated = array(
+      array('id' => 1, 'name' => 'A'),
+      array('id' => 2, 'name' => 'B', 'children' => array(
+        array('id' => 7, 'name' => 'C.2', 'children' => array(
+          array('id' => 10, 'name' => 'C.2.1'),
+          array('id' => 11, 'name' => 'C.2.2')
+        )),
+      )),
+      array('id' => 3, 'name' => 'C', 'children' => array(
+        array('id' => 4, 'name' => 'C.1', 'children' => array(
+          array('id' => 5, 'name' => 'C.1.1'),
+          array('id' => 6, 'name' => 'C.1.2')
+        )),
+      )),
+      array('id' => 9, 'name' => 'D')
+    );
+    $this->assertTrue(Category::buildTree($updated));
+    $this->assertTrue(Category::isValidNestedSet());
+
+    $hierarchy = Category::all()->toHierarchy()->toArray();
+    $this->assertArraysAreEqual($updated, array_ints_keys(hmap($hierarchy, array('id', 'name'))));
+  }
+
 
   public function testMakeTree() {
     with(new CategorySeeder)->run();
