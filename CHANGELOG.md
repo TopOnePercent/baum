@@ -1,3 +1,9 @@
+
+## 1.1.4
+_Jan 5 2015_
+* Updated to use latest Laravel 5.2 packages
+* Now requires PHP >= v5.6.x
+
 ## 1.1.3
 _Dec 27 2015_
 * API changes
@@ -8,7 +14,7 @@ _Dec 27 2015_
 * Documentation changes
   - Soft delete now not advised
 
-## 1.1.3
+## 1.1.2
 * ???
 
 ## 1.1.1
