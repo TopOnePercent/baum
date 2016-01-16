@@ -1,4 +1,5 @@
 <?php
+
 namespace Baum\Providers;
 
 use Baum\Generators\MigrationGenerator;
@@ -7,10 +8,10 @@ use Baum\Console\BaumCommand;
 use Baum\Console\InstallCommand;
 use Illuminate\Support\ServiceProvider;
 
-class BaumServiceProvider extends ServiceProvider {
-
-  /**
-   * Baum version
+class BaumServiceProvider extends ServiceProvider
+{
+    /**
+   * Baum version.
    *
    * @var string
    */
@@ -21,8 +22,9 @@ class BaumServiceProvider extends ServiceProvider {
    *
    * @return void
    */
-  public function register() {
-    $this->registerCommands();
+  public function register()
+  {
+      $this->registerCommands();
   }
 
   /**
@@ -30,9 +32,10 @@ class BaumServiceProvider extends ServiceProvider {
    *
    * @return void
    */
-  public function registerCommands() {
-    $this->registerBaumCommand();
-    $this->registerInstallCommand();
+  public function registerCommands()
+  {
+      $this->registerBaumCommand();
+      $this->registerInstallCommand();
 
     // Resolve the commands with Artisan by attaching the event listener to Artisan's
     // startup. This allows us to use the commands from our terminal.
@@ -44,8 +47,9 @@ class BaumServiceProvider extends ServiceProvider {
    *
    * @return void
    */
-  protected function registerBaumCommand() {
-    $this->app->singleton('command.baum', function($app) {
+  protected function registerBaumCommand()
+  {
+      $this->app->singleton('command.baum', function ($app) {
       return new BaumCommand;
     });
   }
@@ -55,10 +59,11 @@ class BaumServiceProvider extends ServiceProvider {
    *
    * @return void
    */
-  protected function registerInstallCommand() {
-    $this->app->singleton('command.baum.install', function($app) {
+  protected function registerInstallCommand()
+  {
+      $this->app->singleton('command.baum.install', function ($app) {
       $migrator = new MigrationGenerator($app['files']);
-      $modeler  = new ModelGenerator($app['files']);
+      $modeler = new ModelGenerator($app['files']);
 
       return new InstallCommand($migrator, $modeler);
     });
@@ -69,8 +74,8 @@ class BaumServiceProvider extends ServiceProvider {
    *
    * @return array
    */
-  public function provides() {
-    return array('command.baum', 'command.baum.install');
+  public function provides()
+  {
+      return ['command.baum', 'command.baum.install'];
   }
-
 }

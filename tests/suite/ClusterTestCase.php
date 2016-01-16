@@ -1,17 +1,19 @@
 <?php
 
-class ClusterTestCase extends BaumTestCase {
+class ClusterTestCase extends BaumTestCase
+{
+    public static function setUpBeforeClass()
+    {
+        with(new ClusterMigrator)->up();
+    }
 
-  public static function setUpBeforeClass() {
-    with(new ClusterMigrator)->up();
-  }
+    public function setUp()
+    {
+        with(new ClusterSeeder)->run();
+    }
 
-  public function setUp() {
-    with(new ClusterSeeder)->run();
-  }
-
-  protected function clusters($name, $className = 'Cluster') {
-    return forward_static_call_array(array($className, 'where'), array('name', '=', $name))->first();
-  }
-
+    protected function clusters($name, $className = 'Cluster')
+    {
+        return forward_static_call_array([$className, 'where'], ['name', '=', $name])->first();
+    }
 }

@@ -1,16 +1,17 @@
 <?php
+
 namespace Baum\Generators;
 
 use Illuminate\Filesystem\Filesystem;
 
-abstract class Generator {
-
-  /**
+abstract class Generator
+{
+    /**
    * The filesystem instance.
    *
    * @var \Illuminate\Filesystem\Filesystem
    */
-  protected $files = NULL;
+  protected $files = null;
 
   /**
    * Create a new MigrationGenerator instance.
@@ -18,8 +19,9 @@ abstract class Generator {
    * @param \Illuminate\Filesystem\Filesysmte $files
    * @return void
    */
-  function __construct(Filesystem $files) {
-    $this->files = $files;
+  public function __construct(Filesystem $files)
+  {
+      $this->files = $files;
   }
 
   /**
@@ -27,8 +29,9 @@ abstract class Generator {
    *
    * @return string
    */
-  public function getStubPath() {
-    return __DIR__.'/stubs';
+  public function getStubPath()
+  {
+      return __DIR__.'/stubs';
   }
 
   /**
@@ -36,8 +39,9 @@ abstract class Generator {
    *
    * @return \Illuminate\Filesystem\Filesystem
    */
-  public function getFilesystem() {
-    return $this->files;
+  public function getFilesystem()
+  {
+      return $this->files;
   }
 
   /**
@@ -46,11 +50,13 @@ abstract class Generator {
    * @param  string  $table
    * @return void
    */
-  protected function getStub($name) {
-    if ( stripos($name, '.php') === FALSE )
-      $name = $name . '.php';
+  protected function getStub($name)
+  {
+      if (stripos($name, '.php') === false) {
+          $name = $name.'.php';
+      }
 
-    return $this->files->get($this->getStubPath() . '/' . $name);
+      return $this->files->get($this->getStubPath().'/'.$name);
   }
 
   /**
@@ -60,34 +66,37 @@ abstract class Generator {
    * @param string $replacements
    * @return string
    */
-  protected function parseStub($stub, $replacements=array()) {
-    $output = $stub;
+  protected function parseStub($stub, $replacements = [])
+  {
+      $output = $stub;
 
-    foreach ($replacements as $key => $replacement) {
-      $search = '{{'.$key.'}}';
-      $output = str_replace($search, $replacement, $output);
-    }
+      foreach ($replacements as $key => $replacement) {
+          $search = '{{'.$key.'}}';
+          $output = str_replace($search, $replacement, $output);
+      }
 
-    return $output;
+      return $output;
   }
 
   /**
-   * Inflect to a class name
+   * Inflect to a class name.
    *
    * @param string $input
    * @return string
    */
-  protected function classify($input) {
-    return studly_case(str_singular($input));
+  protected function classify($input)
+  {
+      return studly_case(str_singular($input));
   }
 
   /**
-   * Inflect to table name
+   * Inflect to table name.
    *
    * @param string $input
    * @return string
    */
-  protected function tableize($input) {
-    return snake_case(str_plural($input));
+  protected function tableize($input)
+  {
+      return snake_case(str_plural($input));
   }
 }

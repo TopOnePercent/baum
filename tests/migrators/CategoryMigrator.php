@@ -2,12 +2,13 @@
 
 use Illuminate\Database\Capsule\Manager as DB;
 
-class CategoryMigrator {
+class CategoryMigrator
+{
+    public function up()
+    {
+        DB::schema()->dropIfExists('categories');
 
-  public function up() {
-    DB::schema()->dropIfExists('categories');
-
-    DB::schema()->create('categories', function($t) {
+        DB::schema()->create('categories', function ($t) {
       $t->increments('id');
 
       $t->integer('parent_id')->nullable();
@@ -25,10 +26,10 @@ class CategoryMigrator {
 
       $t->softDeletes();
     });
-  }
+    }
 
-  public function down() {
-    DB::schema()->drop('categories');
-  }
-
+    public function down()
+    {
+        DB::schema()->drop('categories');
+    }
 }

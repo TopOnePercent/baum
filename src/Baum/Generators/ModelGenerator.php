@@ -1,26 +1,28 @@
 <?php
+
 namespace Baum\Generators;
 
-class ModelGenerator extends Generator {
-
-  /**
+class ModelGenerator extends Generator
+{
+    /**
    * Create a new model at the given path.
    *
    * @param  string  $name
    * @param  string  $path
    * @return string
    */
-  public function create($name, $path) {
-    $path = $this->getPath($name, $path);
+  public function create($name, $path)
+  {
+      $path = $this->getPath($name, $path);
 
-    $stub = $this->getStub('model');
+      $stub = $this->getStub('model');
 
-    $this->files->put($path, $this->parseStub($stub, array(
+      $this->files->put($path, $this->parseStub($stub, [
       'table' => $this->tableize($name),
-      'class' => $this->classify($name)
-    )));
+      'class' => $this->classify($name),
+    ]));
 
-    return $path;
+      return $path;
   }
 
   /**
@@ -30,8 +32,8 @@ class ModelGenerator extends Generator {
    * @param  string  $path
    * @return string
    */
-  protected function getPath($name, $path) {
-    return $path . '/' . $this->classify($name) . '.php';
+  protected function getPath($name, $path)
+  {
+      return $path.'/'.$this->classify($name).'.php';
   }
-
 }

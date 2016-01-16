@@ -1,9 +1,9 @@
 <?php
 
-$config = array(
+$config = [
     'driver'    => 'sqlite',
     'database'  => ':memory:',
-    'prefix'    => ''
-);
+    'prefix'    => '',
+];
 
 return $config;

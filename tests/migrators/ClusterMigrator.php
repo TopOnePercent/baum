@@ -2,12 +2,13 @@
 
 use Illuminate\Database\Capsule\Manager as DB;
 
-class ClusterMigrator {
+class ClusterMigrator
+{
+    public function up()
+    {
+        DB::schema()->dropIfExists('clusters');
 
-  public function up() {
-    DB::schema()->dropIfExists('clusters');
-
-    DB::schema()->create('clusters', function($t) {
+        DB::schema()->create('clusters', function ($t) {
       $t->string('id');
 
       $t->string('parent_id')->nullable();
@@ -25,10 +26,10 @@ class ClusterMigrator {
 
       $t->softDeletes();
     });
-  }
+    }
 
-  public function down() {
-    DB::schema()->drop('clusters');
-  }
-
+    public function down()
+    {
+        DB::schema()->drop('clusters');
+    }
 }

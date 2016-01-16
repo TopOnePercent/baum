@@ -1,8 +1,9 @@
 <?php
 
-class CategoryMovementTest extends CategoryTestCase {
-
-    public function testMoveLeft() {
+class CategoryMovementTest extends CategoryTestCase
+{
+    public function testMoveLeft()
+    {
         $this->categories('Child 2')->moveLeft();
 
         $this->assertNull($this->categories('Child 2')->getLeftSibling());
@@ -13,21 +14,24 @@ class CategoryMovementTest extends CategoryTestCase {
     /**
      * @expectedException Baum\MoveNotPossibleException
      */
-    public function testMoveLeftRaisesAnExceptionWhenNotPossible() {
+    public function testMoveLeftRaisesAnExceptionWhenNotPossible()
+    {
         $node = $this->categories('Child 2');
 
         $node->moveLeft();
         $node->moveLeft();
     }
 
-    public function testMoveLeftDoesNotChangeDepth() {
+    public function testMoveLeftDoesNotChangeDepth()
+    {
         $this->categories('Child 2')->moveLeft();
 
         $this->assertEquals(1, $this->categories('Child 2')->getDepth());
         $this->assertEquals(2, $this->categories('Child 2.1')->getDepth());
     }
 
-    public function testMoveLeftWithSubtree() {
+    public function testMoveLeftWithSubtree()
+    {
         $this->categories('Root 2')->moveLeft();
 
         $this->assertNull($this->categories('Root 2')->getLeftSibling());
@@ -44,7 +48,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(2, $this->categories('Child 2.1')->getDepth());
     }
 
-    public function testMoveToLeftOf() {
+    public function testMoveToLeftOf()
+    {
         $this->categories('Child 3')->moveToLeftOf($this->categories('Child 1'));
 
         $this->assertNull($this->categories('Child 3')->getLeftSibling());
@@ -55,18 +60,21 @@ class CategoryMovementTest extends CategoryTestCase {
     /**
      * @expectedException Baum\MoveNotPossibleException
      */
-    public function testMoveToLeftOfRaisesAnExceptionWhenNotPossible() {
+    public function testMoveToLeftOfRaisesAnExceptionWhenNotPossible()
+    {
         $this->categories('Child 1')->moveToLeftOf($this->categories('Child 1')->getLeftSibling());
     }
 
-    public function testMoveToLeftOfDoesNotChangeDepth() {
+    public function testMoveToLeftOfDoesNotChangeDepth()
+    {
         $this->categories('Child 2')->moveToLeftOf($this->categories('Child 1'));
 
         $this->assertEquals(1, $this->categories('Child 2')->getDepth());
         $this->assertEquals(2, $this->categories('Child 2.1')->getDepth());
     }
 
-    public function testMoveToLeftOfWithSubtree() {
+    public function testMoveToLeftOfWithSubtree()
+    {
         $this->categories('Root 2')->moveToLeftOf($this->categories('Root 1'));
 
         $this->assertNull($this->categories('Root 2')->getLeftSibling());
@@ -81,7 +89,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(2, $this->categories('Child 2.1')->getDepth());
     }
 
-    public function testMoveRight() {
+    public function testMoveRight()
+    {
         $this->categories('Child 2')->moveRight();
 
         $this->assertNull($this->categories('Child 2')->getRightSibling());
@@ -92,21 +101,24 @@ class CategoryMovementTest extends CategoryTestCase {
     /**
      * @expectedException Baum\MoveNotPossibleException
      */
-    public function testMoveRightRaisesAnExceptionWhenNotPossible() {
+    public function testMoveRightRaisesAnExceptionWhenNotPossible()
+    {
         $node = $this->categories('Child 2');
 
         $node->moveRight();
         $node->moveRight();
     }
 
-    public function testMoveRightDoesNotChangeDepth() {
+    public function testMoveRightDoesNotChangeDepth()
+    {
         $this->categories('Child 2')->moveRight();
 
         $this->assertEquals(1, $this->categories('Child 2')->getDepth());
         $this->assertEquals(2, $this->categories('Child 2.1')->getDepth());
     }
 
-    public function testMoveRightWithSubtree() {
+    public function testMoveRightWithSubtree()
+    {
         $this->categories('Root 1')->moveRight();
 
         $this->assertNull($this->categories('Root 1')->getRightSibling());
@@ -123,7 +135,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(2, $this->categories('Child 2.1')->getDepth());
     }
 
-    public function testMoveToRightOf() {
+    public function testMoveToRightOf()
+    {
         $this->categories('Child 1')->moveToRightOf($this->categories('Child 3'));
 
         $this->assertNull($this->categories('Child 1')->getRightSibling());
@@ -136,18 +149,21 @@ class CategoryMovementTest extends CategoryTestCase {
     /**
      * @expectedException Baum\MoveNotPossibleException
      */
-    public function testMoveToRightOfRaisesAnExceptionWhenNotPossible() {
+    public function testMoveToRightOfRaisesAnExceptionWhenNotPossible()
+    {
         $this->categories('Child 3')->moveToRightOf($this->categories('Child 3')->getRightSibling());
     }
 
-    public function testMoveToRightOfDoesNotChangeDepth() {
+    public function testMoveToRightOfDoesNotChangeDepth()
+    {
         $this->categories('Child 2')->moveToRightOf($this->categories('Child 3'));
 
         $this->assertEquals(1, $this->categories('Child 2')->getDepth());
         $this->assertEquals(2, $this->categories('Child 2.1')->getDepth());
     }
 
-    public function testMoveToRightOfWithSubtree() {
+    public function testMoveToRightOfWithSubtree()
+    {
         $this->categories('Root 1')->moveToRightOf($this->categories('Root 2'));
 
         $this->assertNull($this->categories('Root 1')->getRightSibling());
@@ -164,7 +180,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(2, $this->categories('Child 2.1')->getDepth());
     }
 
-    public function testMakeRoot() {
+    public function testMakeRoot()
+    {
         $this->categories('Child 2')->makeRoot();
 
         $newRoot = $this->categories('Child 2');
@@ -179,7 +196,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    public function testNullifyParentColumnMakesItRoot() {
+    public function testNullifyParentColumnMakesItRoot()
+    {
         $node = $this->categories('Child 2');
 
         $node->parent_id = null;
@@ -196,7 +214,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    public function testNullifyParentColumnOnNewNodes() {
+    public function testNullifyParentColumnOnNewNodes()
+    {
         $node = new Category(['name' => 'Root 3']);
 
         $node->parent_id = null;
@@ -213,7 +232,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    public function testNewCategoryWithNullParent() {
+    public function testNewCategoryWithNullParent()
+    {
         $node = new Category(['name' => 'Root 3']);
         $this->assertTrue($node->isRoot());
 
@@ -224,7 +244,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertTrue($node->isRoot());
     }
 
-    public function testMakeChildOf() {
+    public function testMakeChildOf()
+    {
         $this->categories('Child 1')->makeChildOf($this->categories('Child 3'));
 
         $this->assertEquals($this->categories('Child 3'), $this->categories('Child 1')->parent()->first());
@@ -232,8 +253,9 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    public function testMakeChildOfAppendsAtTheEnd() {
-        $newChild = Category::create(array('name' => 'Child 4'));
+    public function testMakeChildOfAppendsAtTheEnd()
+    {
+        $newChild = Category::create(['name' => 'Child 4']);
         $newChild->makeChildOf($this->categories('Root 1'));
         $lastChild = $this->categories('Root 1')->children()->get()->last();
 
@@ -241,7 +263,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    public function testMakeChildOfMovesWithSubtree() {
+    public function testMakeChildOfMovesWithSubtree()
+    {
         $this->categories('Child 2')->makeChildOf($this->categories('Child 1'));
 
         $this->assertTrue(Category::isValidNestedSet());
@@ -255,8 +278,9 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(7, $this->categories('Child 1')->getRight());
     }
 
-    public function testMakeChildOfSwappingRoots() {
-        $newRoot = Category::create(array('name' => 'Root 3'));
+    public function testMakeChildOfSwappingRoots()
+    {
+        $newRoot = Category::create(['name' => 'Root 3']);
 
         $this->assertEquals(13, $newRoot->getLeft());
         $this->assertEquals(14, $newRoot->getRight());
@@ -274,8 +298,9 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(14, $newRoot->getRight());
     }
 
-    public function testMakeChildOfSwappingRootsWithSubtrees() {
-        $newRoot = Category::create(array('name' => 'Root 3'));
+    public function testMakeChildOfSwappingRootsWithSubtrees()
+    {
+        $newRoot = Category::create(['name' => 'Root 3']);
 
         $this->categories('Root 1')->makeChildOf($newRoot);
 
@@ -290,7 +315,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(9, $this->categories('Child 2.1')->getRight());
     }
 
-    public function testMakeFirstChildOf() {
+    public function testMakeFirstChildOf()
+    {
         $this->categories('Child 1')->makeFirstChildOf($this->categories('Child 3'));
 
         $this->assertEquals($this->categories('Child 3'), $this->categories('Child 1')->parent()->first());
@@ -298,8 +324,9 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    public function testMakeFirstChildOfAppendsAtTheBeginning() {
-        $newChild = Category::create(array('name' => 'Child 4'));
+    public function testMakeFirstChildOfAppendsAtTheBeginning()
+    {
+        $newChild = Category::create(['name' => 'Child 4']);
 
         $newChild->makeFirstChildOf($this->categories('Root 1'));
 
@@ -309,7 +336,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    public function testMakeFirstChildOfMovesWithSubtree() {
+    public function testMakeFirstChildOfMovesWithSubtree()
+    {
         $this->categories('Child 2')->makeFirstChildOf($this->categories('Child 1'));
 
         $this->assertTrue(Category::isValidNestedSet());
@@ -323,8 +351,9 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(7, $this->categories('Child 1')->getRight());
     }
 
-    public function testMakeFirstChildOfSwappingRoots() {
-        $newRoot = Category::create(array('name' => 'Root 3'));
+    public function testMakeFirstChildOfSwappingRoots()
+    {
+        $newRoot = Category::create(['name' => 'Root 3']);
 
         $this->assertEquals(13, $newRoot->getLeft());
         $this->assertEquals(14, $newRoot->getRight());
@@ -342,8 +371,9 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(14, $newRoot->getRight());
     }
 
-    public function testMakeFirstChildOfSwappingRootsWithSubtrees() {
-        $newRoot = Category::create(array('name' => 'Root 3'));
+    public function testMakeFirstChildOfSwappingRootsWithSubtrees()
+    {
+        $newRoot = Category::create(['name' => 'Root 3']);
 
         $this->categories('Root 1')->makeFirstChildOf($newRoot);
 
@@ -358,7 +388,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(9, $this->categories('Child 2.1')->getRight());
     }
 
-    public function testMakeLastChildOf() {
+    public function testMakeLastChildOf()
+    {
         $this->categories('Child 1')->makeLastChildOf($this->categories('Child 3'));
 
         $this->assertEquals($this->categories('Child 3'), $this->categories('Child 1')->parent()->first());
@@ -366,8 +397,9 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    public function testMakeLastChildOfAppendsAtTheEnd() {
-        $newChild = Category::create(array('name' => 'Child 4'));
+    public function testMakeLastChildOfAppendsAtTheEnd()
+    {
+        $newChild = Category::create(['name' => 'Child 4']);
 
         $newChild->makeLastChildOf($this->categories('Root 1'));
 
@@ -377,7 +409,8 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    public function testMakeLastChildOfMovesWithSubtree() {
+    public function testMakeLastChildOfMovesWithSubtree()
+    {
         $this->categories('Child 2')->makeLastChildOf($this->categories('Child 1'));
 
         $this->assertTrue(Category::isValidNestedSet());
@@ -391,8 +424,9 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(7, $this->categories('Child 1')->getRight());
     }
 
-    public function testMakeLastChildOfSwappingRoots() {
-        $newRoot = Category::create(array('name' => 'Root 3'));
+    public function testMakeLastChildOfSwappingRoots()
+    {
+        $newRoot = Category::create(['name' => 'Root 3']);
 
         $this->assertEquals(13, $newRoot->getLeft());
         $this->assertEquals(14, $newRoot->getRight());
@@ -410,8 +444,9 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(14, $newRoot->getRight());
     }
 
-    public function testMakeLastChildOfSwappingRootsWithSubtrees() {
-        $newRoot = Category::create(array('name' => 'Root 3'));
+    public function testMakeLastChildOfSwappingRootsWithSubtrees()
+    {
+        $newRoot = Category::create(['name' => 'Root 3']);
 
         $this->categories('Root 1')->makeLastChildOf($newRoot);
 
@@ -429,8 +464,9 @@ class CategoryMovementTest extends CategoryTestCase {
     /**
      * @expectedException Baum\MoveNotPossibleException
      */
-    public function testUnpersistedNodeCannotBeMoved() {
-        $unpersisted = new Category(array('name' => 'Unpersisted'));
+    public function testUnpersistedNodeCannotBeMoved()
+    {
+        $unpersisted = new Category(['name' => 'Unpersisted']);
 
         $unpersisted->moveToRightOf($this->categories('Root 1'));
     }
@@ -438,8 +474,9 @@ class CategoryMovementTest extends CategoryTestCase {
     /**
      * @expectedException Baum\MoveNotPossibleException
      */
-    public function testUnpersistedNodeCannotBeMadeChild() {
-        $unpersisted = new Category(array('name' => 'Unpersisted'));
+    public function testUnpersistedNodeCannotBeMadeChild()
+    {
+        $unpersisted = new Category(['name' => 'Unpersisted']);
 
         $unpersisted->makeChildOf($this->categories('Root 1'));
     }
@@ -447,7 +484,8 @@ class CategoryMovementTest extends CategoryTestCase {
     /**
      * @expectedException Baum\MoveNotPossibleException
      */
-    public function testNodesCannotBeMovedToItself() {
+    public function testNodesCannotBeMovedToItself()
+    {
         $node = $this->categories('Child 1');
 
         $node->moveToRightOf($node);
@@ -456,7 +494,8 @@ class CategoryMovementTest extends CategoryTestCase {
     /**
      * @expectedException Baum\MoveNotPossibleException
      */
-    public function testNodesCannotBeMadeChildOfThemselves() {
+    public function testNodesCannotBeMadeChildOfThemselves()
+    {
         $node = $this->categories('Child 1');
 
         $node->makeChildOf($node);
@@ -465,17 +504,19 @@ class CategoryMovementTest extends CategoryTestCase {
     /**
      * @expectedException Baum\MoveNotPossibleException
      */
-    public function testNodesCannotBeMovedToDescendantsOfThemselves() {
+    public function testNodesCannotBeMovedToDescendantsOfThemselves()
+    {
         $node = $this->categories('Root 1');
 
         $node->makeChildOf($this->categories('Child 2.1'));
     }
 
-    public function testDepthIsUpdatedWhenMadeChild() {
-        $a = Category::create(array('name' => 'A'));
-        $b = Category::create(array('name' => 'B'));
-        $c = Category::create(array('name' => 'C'));
-        $d = Category::create(array('name' => 'D'));
+    public function testDepthIsUpdatedWhenMadeChild()
+    {
+        $a = Category::create(['name' => 'A']);
+        $b = Category::create(['name' => 'B']);
+        $c = Category::create(['name' => 'C']);
+        $d = Category::create(['name' => 'D']);
 
         // a > b > c > d
         $b->makeChildOf($a);
@@ -493,26 +534,32 @@ class CategoryMovementTest extends CategoryTestCase {
         $this->assertEquals(3, $d->getDepth());
     }
 
-    public function testDepthIsUpdatedOnDescendantsWhenParentMoves() {
-        $a = Category::create(array('name' => 'A'));
-        $b = Category::create(array('name' => 'B'));
-        $c = Category::create(array('name' => 'C'));
-        $d = Category::create(array('name' => 'D'));
+    public function testDepthIsUpdatedOnDescendantsWhenParentMoves()
+    {
+        $a = Category::create(['name' => 'A']);
+        $b = Category::create(['name' => 'B']);
+        $c = Category::create(['name' => 'C']);
+        $d = Category::create(['name' => 'D']);
 
         // a > b > c > d
         $b->makeChildOf($a);
         $c->makeChildOf($b);
         $d->makeChildOf($c);
 
-        $a->reload(); $b->reload(); $c->reload(); $d->reload();
+        $a->reload();
+        $b->reload();
+        $c->reload();
+        $d->reload();
 
         $b->moveToRightOf($a);
 
-        $a->reload(); $b->reload(); $c->reload(); $d->reload();
+        $a->reload();
+        $b->reload();
+        $c->reload();
+        $d->reload();
 
         $this->assertEquals(0, $b->getDepth());
         $this->assertEquals(1, $c->getDepth());
         $this->assertEquals(2, $d->getDepth());
     }
-
 }
