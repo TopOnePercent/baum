@@ -3,46 +3,40 @@
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Baum\Node;
 
-class Category extends Node {
+class Category extends Node
+{
+    protected $table = 'categories';
 
-  protected $table = 'categories';
-
-  public $timestamps = false;
-
+    public $timestamps = false;
 }
 
-class ScopedCategory extends Category {
-
-  protected $scoped = array('company_id');
-
+class ScopedCategory extends Category
+{
+    protected $scoped = ['company_id'];
 }
 
-class MultiScopedCategory extends Category {
-
-  protected $scoped = array('company_id', 'language');
-
+class MultiScopedCategory extends Category
+{
+    protected $scoped = ['company_id', 'language'];
 }
 
-class OrderedCategory extends Category {
-
-  protected $orderColumn = 'name';
-
+class OrderedCategory extends Category
+{
+    protected $orderColumn = 'name';
 }
 
-class OrderedScopedCategory extends Category {
+class OrderedScopedCategory extends Category
+{
+    protected $scoped = ['company_id'];
 
-  protected $scoped = array('company_id');
-
-  protected $orderColumn = 'name';
-
+    protected $orderColumn = 'name';
 }
 
-class SoftCategory extends Category {
+class SoftCategory extends Category
+{
+    use SoftDeletes;
 
-  use SoftDeletes;
+    public $timestamps = true;
 
-  public $timestamps = true;
-
-  protected $dates = ['deleted_at'];
-
+    protected $dates = ['deleted_at'];
 }

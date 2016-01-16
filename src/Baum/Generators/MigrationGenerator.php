@@ -1,26 +1,28 @@
 <?php
+
 namespace Baum\Generators;
 
-class MigrationGenerator extends Generator {
-
-  /**
+class MigrationGenerator extends Generator
+{
+    /**
    * Create a new migration at the given path.
    *
    * @param  string  $name
    * @param  string  $path
    * @return string
    */
-  public function create($name, $path) {
-    $path = $this->getPath($name, $path);
+  public function create($name, $path)
+  {
+      $path = $this->getPath($name, $path);
 
-    $stub = $this->getStub('migration');
+      $stub = $this->getStub('migration');
 
-    $this->files->put($path, $this->parseStub($stub, array(
+      $this->files->put($path, $this->parseStub($stub, [
       'table' => $this->tableize($name),
-      'class' => $this->getMigrationClassName($name)
-    )));
+      'class' => $this->getMigrationClassName($name),
+    ]));
 
-    return $path;
+      return $path;
   }
 
   /**
@@ -29,8 +31,9 @@ class MigrationGenerator extends Generator {
    * @param string $name
    * @return string
    */
-  protected function getMigrationName($name) {
-    return 'create_' . $this->tableize($name) . '_table';
+  protected function getMigrationName($name)
+  {
+      return 'create_'.$this->tableize($name).'_table';
   }
 
   /**
@@ -38,8 +41,9 @@ class MigrationGenerator extends Generator {
    *
    * @param string $name
    */
-  protected function getMigrationClassName($name) {
-    return $this->classify($this->getMigrationName($name));
+  protected function getMigrationClassName($name)
+  {
+      return $this->classify($this->getMigrationName($name));
   }
 
   /**
@@ -49,8 +53,9 @@ class MigrationGenerator extends Generator {
    * @param  string  $path
    * @return string
    */
-  protected function getPath($name, $path) {
-    return $path . '/' . $this->getDatePrefix() . '_' . $this->getMigrationName($name) . '.php';
+  protected function getPath($name, $path)
+  {
+      return $path.'/'.$this->getDatePrefix().'_'.$this->getMigrationName($name).'.php';
   }
 
   /**
@@ -58,8 +63,8 @@ class MigrationGenerator extends Generator {
    *
    * @return int
    */
-  protected function getDatePrefix() {
-    return date('Y_m_d_His');
+  protected function getDatePrefix()
+  {
+      return date('Y_m_d_His');
   }
-
 }
