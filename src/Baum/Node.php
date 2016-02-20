@@ -801,6 +801,18 @@ abstract class Node extends Model
     }
 
     /**
+    * Retrieve all other nodes at the same depth,
+    *
+    * @return \Illuminate\Database\Eloquent\Collection
+    */
+    public function getOthersAtSameDepth()
+    {
+        return $this->newNestedSetQuery()
+                    ->where($this->getDepthColumnName(), '=', $this->getDepth())
+                    ->withoutSelf();
+    }
+
+    /**
     * Set of all children & nested children.
     *
     * @return \Illuminate\Database\Query\Builder
