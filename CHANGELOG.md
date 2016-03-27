@@ -1,4 +1,10 @@
 
+## 1.1.5
+_Mar 27 2015_
+
+* Fixed bug with Install command in Lumen [https://github.com/gazsp/baum/issues/12](https://github.com/gazsp/baum/issues/12)
+* Added getOthersAtSameDepth() method [https://github.com/gazsp/baum/commit/97dced5a6e40ed4437101aa2d53e0346cc1843f8](https://github.com/gazsp/baum/commit/97dced5a6e40ed4437101aa2d53e0346cc1843f8)
+
 ## 1.1.4
 _Jan 5 2015_
 * Updated to use latest Laravel 5.2 packages
