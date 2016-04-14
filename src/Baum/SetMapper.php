@@ -116,6 +116,10 @@ class SetMapper
                 return false;
             }
 
+            if (!$node->isRoot()) {
+                $node->makeLastChildOf($node->parent);
+            }
+
             $affectedKeys[] = $node->getKey();
 
             if (array_key_exists($this->getChildrenKeyName(), $attributes)) {

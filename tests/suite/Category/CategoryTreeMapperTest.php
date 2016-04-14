@@ -271,4 +271,80 @@ class CategoryTreeMapperTest extends BaumTestCase
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
         $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
     }
+
+    public function testMakeTreeReordesNodes()
+    {
+        with(new CategorySeeder)->run();
+
+        $parent = Category::find(3);
+
+        $subtree = [
+            ['id' => 4, 'name' => 'Child 2.1'],
+            ['name' => 'Child 2.2'],
+            ['name' => 'Child 2.3', 'children' => [
+                ['name' => 'Child 2.3.1', 'children' => [
+                    ['name' => 'Child 2.3.1.1'],
+                    ['name' => 'Child 2.3.1.1'],
+                ]],
+                ['name' => 'Child 2.3.2'],
+                ['name' => 'Child 2.3.3'],
+            ]],
+            ['name' => 'Child 2.4'],
+        ];
+
+        $this->assertTrue($parent->makeTree($subtree));
+        $this->assertTrue(Category::isValidNestedSet());
+
+        $expected = [
+            ['id' => 4, 'name' => 'Child 2.1'],
+            ['id' => 7, 'name' => 'Child 2.2'],
+            ['id' => 8, 'name' => 'Child 2.3', 'children' => [
+                ['id' => 9, 'name' => 'Child 2.3.1', 'children' => [
+                    ['id' => 10, 'name' => 'Child 2.3.1.1'],
+                    ['id' => 11, 'name' => 'Child 2.3.1.1'],
+                ]],
+                ['id' => 12, 'name' => 'Child 2.3.2'],
+                ['id' => 13, 'name' => 'Child 2.3.3'],
+            ]],
+            ['id' => 14, 'name' => 'Child 2.4'],
+        ];
+
+        $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
+        $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
+
+        $modified = [
+            ['id' => 7, 'name' => 'Child 2.2'],
+            ['id' => 4, 'name' => 'Child 2.1'],
+            ['id' => 8, 'name' => 'Child 2.3', 'children' => [
+                ['id' => 9, 'name' => 'Child 2.3.1', 'children' => [
+                    ['id' => 11, 'name' => 'Child 2.3.1.1'],
+                    ['id' => 10, 'name' => 'Child 2.3.1.1'],
+                ]],
+                ['id' => 12, 'name' => 'Child 2.3.2'],
+                ['id' => 13, 'name' => 'Child 2.3.3'],
+            ]],
+            ['id' => 14, 'name' => 'Child 2.4'],
+        ];
+
+        $this->assertTrue($parent->makeTree($modified));
+        $this->assertTrue(Category::isValidNestedSet());
+
+        $expected = [
+            ['id' => 7, 'name' => 'Child 2.2'],
+            ['id' => 4, 'name' => 'Child 2.1'],
+            ['id' => 8, 'name' => 'Child 2.3', 'children' => [
+                ['id' => 9, 'name' => 'Child 2.3.1', 'children' => [
+                    ['id' => 11, 'name' => 'Child 2.3.1.1'],
+                    ['id' => 10, 'name' => 'Child 2.3.1.1'],
+                ]],
+                ['id' => 12, 'name' => 'Child 2.3.2'],
+                ['id' => 13, 'name' => 'Child 2.3.3'],
+            ]],
+            ['id' => 14, 'name' => 'Child 2.4'],
+        ];
+
+
+        $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
+        $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
+    }
 }
