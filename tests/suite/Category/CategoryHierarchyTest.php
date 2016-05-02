@@ -752,7 +752,7 @@ class CategoryHierarchyTest extends CategoryTestCase
     public function testGetNestedList()
     {
         $seperator = ' ';
-        $nestedList = Category::getNestedList('name', 'id', $seperator, '');
+        $nestedList = Category::getNestedList('name', 'id', $seperator);
 
         $expected = [
       1 => str_repeat($seperator, 0).'Root 1',
