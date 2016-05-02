@@ -1312,7 +1312,7 @@ abstract class Node extends Model
     *
     * @return Array
     */
-    public static function getNestedList($column, $key = null, $seperator = ' ')
+    public static function getNestedList($column, $key = null, $seperator = ' ', $symbol = '')
     {
         $instance = new static;
 
@@ -1323,8 +1323,8 @@ abstract class Node extends Model
 
         return array_combine(array_map(function ($node) use ($key) {
             return $node[$key];
-        }, $nodes), array_map(function ($node) use ($seperator, $depthColumn,$column) {
-            return str_repeat($seperator, $node[$depthColumn]).$node[$column];
+        }, $nodes), array_map(function ($node) use ($seperator, $depthColumn, $column, $symbol) {
+            return str_repeat($seperator, $node[$depthColumn]) . $symbol . $node[$column];
         }, $nodes));
     }
 
