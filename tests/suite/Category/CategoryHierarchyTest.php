@@ -772,12 +772,12 @@ class CategoryHierarchyTest extends CategoryTestCase
         $nestedList = Category::getNestedList('name', 'id', $seperator, '- ');
 
         $expected = [
-      1 => str_repeat($seperator, 0).'Root 1',
+      1 => str_repeat($seperator, 0).'- Root 1',
       2 => str_repeat($seperator, 1).'- Child 1',
       3 => str_repeat($seperator, 1).'- Child 2',
       4 => str_repeat($seperator, 2).'- Child 2.1',
       5 => str_repeat($seperator, 1).'- Child 3',
-      6 => str_repeat($seperator, 0).'Root 2',
+      6 => str_repeat($seperator, 0).'- Root 2',
     ];
 
         $this->assertArraysAreEqual($expected, $nestedList);
