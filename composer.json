@@ -29,7 +29,8 @@
     "phpunit/phpunit": "4.*",
     "mockery/mockery": "~0.9",
     "d11wtq/boris": "~1.0.10",
-    "satooshi/php-coveralls": "dev-master"
+    "satooshi/php-coveralls": "dev-master",
+    "fabpot/php-cs-fixer": "^1.11"
   },
   "autoload": {
     "psr-0": {
