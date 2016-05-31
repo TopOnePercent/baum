@@ -1,4 +1,5 @@
 <?php
+
 namespace Baum\Console;
 
 use Baum\Generators\MigrationGenerator;
@@ -6,9 +7,9 @@ use Baum\Generators\ModelGenerator;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
-class InstallCommand extends Command {
-
-  /**
+class InstallCommand extends Command
+{
+    /**
    * The console command name.
    *
    * @var string
@@ -23,29 +24,30 @@ class InstallCommand extends Command {
   protected $description = 'Scaffolds a new migration and model suitable for Baum.';
 
   /**
-   * Migration generator instance
+   * Migration generator instance.
    *
    * @var Baum\Generators\MigrationGenerator
    */
   protected $migrator;
 
   /**
-   * Model generator instance
+   * Model generator instance.
    *
    * @var Baum\Generators\ModelGenerator
    */
   protected $modeler;
 
   /**
-   * Create a new command instance
+   * Create a new command instance.
    *
    * @return void
    */
-  public function __construct(MigrationGenerator $migrator, ModelGenerator $modeler) {
+  public function __construct(MigrationGenerator $migrator, ModelGenerator $modeler)
+  {
       parent::__construct();
 
       $this->migrator = $migrator;
-      $this->modeler  = $modeler;
+      $this->modeler = $modeler;
   }
 
   /**
@@ -58,21 +60,23 @@ class InstallCommand extends Command {
    *
    * @return void
    */
-  public function fire() {
+  public function fire()
+  {
       $name = $this->input->getArgument('name');
       $this->writeMigration($name);
       $this->writeModel($name);
   }
 
   /**
-   * Get the command arguments
+   * Get the command arguments.
    *
    * @return array
    */
-  protected function getArguments() {
-      return array(
-        array('name', InputArgument::REQUIRED, 'Name to use for the scaffolding of the migration and model.')
-      );
+  protected function getArguments()
+  {
+      return [
+        ['name', InputArgument::REQUIRED, 'Name to use for the scaffolding of the migration and model.'],
+      ];
   }
 
   /**
@@ -81,7 +85,8 @@ class InstallCommand extends Command {
    * @param  string  $name
    * @return string
    */
-  protected function writeMigration($name) {
+  protected function writeMigration($name)
+  {
       $output = pathinfo($this->migrator->create($name, $this->getMigrationsPath()), PATHINFO_FILENAME);
       $this->line("      <fg=green;options=bold>create</fg=green;options=bold>  $output");
   }
@@ -92,7 +97,8 @@ class InstallCommand extends Command {
    * @param  string  $name
    * @return string
    */
-  protected function writeModel($name) {
+  protected function writeModel($name)
+  {
       $output = pathinfo($this->modeler->create($name, $this->getModelsPath()), PATHINFO_FILENAME);
       $this->line("      <fg=green;options=bold>create</fg=green;options=bold>  $output");
   }
@@ -102,7 +108,8 @@ class InstallCommand extends Command {
    *
    * @return string
    */
-  protected function getMigrationsPath() {
+  protected function getMigrationsPath()
+  {
       return $this->laravel->databasePath();
   }
 
@@ -111,8 +118,8 @@ class InstallCommand extends Command {
    *
    * @return string
    */
-  protected function getModelsPath() {
+  protected function getModelsPath()
+  {
       return $this->laravel->basePath();
   }
-
 }

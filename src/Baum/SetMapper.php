@@ -8,10 +8,10 @@ use Illuminate\Support\Contracts\ArrayableInterface;
 class SetMapper
 {
     /**
-    * Node instance for reference.
-    *
-    * @var \Baum\Node
-    */
+     * Node instance for reference.
+     *
+     * @var \Baum\Node
+     */
     protected $node = null;
 
     /**
@@ -116,7 +116,7 @@ class SetMapper
                 return false;
             }
 
-            if (!$node->isRoot()) {
+            if (! $node->isRoot()) {
                 $node->makeLastChildOf($node->parent);
             }
 
@@ -128,7 +128,7 @@ class SetMapper
                 if (count($children) > 0) {
                     $result = $this->mapTreeRecursive($children, $node->getKey(), $affectedKeys);
 
-                    if (!$result) {
+                    if (! $result) {
                         return false;
                     }
                 }
@@ -141,12 +141,14 @@ class SetMapper
     protected function getSearchAttributes($attributes)
     {
         $searchable = [$this->node->getKeyName()];
+
         return array_only($attributes, $searchable);
     }
 
     protected function getDataAttributes($attributes)
     {
         $exceptions = [$this->node->getKeyName(), $this->getChildrenKeyName()];
+
         return array_except($attributes, $exceptions);
     }
 
