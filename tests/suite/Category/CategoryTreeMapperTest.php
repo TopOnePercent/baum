@@ -343,7 +343,6 @@ class CategoryTreeMapperTest extends BaumTestCase
             ['id' => 14, 'name' => 'Child 2.4'],
         ];
 
-
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
         $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
     }

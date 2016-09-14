@@ -150,10 +150,10 @@ class CategoryColumnsTest extends CategoryTestCase
     {
         $this->assertEquals(1, $this->categories('Root 1')->getOthersAtSameDepth()->count());
         $this->assertEquals('Root 2', $this->categories('Root 1')->getOthersAtSameDepth()->first()->name);
-        
+
         $this->assertEquals(2, $this->categories('Child 1')->getOthersAtSameDepth()->count());
         $this->assertEquals(0, $this->categories('Child 2.1')->getOthersAtSameDepth()->count());
-        
+
         $this->assertEquals('Child 2', $this->categories('Child 1')->getOthersAtSameDepth()->get()[0]->name);
         $this->assertEquals('Child 3', $this->categories('Child 1')->getOthersAtSameDepth()->get()[1]->name);
     }
