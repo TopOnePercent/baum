@@ -11,13 +11,14 @@ class Builder extends BaseBuilder
    *
    * @param  string  $column
    * @param  string  $direction
+   *
    * @return \Illuminate\Database\Query\Builder|static
    */
   public function reOrderBy($column, $direction = 'asc')
   {
       $this->orders = null;
 
-      if (! is_null($column)) {
+      if (!is_null($column)) {
           return $this->orderBy($column, $direction);
       }
 
@@ -29,12 +30,13 @@ class Builder extends BaseBuilder
    *
    * @param  string  $function
    * @param  array   $columns
+   *
    * @return mixed
    */
   public function aggregate($function, $columns = ['*'])
   {
       // Postgres doesn't like ORDER BY when there's no GROUP BY clause
-    if (! isset($this->groups)) {
+    if (!isset($this->groups)) {
         $this->reOrderBy(null);
     }
 

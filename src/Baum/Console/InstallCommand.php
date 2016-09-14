@@ -83,6 +83,7 @@ class InstallCommand extends Command
    * Write the migration file to disk.
    *
    * @param  string  $name
+   *
    * @return string
    */
   protected function writeMigration($name)
@@ -95,6 +96,7 @@ class InstallCommand extends Command
    * Write the model file to disk.
    *
    * @param  string  $name
+   *
    * @return string
    */
   protected function writeModel($name)

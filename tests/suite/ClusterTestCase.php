@@ -4,12 +4,12 @@ class ClusterTestCase extends BaumTestCase
 {
     public static function setUpBeforeClass()
     {
-        with(new ClusterMigrator)->up();
+        with(new ClusterMigrator())->up();
     }
 
     public function setUp()
     {
-        with(new ClusterSeeder)->run();
+        with(new ClusterSeeder())->run();
     }
 
     protected function clusters($name, $className = 'Cluster')

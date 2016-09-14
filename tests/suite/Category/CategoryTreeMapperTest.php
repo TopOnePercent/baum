@@ -6,7 +6,7 @@ class CategoryTreeMapperTest extends BaumTestCase
 {
     public function setUp()
     {
-        with(new CategoryMigrator)->up();
+        with(new CategoryMigrator())->up();
     }
 
     public function testBuildTree()
@@ -158,7 +158,7 @@ class CategoryTreeMapperTest extends BaumTestCase
 
     public function testMakeTree()
     {
-        with(new CategorySeeder)->run();
+        with(new CategorySeeder())->run();
 
         $parent = Category::find(3);
 
@@ -199,7 +199,7 @@ class CategoryTreeMapperTest extends BaumTestCase
 
     public function testMakeTreePrunesAndInserts()
     {
-        with(new CategorySeeder)->run();
+        with(new CategorySeeder())->run();
 
         $parent = Category::find(3);
 
@@ -255,8 +255,8 @@ class CategoryTreeMapperTest extends BaumTestCase
         $this->assertTrue(Category::isValidNestedSet());
 
         $expected = [
-      ['id' => 7 , 'name' => 'Child 2.2'],
-      ['id' => 8 , 'name' => 'Child 2.3'],
+      ['id' => 7, 'name' => 'Child 2.2'],
+      ['id' => 8, 'name' => 'Child 2.3'],
       ['id' => 14, 'name' => 'Child 2.4'],
       ['id' => 15, 'name' => 'Child 2.5', 'children' => [
         ['id' => 16, 'name' => 'Child 2.5.1', 'children' => [
@@ -274,7 +274,7 @@ class CategoryTreeMapperTest extends BaumTestCase
 
     public function testMakeTreeReordesNodes()
     {
-        with(new CategorySeeder)->run();
+        with(new CategorySeeder())->run();
 
         $parent = Category::find(3);
 

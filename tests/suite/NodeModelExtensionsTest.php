@@ -1,13 +1,13 @@
 <?php
 
-use Mockery as m;
 use Illuminate\Database\Capsule\Manager as DB;
+use Mockery as m;
 
 class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 {
     public static function setUpBeforeClass()
     {
-        with(new CategoryMigrator)->up();
+        with(new CategoryMigrator())->up();
     }
 
     public function setUp()
@@ -27,19 +27,19 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
     public function testNewQueryReturnsEloquentBuilderWithExtendedQueryBuilder()
     {
-        $query = with(new Category)->newQuery()->getQuery();
+        $query = with(new Category())->newQuery()->getQuery();
 
         $this->assertInstanceOf('Baum\Extensions\Query\Builder', $query);
     }
 
     public function testNewCollectionReturnsCustomOne()
     {
-        $this->assertInstanceOf('\Baum\Extensions\Eloquent\Collection', with(new Category)->newCollection());
+        $this->assertInstanceOf('\Baum\Extensions\Eloquent\Collection', with(new Category())->newCollection());
     }
 
     public function testGetObservableEventsIncludesMovingEvents()
     {
-        $events = with(new Category)->getObservableEvents();
+        $events = with(new Category())->getObservableEvents();
 
         $this->assertContains('moving', $events);
         $this->assertContains('moved', $events);
@@ -47,8 +47,8 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
     public function testAreSoftDeletesEnabled()
     {
-        $this->assertFalse(with(new Category)->areSoftDeletesEnabled());
-        $this->assertTrue(with(new SoftCategory)->areSoftDeletesEnabled());
+        $this->assertFalse(with(new Category())->areSoftDeletesEnabled());
+        $this->assertTrue(with(new SoftCategory())->areSoftDeletesEnabled());
     }
 
     public function testSoftDeletesEnabledStatic()
@@ -65,7 +65,7 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
         $closure = function () {
         };
-        $events->shouldReceive('listen')->once()->with('eloquent.moving: '.get_class(new Category), $closure, 0);
+        $events->shouldReceive('listen')->once()->with('eloquent.moving: '.get_class(new Category()), $closure, 0);
         Category::moving($closure);
 
         Category::unsetEventDispatcher();
@@ -81,7 +81,7 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
         $closure = function () {
         };
-        $events->shouldReceive('listen')->once()->with('eloquent.moved: '.get_class(new Category), $closure, 0);
+        $events->shouldReceive('listen')->once()->with('eloquent.moved: '.get_class(new Category()), $closure, 0);
         Category::moved($closure);
 
         Category::unsetEventDispatcher();
@@ -91,7 +91,7 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
     public function testReloadResetsChangesOnFreshNodes()
     {
-        $new = new Category;
+        $new = new Category();
 
         $new->name = 'Some new category';
         $new->reload();
@@ -143,7 +143,7 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
     public function testNewNestedSetQueryUsesInternalBuilder()
     {
-        $category = new Category;
+        $category = new Category();
         $builder = $category->newNestedSetQuery();
         $query = $builder->getQuery();
 
@@ -152,7 +152,7 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
     public function testNewNestedSetQueryIsOrderedByDefault()
     {
-        $category = new Category;
+        $category = new Category();
         $builder = $category->newNestedSetQuery();
         $query = $builder->getQuery();
 
@@ -165,7 +165,7 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
     public function testNewNestedSetQueryIsOrderedByCustom()
     {
-        $category = new OrderedCategory;
+        $category = new OrderedCategory();
         $builder = $category->newNestedSetQuery();
         $query = $builder->getQuery();
 
@@ -178,18 +178,18 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
     public function testNewNestedSetQueryIncludesScopedColumns()
     {
-        $category = new Category;
+        $category = new Category();
         $simpleQuery = $category->newNestedSetQuery()->getQuery();
         $this->assertNull($simpleQuery->wheres);
 
-        $scopedCategory = new ScopedCategory;
+        $scopedCategory = new ScopedCategory();
         $scopedQuery = $scopedCategory->newNestedSetQuery()->getQuery();
         $this->assertCount(1, $scopedQuery->wheres);
         $this->assertEquals($scopedCategory->getScopedColumns(), array_map(function ($elem) {
             return $elem['column'];
         }, $scopedQuery->wheres));
 
-        $multiScopedCategory = new MultiScopedCategory;
+        $multiScopedCategory = new MultiScopedCategory();
         $multiScopedQuery = $multiScopedCategory->newNestedSetQuery()->getQuery();
         $this->assertCount(2, $multiScopedQuery->wheres);
         $this->assertEquals($multiScopedCategory->getScopedColumns(), array_map(function ($elem) {

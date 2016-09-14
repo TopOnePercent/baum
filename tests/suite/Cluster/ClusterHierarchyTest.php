@@ -85,7 +85,7 @@ class ClusterHierarchyTest extends ClusterTestCase
 
     public function testGetRootEqualsSelfIfUnpersisted()
     {
-        $cluster = new Cluster;
+        $cluster = new Cluster();
 
         $this->assertEquals($cluster->getRoot(), $cluster);
     }
@@ -94,7 +94,7 @@ class ClusterHierarchyTest extends ClusterTestCase
     {
         $parent = Cluster::roots()->first();
 
-        $child = new Cluster;
+        $child = new Cluster();
         $child->setAttribute($child->getParentColumnName(), $parent->getKey());
 
         $this->assertEquals($child->getRoot(), $parent);
@@ -161,7 +161,7 @@ class ClusterHierarchyTest extends ClusterTestCase
         $this->assertFalse($this->clusters('Root 1')->isLeaf());
         $this->assertFalse($this->clusters('Child 2')->isLeaf());
 
-        $new = new Cluster;
+        $new = new Cluster();
         $this->assertFalse($new->isLeaf());
     }
 
@@ -175,7 +175,7 @@ class ClusterHierarchyTest extends ClusterTestCase
         $this->assertFalse($this->clusters('Root 1')->isTrunk());
         $this->assertTrue($this->clusters('Child 2')->isTrunk());
 
-        $new = new Cluster;
+        $new = new Cluster();
         $this->assertFalse($new->isTrunk());
     }
 
@@ -208,7 +208,7 @@ class ClusterHierarchyTest extends ClusterTestCase
 
     public function testLimitDepthScope()
     {
-        with(new ClusterSeeder)->nestUptoAt($this->clusters('Child 2.1'), 10);
+        with(new ClusterSeeder())->nestUptoAt($this->clusters('Child 2.1'), 10);
 
         $node = $this->clusters('Child 2');
 
@@ -281,7 +281,7 @@ class ClusterHierarchyTest extends ClusterTestCase
 
     public function testGetDescendantsAndSelfWithLimit()
     {
-        with(new ClusterSeeder)->nestUptoAt($this->clusters('Child 2.1'), 3);
+        with(new ClusterSeeder())->nestUptoAt($this->clusters('Child 2.1'), 3);
 
         $parent = $this->clusters('Root 1');
 
@@ -351,7 +351,7 @@ class ClusterHierarchyTest extends ClusterTestCase
 
     public function testGetDescendantsWithLimit()
     {
-        with(new ClusterSeeder)->nestUptoAt($this->clusters('Child 2.1'), 3);
+        with(new ClusterSeeder())->nestUptoAt($this->clusters('Child 2.1'), 3);
 
         $parent = $this->clusters('Root 1');
 
@@ -650,28 +650,28 @@ class ClusterHierarchyTest extends ClusterTestCase
 
     // Build expectations (expected trees/subtrees)
     $expectedWholeTree = [
-      'A' =>   ['A.1' => null, 'A.2' => null],
-      'B' =>   [
+      'A' => ['A.1' => null, 'A.2' => null],
+      'B' => [
         'B.1' => null,
-        'B.2' =>  [
+        'B.2' => [
           'B.2.1' => null,
-          'B.2.2' =>   ['B.2.2.1' => null],
+          'B.2.2' => ['B.2.2.1' => null],
           'B.2.3' => null,
         ],
         'B.3' => null,
       ],
-      'C' =>   ['C.1' => null, 'C.2' => null],
+      'C' => ['C.1' => null, 'C.2' => null],
       'D' => null,
     ];
 
         $expectedSubtreeA = ['A' =>   ['A.1' => null, 'A.2' => null]];
 
         $expectedSubtreeB = [
-      'B' =>  [
+      'B' => [
         'B.1' => null,
-        'B.2' =>  [
+        'B.2' => [
           'B.2.1' => null,
-          'B.2.2' =>  ['B.2.2.1' => null],
+          'B.2.2' => ['B.2.2.1' => null],
           'B.2.3' => null,
         ],
         'B.3' => null,
@@ -724,7 +724,7 @@ class ClusterHierarchyTest extends ClusterTestCase
 
     public function testToHierarchyNestsCorrectlyWithOrder()
     {
-        with(new OrderedClusterSeeder)->run();
+        with(new OrderedClusterSeeder())->run();
 
         $expectedWhole = [
       'Root A' => null,

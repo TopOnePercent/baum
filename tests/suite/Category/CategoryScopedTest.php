@@ -4,7 +4,7 @@ class CategoryScopedTest extends CategoryTestCase
 {
     public function setUp()
     {
-        with(new MultiScopedCategorySeeder)->run();
+        with(new MultiScopedCategorySeeder())->run();
     }
 
     public function testInSameScope()
@@ -126,7 +126,7 @@ class CategoryScopedTest extends CategoryTestCase
 
     public function testSimpleMovements()
     {
-        with(new ScopedCategorySeeder)->run();
+        with(new ScopedCategorySeeder())->run();
 
         $this->assertTrue(ScopedCategory::isValidNestedSet());
 
@@ -143,7 +143,7 @@ class CategoryScopedTest extends CategoryTestCase
 
     public function testSimpleSubtreeMovements()
     {
-        with(new ScopedCategorySeeder)->run();
+        with(new ScopedCategorySeeder())->run();
 
         $this->assertTrue(ScopedCategory::isValidNestedSet());
 
@@ -163,7 +163,7 @@ class CategoryScopedTest extends CategoryTestCase
 
     public function testFullSubtreeMovements()
     {
-        with(new ScopedCategorySeeder)->run();
+        with(new ScopedCategorySeeder())->run();
 
         $this->assertTrue(ScopedCategory::isValidNestedSet());
 
@@ -240,12 +240,12 @@ class CategoryScopedTest extends CategoryTestCase
 
     public function testToHierarchyNestsCorrectlyWithScopedOrder()
     {
-        with(new OrderedScopedCategorySeeder)->run();
+        with(new OrderedScopedCategorySeeder())->run();
 
         $expectedWhole1 = [
       'Root 1' => [
           'Child 1' => null,
-          'Child 2' =>  [
+          'Child 2' => [
               'Child 2.1' => null,
           ],
           'Child 3' => null,
@@ -255,7 +255,7 @@ class CategoryScopedTest extends CategoryTestCase
         $expectedWhole2 = [
       'Root 2' => [
           'Child 4' => null,
-          'Child 5' =>  [
+          'Child 5' => [
               'Child 5.1' => null,
           ],
           'Child 6' => null,

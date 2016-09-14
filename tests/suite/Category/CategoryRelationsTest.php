@@ -4,21 +4,21 @@ class CategoryRelationsTest extends CategoryTestCase
 {
     public function testParentRelationIsABelongsTo()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Relations\BelongsTo', $category->parent());
     }
 
     public function testParentRelationIsSelfReferential()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertInstanceOf('Baum\Node', $category->parent()->getRelated());
     }
 
     public function testParentRelationRefersToCorrectField()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertEquals($category->getParentColumnName(), $category->parent()->getForeignKey());
 
@@ -34,21 +34,21 @@ class CategoryRelationsTest extends CategoryTestCase
 
     public function testChildrenRelationIsAHasMany()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Relations\HasMany', $category->children());
     }
 
     public function testChildrenRelationIsSelfReferential()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertInstanceOf('Baum\Node', $category->children()->getRelated());
     }
 
     public function testChildrenRelationReferesToCorrectField()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertEquals($category->getParentColumnName(), $category->children()->getPlainForeignKey());
 
@@ -72,7 +72,7 @@ class CategoryRelationsTest extends CategoryTestCase
 
     public function testChildrenRelationUsesDefaultOrdering()
     {
-        $category = new Category;
+        $category = new Category();
 
         $query = $category->children()->getQuery()->getQuery();
 
@@ -82,7 +82,7 @@ class CategoryRelationsTest extends CategoryTestCase
 
     public function testChildrenRelationUsesCustomOrdering()
     {
-        $category = new OrderedCategory;
+        $category = new OrderedCategory();
 
         $query = $category->children()->getQuery()->getQuery();
 
@@ -109,7 +109,7 @@ class CategoryRelationsTest extends CategoryTestCase
 
     public function testChildrenRelationObeysCustomOrdering()
     {
-        with(new OrderedCategorySeeder)->run();
+        with(new OrderedCategorySeeder())->run();
 
         $children = OrderedCategory::find(1)->children()->get()->all();
 
