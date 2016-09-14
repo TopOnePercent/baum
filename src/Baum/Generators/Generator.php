@@ -17,6 +17,7 @@ abstract class Generator
    * Create a new MigrationGenerator instance.
    *
    * @param \Illuminate\Filesystem\Filesysmte $files
+   *
    * @return void
    */
   public function __construct(Filesystem $files)
@@ -48,6 +49,7 @@ abstract class Generator
    * Get the given stub by name.
    *
    * @param  string  $table
+   *
    * @return void
    */
   protected function getStub($name)
@@ -64,6 +66,7 @@ abstract class Generator
    *
    * @param string $stub
    * @param string $replacements
+   *
    * @return string
    */
   protected function parseStub($stub, $replacements = [])
@@ -82,6 +85,7 @@ abstract class Generator
    * Inflect to a class name.
    *
    * @param string $input
+   *
    * @return string
    */
   protected function classify($input)
@@ -93,6 +97,7 @@ abstract class Generator
    * Inflect to table name.
    *
    * @param string $input
+   *
    * @return string
    */
   protected function tableize($input)

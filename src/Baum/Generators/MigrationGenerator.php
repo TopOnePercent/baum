@@ -9,6 +9,7 @@ class MigrationGenerator extends Generator
    *
    * @param  string  $name
    * @param  string  $path
+   *
    * @return string
    */
   public function create($name, $path)
@@ -29,6 +30,7 @@ class MigrationGenerator extends Generator
    * Get the migration name.
    *
    * @param string $name
+   *
    * @return string
    */
   protected function getMigrationName($name)
@@ -51,6 +53,7 @@ class MigrationGenerator extends Generator
    *
    * @param  string  $name
    * @param  string  $path
+   *
    * @return string
    */
   protected function getPath($name, $path)

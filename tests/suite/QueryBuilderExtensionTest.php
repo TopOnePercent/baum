@@ -1,7 +1,7 @@
 <?php
 
-use Mockery as m;
 use Baum\Extensions\Query\Builder as QueryBuilder;
+use Mockery as m;
 
 class QueryBuilderExtensionTest extends PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class QueryBuilderExtensionTest extends PHPUnit_Framework_TestCase
 
     protected function getBuilder()
     {
-        $grammar = new Illuminate\Database\Query\Grammars\Grammar;
+        $grammar = new Illuminate\Database\Query\Grammars\Grammar();
         $processor = m::mock('Illuminate\Database\Query\Processors\Processor');
 
         return new QueryBuilder(m::mock('Illuminate\Database\ConnectionInterface'), $grammar, $processor);

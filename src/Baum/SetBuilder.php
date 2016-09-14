@@ -22,6 +22,7 @@ class SetBuilder
    * Create a new \Baum\SetBuilder class instance.
    *
    * @param   \Baum\Node      $node
+   *
    * @return  void
    */
   public function __construct($node)
@@ -90,6 +91,7 @@ class SetBuilder
    * Return all children for the specified node.
    *
    * @param   Baum\Node $node
+   *
    * @return  Illuminate\Database\Eloquent\Collection
    */
   public function children($node)
@@ -115,6 +117,7 @@ class SetBuilder
    * Return an array of the scoped attributes of the supplied node.
    *
    * @param   Baum\Node $node
+   *
    * @return  array
    */
   protected function scopedAttributes($node)
@@ -137,6 +140,7 @@ class SetBuilder
    * computing when a scope is defined (acsts as an scope identifier).
    *
    * @param   Baum\Node $node
+   *
    * @return  string
    */
   protected function scopedKey($node)
@@ -157,6 +161,7 @@ class SetBuilder
    * Return next index bound value for the given key (current scope identifier).
    *
    * @param   string  $key
+   *
    * @return  int
    */
   protected function getNextBound($key)

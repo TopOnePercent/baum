@@ -64,6 +64,7 @@ class Move
    * @param   \Baum\Node      $node
    * @param   \Baum\Node|int  $target
    * @param   string          $position
+   *
    * @return  void
    */
   public function __construct($node, $target, $position)
@@ -81,6 +82,7 @@ class Move
    * @param   \Baum\Node      $node
    * @param   \Baum\Node|int  $target
    * @param   string          $position
+   *
    * @return \Baum\Node
    */
   public static function to($node, $target, $position)
@@ -189,6 +191,7 @@ class Move
    * to find the node in the database.
    *
    * @param   \Baum\node|int
+   *
    * @return  \Baum\Node
    */
   protected function resolveNode($node)
@@ -207,7 +210,7 @@ class Move
    */
   protected function guardAgainstImpossibleMove()
   {
-      if (! $this->node->exists) {
+      if (!$this->node->exists) {
           throw new MoveNotPossibleException('A new node cannot be moved.');
       }
 
@@ -215,7 +218,7 @@ class Move
           throw new MoveNotPossibleException("Position should be one of ['child', 'left', 'right'] but is {$this->position}.");
       }
 
-      if (! $this->promotingToRoot()) {
+      if (!$this->promotingToRoot()) {
           if (is_null($this->target)) {
               if ($this->position === 'left' || $this->position === 'right') {
                   throw new MoveNotPossibleException("Could not resolve target node. This node cannot move any further to the {$this->position}.");
@@ -232,7 +235,7 @@ class Move
               throw new MoveNotPossibleException('A node cannot be moved to a descendant of itself (inside moved tree).');
           }
 
-          if (! $this->node->inSameScope($this->target)) {
+          if (!$this->node->inSameScope($this->target)) {
               throw new MoveNotPossibleException('A node cannot be moved to a different scope.');
           }
       }
@@ -245,7 +248,7 @@ class Move
    */
   protected function bound1()
   {
-      if (! is_null($this->_bound1)) {
+      if (!is_null($this->_bound1)) {
           return $this->_bound1;
       }
 
@@ -280,7 +283,7 @@ class Move
    */
   protected function bound2()
   {
-      if (! is_null($this->_bound2)) {
+      if (!is_null($this->_bound2)) {
           return $this->_bound2;
       }
 
@@ -296,16 +299,16 @@ class Move
    */
   protected function boundaries()
   {
-      if (! is_null($this->_boundaries)) {
+      if (!is_null($this->_boundaries)) {
           return $this->_boundaries;
       }
 
     // we have defined the boundaries of two non-overlapping intervals,
     // so sorting puts both the intervals and their boundaries in order
     $this->_boundaries = [
-      $this->node->getLeft()  ,
-      $this->node->getRight() ,
-      $this->bound1()         ,
+      $this->node->getLeft(),
+      $this->node->getRight(),
+      $this->bound1(),
       $this->bound2(),
     ];
       sort($this->_boundaries);
@@ -339,7 +342,7 @@ class Move
    */
   protected function hasChange()
   {
-      return ! ($this->bound1() == $this->node->getRight() || $this->bound1() == $this->node->getLeft());
+      return !($this->bound1() == $this->node->getRight() || $this->bound1() == $this->node->getLeft());
   }
 
   /**
@@ -349,7 +352,7 @@ class Move
    */
   protected function promotingToRoot()
   {
-      return ($this->position == 'root');
+      return $this->position == 'root';
   }
 
   /**
@@ -366,6 +369,7 @@ class Move
    * Set the event dispatcher instance.
    *
    * @param  \Illuminate\Events\Dispatcher
+   *
    * @return void
    */
   public static function setEventDispatcher(Dispatcher $dispatcher = null)
@@ -378,11 +382,12 @@ class Move
    *
    * @param  string $event
    * @param  bool   $halt
+   *
    * @return mixed
    */
   protected function fireMoveEvent($event, $halt = true)
   {
-      if (! isset(static::$dispatcher)) {
+      if (!isset(static::$dispatcher)) {
           return true;
       }
 
@@ -399,6 +404,7 @@ class Move
    * Quotes an identifier for being used in a database query.
    *
    * @param mixed $value
+   *
    * @return string
    */
   protected function quoteIdentifier($value)
@@ -419,6 +425,7 @@ class Move
    *
    * @param   int   $lft
    * @param   int   $rgt
+   *
    * @return  void
    */
   protected function applyLockBetween($lft, $rgt)

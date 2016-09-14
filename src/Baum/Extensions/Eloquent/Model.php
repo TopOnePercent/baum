@@ -2,19 +2,19 @@
 
 namespace Baum\Extensions\Eloquent;
 
+use Baum\Extensions\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Baum\Extensions\Query\Builder as QueryBuilder;
 
 abstract class Model extends BaseModel
 {
     /**
    * Reloads the model from the database.
    *
-   * @return \Baum\Node
-   *
    * @throws ModelNotFoundException
+   *
+   * @return \Baum\Node
    */
   public function reload()
   {
@@ -22,7 +22,7 @@ abstract class Model extends BaseModel
           $fresh = $this->getFreshInstance();
 
           if (is_null($fresh)) {
-              throw with(new ModelNotFoundException)->setModel(get_called_class());
+              throw with(new ModelNotFoundException())->setModel(get_called_class());
           }
 
           $this->setRawAttributes($fresh->getAttributes(), true);
@@ -52,6 +52,7 @@ abstract class Model extends BaseModel
    * Register a moving model event with the dispatcher.
    *
    * @param  Closure|string  $callback
+   *
    * @return void
    */
   public static function moving($callback, $priority = 0)
@@ -63,6 +64,7 @@ abstract class Model extends BaseModel
    * Register a moved model event with the dispatcher.
    *
    * @param  Closure|string  $callback
+   *
    * @return void
    */
   public static function moved($callback, $priority = 0)
@@ -115,7 +117,7 @@ abstract class Model extends BaseModel
 
     // Now that we're sure that the calling class has some kind of global scope
     // we check for the SoftDeletingScope existance
-    return static::hasGlobalScope(new SoftDeletingScope);
+    return static::hasGlobalScope(new SoftDeletingScope());
   }
 
   /**
@@ -126,6 +128,6 @@ abstract class Model extends BaseModel
    */
   public static function softDeletesEnabled()
   {
-      return with(new static)->areSoftDeletesEnabled();
+      return with(new static())->areSoftDeletesEnabled();
   }
 }

@@ -4,14 +4,14 @@ class CategoryColumnsTest extends CategoryTestCase
 {
     public function testGetParentColumnName()
     {
-        $category = new Category;
+        $category = new Category();
 
-        $this->assertEquals(with(new Category)->getParentColumnName(), 'parent_id');
+        $this->assertEquals(with(new Category())->getParentColumnName(), 'parent_id');
     }
 
     public function testGetQualifiedParentColumnName()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertEquals($category->getQualifiedParentColumnName(), 'categories.parent_id');
     }
@@ -25,14 +25,14 @@ class CategoryColumnsTest extends CategoryTestCase
 
     public function testGetLeftColumnName()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertEquals($category->getLeftColumnName(), 'lft');
     }
 
     public function testGetQualifiedLeftColumnName()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertEquals($category->getQualifiedLeftColumnName(), 'categories.lft');
     }
@@ -46,14 +46,14 @@ class CategoryColumnsTest extends CategoryTestCase
 
     public function testGetRightColumnName()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertEquals($category->getRightColumnName(), 'rgt');
     }
 
     public function testGetQualifiedRightColumnName()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertEquals($category->getQualifiedRightColumnName(), 'categories.rgt');
     }
@@ -67,14 +67,14 @@ class CategoryColumnsTest extends CategoryTestCase
 
     public function testGetOrderColumName()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertEquals($category->getOrderColumnName(), $category->getLeftColumnName());
     }
 
     public function testGetQualifiedOrderColumnName()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertEquals($category->getQualifiedOrderColumnName(), $category->getQualifiedLeftColumnName());
     }
@@ -88,14 +88,14 @@ class CategoryColumnsTest extends CategoryTestCase
 
     public function testGetOrderColumnNameNonDefault()
     {
-        $category = new OrderedCategory;
+        $category = new OrderedCategory();
 
         $this->assertEquals($category->getOrderColumnName(), 'name');
     }
 
     public function testGetQualifiedOrderColumnNameNonDefault()
     {
-        $category = new OrderedCategory;
+        $category = new OrderedCategory();
 
         $this->assertEquals($category->getQualifiedOrderColumnName(), 'categories.name');
     }
@@ -109,37 +109,37 @@ class CategoryColumnsTest extends CategoryTestCase
 
     public function testGetScopedColumns()
     {
-        $category = new Category;
+        $category = new Category();
         $this->assertEquals($category->getScopedColumns(), []);
 
-        $category = new ScopedCategory;
+        $category = new ScopedCategory();
         $this->assertEquals($category->getScopedColumns(), ['company_id']);
 
-        $category = new MultiScopedCategory;
+        $category = new MultiScopedCategory();
         $this->assertEquals($category->getScopedColumns(), ['company_id', 'language']);
     }
 
     public function testGetQualifiedScopedColumns()
     {
-        $category = new Category;
+        $category = new Category();
         $this->assertEquals($category->getQualifiedScopedColumns(), []);
 
-        $category = new ScopedCategory;
+        $category = new ScopedCategory();
         $this->assertEquals($category->getQualifiedScopedColumns(), ['categories.company_id']);
 
-        $category = new MultiScopedCategory;
+        $category = new MultiScopedCategory();
         $this->assertEquals($category->getQualifiedScopedColumns(), ['categories.company_id', 'categories.language']);
     }
 
     public function testIsScoped()
     {
-        $category = new Category;
+        $category = new Category();
         $this->assertFalse($category->isScoped());
 
-        $category = new ScopedCategory;
+        $category = new ScopedCategory();
         $this->assertTrue($category->isScoped());
 
-        $category = new MultiScopedCategory;
+        $category = new MultiScopedCategory();
         $this->assertTrue($category->isScoped());
 
         $category = new OrderedCategory();

@@ -93,7 +93,7 @@ class CategoryHierarchyTest extends CategoryTestCase
 
     public function testGetRootEqualsSelfIfUnpersisted()
     {
-        $category = new Category;
+        $category = new Category();
 
         $this->assertEquals($category->getRoot(), $category);
     }
@@ -102,7 +102,7 @@ class CategoryHierarchyTest extends CategoryTestCase
     {
         $parent = Category::roots()->first();
 
-        $child = new Category;
+        $child = new Category();
         $child->setAttribute($child->getParentColumnName(), $parent->getKey());
 
         $this->assertEquals($child->getRoot(), $parent);
@@ -165,7 +165,7 @@ class CategoryHierarchyTest extends CategoryTestCase
         $this->assertFalse($this->categories('Root 1')->isLeaf());
         $this->assertFalse($this->categories('Child 2')->isLeaf());
 
-        $new = new Category;
+        $new = new Category();
         $this->assertFalse($new->isLeaf());
     }
 
@@ -179,7 +179,7 @@ class CategoryHierarchyTest extends CategoryTestCase
         $this->assertFalse($this->categories('Root 1')->isTrunk());
         $this->assertTrue($this->categories('Child 2')->isTrunk());
 
-        $new = new Category;
+        $new = new Category();
         $this->assertFalse($new->isTrunk());
     }
 
@@ -212,7 +212,7 @@ class CategoryHierarchyTest extends CategoryTestCase
 
     public function testLimitDepthScope()
     {
-        with(new CategorySeeder)->nestUptoAt($this->categories('Child 2.1'), 10);
+        with(new CategorySeeder())->nestUptoAt($this->categories('Child 2.1'), 10);
 
         $node = $this->categories('Child 2');
 
@@ -283,7 +283,7 @@ class CategoryHierarchyTest extends CategoryTestCase
 
     public function testGetDescendantsAndSelfWithLimit()
     {
-        with(new CategorySeeder)->nestUptoAt($this->categories('Child 2.1'), 3);
+        with(new CategorySeeder())->nestUptoAt($this->categories('Child 2.1'), 3);
 
         $parent = $this->categories('Root 1');
 
@@ -353,7 +353,7 @@ class CategoryHierarchyTest extends CategoryTestCase
 
     public function testGetDescendantsWithLimit()
     {
-        with(new CategorySeeder)->nestUptoAt($this->categories('Child 2.1'), 3);
+        with(new CategorySeeder())->nestUptoAt($this->categories('Child 2.1'), 3);
 
         $parent = $this->categories('Root 1');
 
@@ -652,28 +652,28 @@ class CategoryHierarchyTest extends CategoryTestCase
 
     // Build expectations (expected trees/subtrees)
     $expectedWholeTree = [
-      'A' =>   ['A.1' => null, 'A.2' => null],
-      'B' =>   [
+      'A' => ['A.1' => null, 'A.2' => null],
+      'B' => [
         'B.1' => null,
-        'B.2' =>  [
+        'B.2' => [
           'B.2.1' => null,
-          'B.2.2' =>   ['B.2.2.1' => null],
+          'B.2.2' => ['B.2.2.1' => null],
           'B.2.3' => null,
         ],
         'B.3' => null,
       ],
-      'C' =>   ['C.1' => null, 'C.2' => null],
+      'C' => ['C.1' => null, 'C.2' => null],
       'D' => null,
     ];
 
         $expectedSubtreeA = ['A' =>   ['A.1' => null, 'A.2' => null]];
 
         $expectedSubtreeB = [
-      'B' =>  [
+      'B' => [
         'B.1' => null,
-        'B.2' =>  [
+        'B.2' => [
           'B.2.1' => null,
-          'B.2.2' =>  ['B.2.2.1' => null],
+          'B.2.2' => ['B.2.2.1' => null],
           'B.2.3' => null,
         ],
         'B.3' => null,
@@ -726,7 +726,7 @@ class CategoryHierarchyTest extends CategoryTestCase
 
     public function testToHierarchyNestsCorrectlyWithOrder()
     {
-        with(new OrderedCategorySeeder)->run();
+        with(new OrderedCategorySeeder())->run();
 
         $expectedWhole = [
       'Root A' => null,

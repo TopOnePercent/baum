@@ -10,9 +10,9 @@ require __DIR__.'/vendor/autoload.php';
  */
 $config = require __DIR__.'/tests/config/database.php';
 
-$capsule = new Illuminate\Database\Capsule\Manager;
+$capsule = new Illuminate\Database\Capsule\Manager();
 $capsule->addConnection($config);
-$capsule->setEventDispatcher(new Illuminate\Events\Dispatcher(new Illuminate\Container\Container));
+$capsule->setEventDispatcher(new Illuminate\Events\Dispatcher(new Illuminate\Container\Container()));
 $capsule->bootEloquent();
 $capsule->setAsGlobal();
 

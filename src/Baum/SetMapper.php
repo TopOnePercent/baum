@@ -24,8 +24,9 @@ class SetMapper
     /**
      * Create a new \Baum\SetBuilder class instance.
      *
-     * @param   \Baum\Node      $node
-     * @return  void
+     * @param \Baum\Node $node
+     *
+     * @return void
      */
     public function __construct($node, $childrenKeyName = 'children')
     {
@@ -38,7 +39,8 @@ class SetMapper
      * Maps a tree structure into the database. Unguards & wraps in transaction.
      *
      * @param   array|\Illuminate\Support\Contracts\ArrayableInterface
-     * @return  bool
+     *
+     * @return bool
      */
     public function map($nodeList)
     {
@@ -58,7 +60,8 @@ class SetMapper
      * inside a transaction.
      *
      * @param   array|\Illuminate\Support\Contracts\ArrayableInterface
-     * @return  bool
+     *
+     * @return bool
      */
     public function mapTree($nodeList)
     {
@@ -88,9 +91,10 @@ class SetMapper
     /**
      * Maps a tree structure into the database.
      *
-     * @param   array   $tree
-     * @param   mixed   $parent
-     * @return  bool
+     * @param array $tree
+     * @param mixed $parent
+     *
+     * @return bool
      */
     protected function mapTreeRecursive(array $tree, $parentKey = null, &$affectedKeys = [])
     {
@@ -104,7 +108,7 @@ class SetMapper
             $node = $this->firstOrNew($this->getSearchAttributes($attributes));
 
             $data = $this->getDataAttributes($attributes);
-            if (! is_null($parentKey)) {
+            if (!is_null($parentKey)) {
                 $data[$node->getParentColumnName()] = $parentKey;
             }
 
@@ -112,11 +116,11 @@ class SetMapper
 
             $result = $node->save();
 
-            if (! $result) {
+            if (!$result) {
                 return false;
             }
 
-            if (! $node->isRoot()) {
+            if (!$node->isRoot()) {
                 $node->makeLastChildOf($node->parent);
             }
 
@@ -128,7 +132,7 @@ class SetMapper
                 if (count($children) > 0) {
                     $result = $this->mapTreeRecursive($children, $node->getKey(), $affectedKeys);
 
-                    if (! $result) {
+                    if (!$result) {
                         return false;
                     }
                 }
@@ -157,7 +161,7 @@ class SetMapper
         $className = get_class($this->node);
 
         if (count($attributes) === 0) {
-            return new $className;
+            return new $className();
         }
 
         return forward_static_call([$className, 'firstOrNew'], $attributes);

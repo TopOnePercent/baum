@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Baum\Node;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cluster extends Node
 {

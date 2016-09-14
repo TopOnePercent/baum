@@ -4,12 +4,12 @@ class CategoryTestCase extends BaumTestCase
 {
     public static function setUpBeforeClass()
     {
-        with(new CategoryMigrator)->up();
+        with(new CategoryMigrator())->up();
     }
 
     public function setUp()
     {
-        with(new CategorySeeder)->run();
+        with(new CategorySeeder())->run();
     }
 
     protected function categories($name, $className = 'Category')

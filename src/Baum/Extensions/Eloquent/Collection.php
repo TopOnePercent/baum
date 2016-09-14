@@ -28,7 +28,7 @@ class Collection extends BaseCollection
     protected function hierarchical($result)
     {
         foreach ($result as $key => $node) {
-            $node->setRelation('children', new BaseCollection);
+            $node->setRelation('children', new BaseCollection());
         }
 
         $nestedKeys = [];
@@ -36,7 +36,7 @@ class Collection extends BaseCollection
         foreach ($result as $key => $node) {
             $parentKey = $node->getParentId();
 
-            if (! is_null($parentKey) && array_key_exists($parentKey, $result)) {
+            if (!is_null($parentKey) && array_key_exists($parentKey, $result)) {
                 $result[$parentKey]->children[] = $node;
                 $nestedKeys[] = $node->getKey();
             }

@@ -307,7 +307,7 @@ abstract class Node extends Model
      */
     public function getQualifiedScopedColumns()
     {
-        if (! $this->isScoped()) {
+        if (!$this->isScoped()) {
             return $this->getScopedColumns();
         }
 
@@ -326,7 +326,7 @@ abstract class Node extends Model
      */
     public function isScoped()
     {
-        return ! ! (count($this->getScopedColumns()) > 0);
+        return (bool) (count($this->getScopedColumns()) > 0);
     }
 
     /**
@@ -372,6 +372,7 @@ abstract class Node extends Model
      * Overload new Collection.
      *
      * @param array $models
+     *
      * @return \Baum\Extensions\Eloquent\Collection
      */
     public function newCollection(array $models = [])
@@ -382,12 +383,13 @@ abstract class Node extends Model
     /**
      * Get all of the nodes from the database.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public static function all($columns = ['*'])
     {
-        $instance = new static;
+        $instance = new static();
 
         return $instance->newQuery()
                         ->orderBy($instance->getQualifiedOrderColumnName())
@@ -411,7 +413,7 @@ abstract class Node extends Model
      */
     public static function roots()
     {
-        $instance = new static;
+        $instance = new static();
 
         return $instance->newQuery()
                         ->whereNull($instance->getParentColumnName())
@@ -426,7 +428,7 @@ abstract class Node extends Model
      */
     public static function allLeaves()
     {
-        $instance = new static;
+        $instance = new static();
 
         $grammar = $instance->getConnection()->getQueryGrammar();
 
@@ -446,7 +448,7 @@ abstract class Node extends Model
      */
     public static function allTrunks()
     {
-        $instance = new static;
+        $instance = new static();
 
         $grammar = $instance->getConnection()->getQueryGrammar();
 
@@ -466,7 +468,7 @@ abstract class Node extends Model
      */
     public static function isValidNestedSet()
     {
-        $validator = new SetValidator(new static);
+        $validator = new SetValidator(new static());
 
         return $validator->passes();
     }
@@ -478,7 +480,7 @@ abstract class Node extends Model
      */
     public static function rebuild()
     {
-        $builder = new SetBuilder(new static);
+        $builder = new SetBuilder(new static());
         $builder->rebuild();
     }
 
@@ -486,11 +488,12 @@ abstract class Node extends Model
      * Maps the provided tree structure into the database.
      *
      * @param   array|\Illuminate\Support\Contracts\ArrayableInterface
-     * @return  bool
+     *
+     * @return bool
      */
     public static function buildTree($nodeList)
     {
-        return with(new static)->makeTree($nodeList);
+        return with(new static())->makeTree($nodeList);
     }
 
     /**
@@ -530,7 +533,8 @@ abstract class Node extends Model
      *
      * @param   query   \Illuminate\Database\Query\Builder
      * @param   limit   integer
-     * @return  \Illuminate\Database\Query\Builder
+     *
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeLimitDepth($query, $limit)
     {
@@ -568,7 +572,7 @@ abstract class Node extends Model
      */
     public function isTrunk()
     {
-        return ! $this->isRoot() && ! $this->isLeaf();
+        return !$this->isRoot() && !$this->isLeaf();
     }
 
     /**
@@ -578,7 +582,7 @@ abstract class Node extends Model
      */
     public function isChild()
     {
-        return ! $this->isRoot();
+        return !$this->isRoot();
     }
 
     /**
@@ -593,7 +597,7 @@ abstract class Node extends Model
         } else {
             $parentId = $this->getParentId();
 
-            if (! is_null($parentId) && $currentParent = static::find($parentId)) {
+            if (!is_null($parentId) && $currentParent = static::find($parentId)) {
                 return $currentParent->getRoot();
             } else {
                 return $this;
@@ -617,7 +621,8 @@ abstract class Node extends Model
     /**
      * Get all the ancestor chain from the database including the current node.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getAncestorsAndSelf($columns = ['*'])
@@ -629,7 +634,8 @@ abstract class Node extends Model
      * Get all the ancestor chain from the database including the current node
      * but without the root node.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getAncestorsAndSelfWithoutRoot($columns = ['*'])
@@ -651,7 +657,8 @@ abstract class Node extends Model
     /**
      * Get all the ancestor chain from the database excluding the current node.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getAncestors($columns = ['*'])
@@ -663,7 +670,8 @@ abstract class Node extends Model
      * Get all the ancestor chain from the database excluding the current node
      * and the root node (from the current node's perspective).
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getAncestorsWithoutRoot($columns = ['*'])
@@ -685,7 +693,8 @@ abstract class Node extends Model
     /**
      * Get all children of the parent, including self.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getSiblingsAndSelf($columns = ['*'])
@@ -706,7 +715,8 @@ abstract class Node extends Model
     /**
      * Return all children of the parent, except self.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getSiblings($columns = ['*'])
@@ -734,7 +744,8 @@ abstract class Node extends Model
     /**
      * Return all of its nested children which do not have children.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getLeaves($columns = ['*'])
@@ -763,7 +774,8 @@ abstract class Node extends Model
     /**
      * Return all of its nested children which are trunks.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getTrunks($columns = ['*'])
@@ -786,7 +798,8 @@ abstract class Node extends Model
     /**
      * Retrieve all nested children an self.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getDescendantsAndSelf($columns = ['*'])
@@ -827,7 +840,8 @@ abstract class Node extends Model
     /**
      * Retrieve all of its children & nested children.
      *
-     * @param  array  $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getDescendants($columns = ['*'])
@@ -857,7 +871,8 @@ abstract class Node extends Model
     /**
      * Retrive all of its "immediate" descendants.
      *
-     * @param array   $columns
+     * @param array $columns
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getImmediateDescendants($columns = ['*'])
@@ -884,60 +899,60 @@ abstract class Node extends Model
      * Returns true if node is a descendant.
      *
      * @param NestedSet
+     *
      * @return bool
      */
     public function isDescendantOf($other)
     {
-        return (
+        return
             $this->getLeft() > $other->getLeft() &&
             $this->getLeft() < $other->getRight() &&
-            $this->inSameScope($other)
-        );
+            $this->inSameScope($other);
     }
 
     /**
      * Returns true if node is self or a descendant.
      *
      * @param NestedSet
+     *
      * @return bool
      */
     public function isSelfOrDescendantOf($other)
     {
-        return (
+        return
             $this->getLeft() >= $other->getLeft() &&
             $this->getLeft() < $other->getRight() &&
-            $this->inSameScope($other)
-        );
+            $this->inSameScope($other);
     }
 
     /**
      * Returns true if node is an ancestor.
      *
      * @param NestedSet
+     *
      * @return bool
      */
     public function isAncestorOf($other)
     {
-        return (
+        return
             $this->getLeft() < $other->getLeft() &&
             $this->getRight() > $other->getLeft() &&
-            $this->inSameScope($other)
-        );
+            $this->inSameScope($other);
     }
 
     /**
      * Returns true if node is self or an ancestor.
      *
      * @param NestedSet
+     *
      * @return bool
      */
     public function isSelfOrAncestorOf($other)
     {
-        return (
+        return
             $this->getLeft() <= $other->getLeft() &&
             $this->getRight() > $other->getLeft() &&
-            $this->inSameScope($other)
-        );
+            $this->inSameScope($other);
     }
 
     /**
@@ -1084,17 +1099,19 @@ abstract class Node extends Model
      * Equals?
      *
      * @param \Baum\Node
+     *
      * @return bool
      */
     public function equals($node)
     {
-        return ($this == $node);
+        return $this == $node;
     }
 
     /**
      * Checkes if the given node is in the same scope as the current one.
      *
      * @param \Baum\Node
+     *
      * @return bool
      */
     public function inSameScope($other)
@@ -1113,16 +1130,16 @@ abstract class Node extends Model
      * its in the subtree defined by the left and right indices.
      *
      * @param \Baum\Node
+     *
      * @return bool
      */
     public function insideSubtree($node)
     {
-        return (
+        return
             $this->getLeft() >= $node->getLeft() &&
             $this->getLeft() <= $node->getRight() &&
             $this->getRight() >= $node->getLeft() &&
-            $this->getRight() <= $node->getRight()
-        );
+            $this->getRight() <= $node->getRight();
     }
 
     /**
@@ -1135,7 +1152,7 @@ abstract class Node extends Model
         $withHighestRight = $this->newNestedSetQuery()->reOrderBy($this->getRightColumnName(), 'desc')->take(1)->sharedLock()->first();
 
         $maxRgt = 0;
-        if (! is_null($withHighestRight)) {
+        if (!is_null($withHighestRight)) {
             $maxRgt = $withHighestRight->getRight();
         }
 
@@ -1151,7 +1168,7 @@ abstract class Node extends Model
      */
     public function storeNewParent()
     {
-        if ($this->isDirty($this->getParentColumnName()) && ($this->exists || ! $this->isRoot())) {
+        if ($this->isDirty($this->getParentColumnName()) && ($this->exists || !$this->isRoot())) {
             static::$moveToNewParentId = $this->getParentId();
         } else {
             static::$moveToNewParentId = false;
@@ -1207,14 +1224,14 @@ abstract class Node extends Model
 
             $self->descendantsAndSelf()->select($self->getKeyName())->lockForUpdate()->get();
 
-            $oldDepth = ! is_null($self->getDepth()) ? $self->getDepth() : 0;
+            $oldDepth = !is_null($self->getDepth()) ? $self->getDepth() : 0;
             $newDepth = $self->getLevel();
 
             $self->newNestedSetQuery()->where($self->getKeyName(), '=', $self->getKey())->update([$self->getDepthColumnName() => $newDepth]);
             $self->setAttribute($self->getDepthColumnName(), $newDepth);
 
             $diff = $newDepth - $oldDepth;
-            if (! $self->isLeaf() && $diff != 0) {
+            if (!$self->isLeaf() && $diff != 0) {
                 $self->descendants()->increment($self->getDepthColumnName(), $diff);
             }
         });
@@ -1312,11 +1329,11 @@ abstract class Node extends Model
     /**
      * Return an key-value array indicating the node's depth with $seperator.
      *
-     * @return Array
+     * @return array
      */
     public static function getNestedList($column, $key = null, $seperator = ' ')
     {
-        $instance = new static;
+        $instance = new static();
 
         $key = $key ?: $instance->getKeyName();
         $depthColumn = $instance->getDepthColumnName();
@@ -1336,7 +1353,8 @@ abstract class Node extends Model
      * descendancy subtree of the current node instance.
      *
      * @param   array|\Illuminate\Support\Contracts\ArrayableInterface
-     * @return  bool
+     *
+     * @return bool
      */
     public function makeTree($nodeList)
     {
@@ -1351,6 +1369,7 @@ abstract class Node extends Model
      *
      * @param Baum\Node|int $target
      * @param string        $position
+     *
      * @return \Baum\Node
      */
     protected function moveTo($target, $position)
@@ -1379,9 +1398,10 @@ abstract class Node extends Model
     /**
      * Return an array with the last node we could reach and its nesting level.
      *
-     * @param   Baum\Node $node
-     * @param   int   $nesting
-     * @return  array
+     * @param Baum\Node $node
+     * @param int       $nesting
+     *
+     * @return array
      */
     protected function determineDepth($node, $nesting = 0)
     {

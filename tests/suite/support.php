@@ -1,12 +1,13 @@
 <?php
 
-if (! function_exists('hmap')) {
+if (!function_exists('hmap')) {
 
   /**
    * Simple function which aids in converting the tree hierarchy into something
    * more easily testable...
    *
    * @param array   $nodes
+   *
    * @return array
    */
   function hmap(array $nodes, $preserve = null)
@@ -36,7 +37,7 @@ if (! function_exists('hmap')) {
   }
 }
 
-if (! function_exists('array_ints_keys')) {
+if (!function_exists('array_ints_keys')) {
 
   /**
    * Cast provided keys's values into ints. This is to wrestle with PDO driver
@@ -44,6 +45,7 @@ if (! function_exists('array_ints_keys')) {
    *
    * @param   array $input
    * @param   mixed $keys
+   *
    * @return  array
    */
   function array_ints_keys(array $input, $keys = 'id')

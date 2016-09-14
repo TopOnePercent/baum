@@ -9,6 +9,7 @@ class ModelGenerator extends Generator
    *
    * @param  string  $name
    * @param  string  $path
+   *
    * @return string
    */
   public function create($name, $path)
@@ -30,6 +31,7 @@ class ModelGenerator extends Generator
    *
    * @param  string  $name
    * @param  string  $path
+   *
    * @return string
    */
   protected function getPath($name, $path)

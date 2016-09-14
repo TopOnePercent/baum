@@ -2,8 +2,8 @@
 
 namespace Baum\Console;
 
-use Illuminate\Console\Command;
 use Baum\Providers\BaumServiceProvider as Baum;
+use Illuminate\Console\Command;
 
 class BaumCommand extends Command
 {

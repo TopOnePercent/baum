@@ -2,10 +2,10 @@
 
 namespace Baum\Providers;
 
-use Baum\Generators\MigrationGenerator;
-use Baum\Generators\ModelGenerator;
 use Baum\Console\BaumCommand;
 use Baum\Console\InstallCommand;
+use Baum\Generators\MigrationGenerator;
+use Baum\Generators\ModelGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class BaumServiceProvider extends ServiceProvider
@@ -50,7 +50,7 @@ class BaumServiceProvider extends ServiceProvider
   protected function registerBaumCommand()
   {
       $this->app->singleton('command.baum', function ($app) {
-          return new BaumCommand;
+          return new BaumCommand();
       });
   }
 
