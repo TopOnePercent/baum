@@ -16,8 +16,8 @@ class Cluster extends Node
         parent::boot();
 
         static::creating(function ($cluster) {
-      $cluster->ensureUuid();
-    });
+            $cluster->ensureUuid();
+        });
     }
 
     public function ensureUuid()

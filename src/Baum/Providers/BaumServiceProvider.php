@@ -50,8 +50,8 @@ class BaumServiceProvider extends ServiceProvider
   protected function registerBaumCommand()
   {
       $this->app->singleton('command.baum', function ($app) {
-      return new BaumCommand;
-    });
+          return new BaumCommand;
+      });
   }
 
   /**
@@ -62,11 +62,11 @@ class BaumServiceProvider extends ServiceProvider
   protected function registerInstallCommand()
   {
       $this->app->singleton('command.baum.install', function ($app) {
-      $migrator = new MigrationGenerator($app['files']);
-      $modeler = new ModelGenerator($app['files']);
+          $migrator = new MigrationGenerator($app['files']);
+          $modeler = new ModelGenerator($app['files']);
 
-      return new InstallCommand($migrator, $modeler);
-    });
+          return new InstallCommand($migrator, $modeler);
+      });
   }
 
   /**

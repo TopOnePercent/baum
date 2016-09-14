@@ -45,10 +45,10 @@ class SetBuilder
     $self = $this;
 
       $this->node->getConnection()->transaction(function () use ($self) {
-      foreach ($self->roots() as $root) {
-          $self->rebuildBounds($root, 0);
-      }
-    });
+          foreach ($self->roots() as $root) {
+              $self->rebuildBounds($root, 0);
+          }
+      });
   }
 
   /**
@@ -126,7 +126,8 @@ class SetBuilder
       }
 
       $values = array_map(function ($column) use ($node) {
-      return $node->getAttribute($column); }, $keys);
+          return $node->getAttribute($column);
+      }, $keys);
 
       return array_combine($keys, $values);
   }

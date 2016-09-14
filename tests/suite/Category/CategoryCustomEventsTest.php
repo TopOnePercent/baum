@@ -35,7 +35,9 @@ class CategoryCustomEventsTest extends CategoryTestCase
         $events->shouldReceive('until')->once()->with('eloquent.moving: '.get_class($unchanged), $unchanged)->andReturn(false);
 
     // Force "moving" to return false
-    Category::moving(function ($node) { return false; });
+    Category::moving(function ($node) {
+        return false;
+    });
 
         $unchanged->makeRoot();
 

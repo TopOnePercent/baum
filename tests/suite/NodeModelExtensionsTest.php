@@ -63,7 +63,8 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
         Category::setEventDispatcher($events = m::mock('Illuminate\Contracts\Events\Dispatcher'));
 
-        $closure = function () {};
+        $closure = function () {
+        };
         $events->shouldReceive('listen')->once()->with('eloquent.moving: '.get_class(new Category), $closure, 0);
         Category::moving($closure);
 
@@ -78,7 +79,8 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
         Category::setEventDispatcher($events = m::mock('Illuminate\Contracts\Events\Dispatcher'));
 
-        $closure = function () {};
+        $closure = function () {
+        };
         $events->shouldReceive('listen')->once()->with('eloquent.moved: '.get_class(new Category), $closure, 0);
         Category::moved($closure);
 
@@ -184,12 +186,14 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
         $scopedQuery = $scopedCategory->newNestedSetQuery()->getQuery();
         $this->assertCount(1, $scopedQuery->wheres);
         $this->assertEquals($scopedCategory->getScopedColumns(), array_map(function ($elem) {
-      return $elem['column']; }, $scopedQuery->wheres));
+            return $elem['column'];
+        }, $scopedQuery->wheres));
 
         $multiScopedCategory = new MultiScopedCategory;
         $multiScopedQuery = $multiScopedCategory->newNestedSetQuery()->getQuery();
         $this->assertCount(2, $multiScopedQuery->wheres);
         $this->assertEquals($multiScopedCategory->getScopedColumns(), array_map(function ($elem) {
-      return $elem['column']; }, $multiScopedQuery->wheres));
+            return $elem['column'];
+        }, $multiScopedQuery->wheres));
     }
 }

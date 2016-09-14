@@ -51,10 +51,10 @@ if (! function_exists('array_ints_keys')) {
       $keys = is_string($keys) ? [$keys] : $keys;
 
       array_walk_recursive($input, function (&$value, $key) use ($keys) {
-      if (array_search($key, $keys) !== false) {
-          $value = (int) $value;
-      }
-    });
+          if (array_search($key, $keys) !== false) {
+              $value = (int) $value;
+          }
+      });
 
       return $input;
   }

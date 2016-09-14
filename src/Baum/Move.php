@@ -107,8 +107,8 @@ class Move
           $self = $this;
 
           $this->node->getConnection()->transaction(function () use ($self) {
-        $self->updateStructure();
-      });
+              $self->updateStructure();
+          });
 
           $this->target->reload();
 
@@ -177,7 +177,7 @@ class Move
       return $this->node
                 ->newNestedSetQuery()
                 ->where(function ($query) use ($leftColumn, $rightColumn, $a, $d) {
-                  $query->whereBetween($leftColumn, [$a, $d])
+                    $query->whereBetween($leftColumn, [$a, $d])
                         ->orWhereBetween($rightColumn, [$a, $d]);
                 })
                 ->update($updateConditions);
@@ -368,7 +368,7 @@ class Move
    * @param  \Illuminate\Events\Dispatcher
    * @return void
    */
-  public static function setEventDispatcher(Dispatcher $dispatcher)
+  public static function setEventDispatcher(Dispatcher $dispatcher = null)
   {
       static::$dispatcher = $dispatcher;
   }
@@ -386,9 +386,9 @@ class Move
           return true;
       }
 
-    // Basically the same as \Illuminate\Database\Eloquent\Model->fireModelEvent
-    // but we relay the event into the node instance.
-    $event = "eloquent.{$event}: ".get_class($this->node);
+      // Basically the same as \Illuminate\Database\Eloquent\Model->fireModelEvent
+      // but we relay the event into the node instance.
+      $event = "eloquent.{$event}: ".get_class($this->node);
 
       $method = $halt ? 'until' : 'fire';
 

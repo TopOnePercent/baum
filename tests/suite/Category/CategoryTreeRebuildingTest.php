@@ -43,7 +43,9 @@ class CategoryTreeRebuildingTest extends CategoryTestCase
         Category::rebuild();
 
         $expected = [0, 1, 1, 2, 1, 0];
-        $this->assertEquals($expected, Category::all()->map(function ($n) { return $n->getDepth(); })->all());
+        $this->assertEquals($expected, Category::all()->map(function ($n) {
+            return $n->getDepth();
+        })->all());
     }
 
     public function testRebuildWithScope()
@@ -72,8 +74,8 @@ class CategoryTreeRebuildingTest extends CategoryTestCase
 
         $children = $this->categories('A', 'MultiScopedCategory')->children()->get()->all();
         $children = array_map(function ($item) {
-        return $item->getAttributes();
-    }, $children);
+            return $item->getAttributes();
+        }, $children);
 
         $this->assertEquals($expected, $children);
     }

@@ -129,7 +129,8 @@ class SetValidator
       $columns = array_merge($this->node->getQualifiedScopedColumns(), [$column]);
 
       $columnsForSelect = implode(', ', array_map(function ($col) use ($grammar) {
-      return $grammar->wrap($col); }, $columns));
+          return $grammar->wrap($col);
+      }, $columns));
 
       $wrappedColumn = $grammar->wrap($column);
 
@@ -227,13 +228,13 @@ class SetValidator
   protected function keyForScope($node)
   {
       return implode('-', array_map(function ($column) use ($node) {
-      $value = $node->getAttribute($column);
+          $value = $node->getAttribute($column);
 
-      if (is_null($value)) {
-          return 'NULL';
-      }
+          if (is_null($value)) {
+              return 'NULL';
+          }
 
-      return $value;
-    }, $node->getScopedColumns()));
+          return $value;
+      }, $node->getScopedColumns()));
   }
 }
