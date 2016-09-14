@@ -52,8 +52,8 @@ abstract class Generator
    */
   protected function getStub($name)
   {
-      if (stripos($name, '.php') === false) {
-          $name = $name.'.php';
+      if (stripos($name, '.php.stub') === false) {
+          $name = $name.'.php.stub';
       }
 
       return $this->files->get($this->getStubPath().'/'.$name);
