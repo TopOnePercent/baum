@@ -765,4 +765,22 @@ class CategoryHierarchyTest extends CategoryTestCase
 
         $this->assertArraysAreEqual($expected, $nestedList);
     }
+
+    public function testGetNestedListSymbol()
+    {
+        $symbol = '- ';
+        $seperator = ' ';
+        $nestedList = Category::getNestedList('name', 'id', $seperator, $symbol);
+
+        $expected = [
+      1 => str_repeat($seperator, 0).$symbol.'Root 1',
+      2 => str_repeat($seperator, 1).$symbol.'Child 1',
+      3 => str_repeat($seperator, 1).$symbol.'Child 2',
+      4 => str_repeat($seperator, 2).$symbol.'Child 2.1',
+      5 => str_repeat($seperator, 1).$symbol.'Child 3',
+      6 => str_repeat($seperator, 0).$symbol.'Root 2',
+    ];
+
+        $this->assertArraysAreEqual($expected, $nestedList);
+    }
 }
