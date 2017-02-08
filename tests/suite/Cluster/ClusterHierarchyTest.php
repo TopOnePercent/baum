@@ -762,4 +762,22 @@ class ClusterHierarchyTest extends ClusterTestCase
 
         $this->assertArraysAreEqual($expected, $nestedList);
     }
+
+    public function testGetNestedListSymbol()
+    {
+        $symbol = '- ';
+        $seperator = ' ';
+        $nestedList = Cluster::getNestedList('name', 'id', $seperator, $symbol);
+
+        $expected = [
+      '7461d8f5-2ea9-4788-99c4-9d0244f0bfb1' => str_repeat($seperator, 0).$symbol.'Root 1',
+      '5d7ce1fd-6151-46d3-a5b3-0ebb9988dc57' => str_repeat($seperator, 1).$symbol.'Child 1',
+      '07c1fc8c-53b5-4fe7-b9c4-e09f266a455c' => str_repeat($seperator, 1).$symbol.'Child 2',
+      '3315a297-af87-4ad3-9fa5-19785407573d' => str_repeat($seperator, 2).$symbol.'Child 2.1',
+      '054476d2-6830-4014-a181-4de010ef7114' => str_repeat($seperator, 1).$symbol.'Child 3',
+      '3bb62314-9e1e-49c6-a5cb-17a9ab9b1b9a' => str_repeat($seperator, 0).$symbol.'Root 2',
+    ];
+
+        $this->assertArraysAreEqual($expected, $nestedList);
+    }
 }

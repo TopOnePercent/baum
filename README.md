@@ -751,7 +751,7 @@ It expects the column name to return, and optionally: the column
 to use for array keys (will use `id` if none supplied) and/or a separator:
 
 ```php
-public static function getNestedList($column, $key = null, $seperator = ' ');
+public static function getNestedList($column, $key = null, $seperator = ' ', $symbol = '');
 ```
 
 An example use case:
