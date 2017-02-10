@@ -884,7 +884,7 @@ abstract class Node extends Model
     * @param NestedSet
     * @return bool
     */
-    public function isDescendantOf($other)
+    public function isChildOf($other)
     {
         return (
             intval($this->parent_id) === intval($other->id) &&
