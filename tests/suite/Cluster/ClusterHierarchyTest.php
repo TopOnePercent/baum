@@ -458,6 +458,15 @@ class ClusterHierarchyTest extends ClusterTestCase
         $this->assertFalse($this->clusters('Child 1')->isAncestorOf($this->clusters('Child 1')));
     }
 
+		public function testIsChildOf()
+		{
+        $this->assertTrue($this->clusters('Child 1')->isChildOf($this->clusters('Root 1')));
+        $this->assertTrue($this->clusters('Child 2')->isChildOf($this->clusters('Root 1')));
+        $this->assertTrue($this->clusters('Child 2.1')->isChildOf($this->clusters('Child 2')));
+        $this->assertFalse($this->clusters('Child 2.1')->isChildOf($this->clusters('Root 1')));
+        $this->assertFalse($this->clusters('Child 2.1')->isChildOf($this->clusters('Child 1')));
+		}
+
     public function testIsSelfOrDescendantOf()
     {
         $this->assertTrue($this->clusters('Child 1')->isSelfOrDescendantOf($this->clusters('Root 1')));
