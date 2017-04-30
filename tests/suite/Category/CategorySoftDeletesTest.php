@@ -255,7 +255,7 @@ class CategorySoftDeletesTest extends CategoryTestCase
     {
         $expected = ['Root 1', 'Child 1', 'Child 2', 'Child 2.1', 'Child 3', 'Root 2'];
 
-        $this->assertArraysAreEqual($expected, SoftCategory::all()->lists('name')->toArray());
+        $this->assertArraysAreEqual($expected, SoftCategory::all()->pluck('name')->toArray());
     }
 
     public function testAllStaticWithSoftDeletes()
@@ -264,6 +264,6 @@ class CategorySoftDeletesTest extends CategoryTestCase
         $this->categories('Child 3', 'SoftCategory')->delete();
 
         $expected = ['Root 1', 'Child 2', 'Child 2.1', 'Root 2'];
-        $this->assertArraysAreEqual($expected, SoftCategory::all()->lists('name')->toArray());
+        $this->assertArraysAreEqual($expected, SoftCategory::all()->pluck('name')->toArray());
     }
 }
