@@ -75,6 +75,13 @@ abstract class Node extends Model
     protected $scoped = [];
 
     /**
+     * Fire events on descendant nodes when deleting.
+     *
+     * @var boolean
+     */
+    protected $fireDescendantDeleteEvents = false;
+
+    /**
      * The "booting" method of the model.
      *
      * We'll use this method to register event listeners on a Node instance as
@@ -1276,10 +1283,20 @@ abstract class Node extends Model
             $rgt = $self->getRight();
 
             // Apply a lock to the rows which fall past the deletion point
-            $self->newNestedSetQuery()->where($lftCol, '>=', $lft)->select($self->getKeyName())->lockForUpdate()->get();
+            $self->newNestedSetQuery()->where($lftCol, '>=', $lft)->select($self->getKeyName())
+                ->lockForUpdate()->get();
 
-            // Prune children
-            $self->newNestedSetQuery()->where($lftCol, '>', $lft)->where($rgtCol, '<', $rgt)->delete();
+            // Prune children, optionally one by one to file deleting / deleted events
+            $query = $self->newNestedSetQuery()->where($lftCol, '>', $lft)->where($rgtCol, '<', $rgt);
+
+            if (!$this->fireDescendantDeleteEvents) {
+                $query->delete();
+            }
+            else {
+                $query->each(function($node) {
+                    $node->delete();
+                });
+            }
 
             // Update left and right indexes for the remaining nodes
             $diff = $rgt - $lft + 1;

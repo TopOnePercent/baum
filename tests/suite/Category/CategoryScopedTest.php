@@ -4,6 +4,8 @@ class CategoryScopedTest extends CategoryTestCase
 {
     public function setUp()
     {
+        parent::setUp();
+
         with(new MultiScopedCategorySeeder())->run();
     }
 

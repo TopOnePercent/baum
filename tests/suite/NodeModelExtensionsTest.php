@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as DB;
-
-class NodeModelExtensionsTest extends BaumTestCase
+class NodeModelExtensionsTest extends CategoryTestCase
 {
     protected function categories($name, $className = 'Category')
     {

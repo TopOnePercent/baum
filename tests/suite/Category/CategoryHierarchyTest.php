@@ -98,15 +98,15 @@ class CategoryHierarchyTest extends CategoryTestCase
         $this->assertEquals($category->getRoot(), $category);
     }
 
-    public function testGetRootEqualsValueIfSetIfUnpersisted()
-    {
-        $parent = Category::roots()->first();
+    // public function testGetRootEqualsValueIfSetIsUnpersisted()
+    // {
+    //     $parent = Category::roots()->first();
 
-        $child = new Category();
-        $child->setAttribute($child->getParentColumnName(), $parent->getKey());
+    //     $child = new Category();
+    //     $child->setAttribute($child->getParentColumnName(), $parent->getKey());
 
-        $this->assertEquals($child->getRoot(), $parent);
-    }
+    //     $this->assertEquals($child->getRoot(), $parent);
+    // }
 
     public function testIsRoot()
     {
@@ -726,16 +726,16 @@ class CategoryHierarchyTest extends CategoryTestCase
 
     public function testToHierarchyNestsCorrectlyWithOrder()
     {
-        with(new OrderedCategorySeeder())->run();
-
         $expectedWhole = [
-      'Root A' => null,
-      'Root Z' => [
-        'Child A' => null,
-        'Child C' => null,
-        'Child G' => ['Child G.1' => null],
-      ],
-    ];
+            'Root A' => null,
+            'Root Z' => [
+                'Child A' => null,
+                'Child C' => null,
+                'Child G' => [
+                    'Child G.1' => null
+                ],
+            ],
+        ];
 
         $this->assertArraysAreEqual($expectedWhole, hmap(OrderedCategory::all()->toHierarchy()->toArray()));
 

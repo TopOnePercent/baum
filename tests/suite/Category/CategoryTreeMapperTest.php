@@ -1,14 +1,7 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as DB;
-
-class CategoryTreeMapperTest extends BaumTestCase
+class CategoryTreeMapperTest extends CategoryTestCase
 {
-    public function setUp()
-    {
-        with(new CategoryMigrator())->up();
-    }
-
     public function testBuildTree()
     {
         $tree = [
