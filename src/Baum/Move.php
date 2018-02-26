@@ -397,8 +397,6 @@ class Move
 
         $method = $halt ? 'until' : 'fire';
 
-        var_dump($event, $method);
-
         return static::$dispatcher->$method($event, $this->node);
     }
 
