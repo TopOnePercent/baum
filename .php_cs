@@ -62,7 +62,6 @@ $fixers = [
     'standardize_not_equal',
     'ternary_spaces',
     'trailing_spaces',
-    'trim_array_spaces',
     'unalign_equals',
     'unary_operators_spaces',
     'unused_use',
