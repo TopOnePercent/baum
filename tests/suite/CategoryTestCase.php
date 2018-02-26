@@ -2,13 +2,11 @@
 
 class CategoryTestCase extends BaumTestCase
 {
-    public static function setUpBeforeClass()
-    {
-        with(new CategoryMigrator())->up();
-    }
-
     public function setUp()
     {
+        parent::setUp();
+
+        with(new CategoryMigrator())->up();
         with(new CategorySeeder())->run();
     }
 

@@ -552,7 +552,7 @@ abstract class Node extends Model
      */
     public function isRoot()
     {
-        return is_null($this->getParentId());
+        return !$this->getParentId();
     }
 
     /**
@@ -597,7 +597,7 @@ abstract class Node extends Model
         } else {
             $parentId = $this->getParentId();
 
-            if (!is_null($parentId) && $currentParent = static::find($parentId)) {
+            if (!$parentId && $currentParent = static::find($parentId)) {
                 return $currentParent->getRoot();
             } else {
                 return $this;
@@ -888,13 +888,13 @@ abstract class Node extends Model
      */
     public function getLevel()
     {
-        if (is_null($this->getParentId())) {
+        if (!$this->getParentId()) {
             return 0;
         }
 
         return $this->computeLevel();
     }
-    
+
     /**
     * Returns true if node is a direct descendant of $other.
     *
@@ -1198,9 +1198,10 @@ abstract class Node extends Model
     {
         $pid = static::$moveToNewParentId;
 
-        if (is_null($pid)) {
+        if (!$pid) {
             $this->makeRoot();
-        } elseif ($pid !== false) {
+        }
+        else {
             $this->makeChildOf($pid);
         }
     }

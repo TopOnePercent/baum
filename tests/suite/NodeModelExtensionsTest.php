@@ -3,7 +3,7 @@
 use Illuminate\Database\Capsule\Manager as DB;
 use Mockery as m;
 
-class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
+class NodeModelExtensionsTest extends BaumTestCase
 {
     public static function setUpBeforeClass()
     {

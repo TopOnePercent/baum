@@ -74,9 +74,9 @@ class InstallCommand extends Command
    */
   protected function getArguments()
   {
-      return [
-        ['name', InputArgument::REQUIRED, 'Name to use for the scaffolding of the migration and model.'],
-      ];
+        return [
+            ['name', InputArgument::REQUIRED, 'Name to use for the scaffolding of the migration and model.'],
+        ];
   }
 
   /**

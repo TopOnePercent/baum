@@ -1,40 +1,37 @@
 {
-  "name": "gazsp/baum",
-  "type": "library",
-  "description": "Baum is an implementation of the Nested Set pattern for Eloquent models.",
-  "keywords": ["nested set", "laravel", "laravel 5", "eloquent", "database"],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Estanislau Trepat",
-      "email": "estanis@etrepat.com",
-      "homepage": "http://etrepat.com"
+    "name": "gazsp/baum",
+    "type": "library",
+    "description": "Baum is an implementation of the Nested Set pattern for Eloquent models.",
+    "keywords": ["nested set", "mptt", "laravel", "laravel 5", "eloquent", "database"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Estanislau Trepat",
+            "email": "estanis@etrepat.com",
+            "homepage": "http://etrepat.com"
+        },
+        {
+            "name": "Gary Pearman",
+            "email": "gaz@red-robot.co.uk",
+            "homepage": "http://red-robot.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "illuminate/console": "^5.5",
+        "illuminate/database": "^5.5",
+        "illuminate/events": "^5.5",
+        "illuminate/filesystem": "^5.5",
+        "illuminate/support": "^5.5"
     },
-    {
-      "name": "Gary Pearman",
-      "email": "gaz@red-robot.co.uk",
-      "homepage": "http://red-robot.co.uk"
+    "require-dev": {
+        "phpunit/phpunit": "^7",
+        "friendsofphp/php-cs-fixer": "^2.10",
+        "orchestra/testbench": "^3.6"
+    },
+    "autoload": {
+        "psr-0": {
+            "Baum": "src/"
+        }
     }
-
-  ],
-  "require": {
-    "php": ">=5.5.9",
-    "illuminate/console": "^5.2",
-    "illuminate/database": "^5.2",
-    "illuminate/events": "^5.2",
-    "illuminate/filesystem": "^5.2",
-    "illuminate/support": "^5.2"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "4.*",
-    "mockery/mockery": "~0.9",
-    "d11wtq/boris": "~1.0.10",
-    "satooshi/php-coveralls": "dev-master",
-    "fabpot/php-cs-fixer": "^1.11"
-  },
-  "autoload": {
-    "psr-0": {
-      "Baum": "src/"
-    }
-  }
 }

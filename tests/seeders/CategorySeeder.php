@@ -6,8 +6,6 @@ class CategorySeeder
 {
     public function run()
     {
-        DB::table('categories')->delete();
-
         Category::unguard();
 
         Category::create(['id' => 1, 'name' => 'Root 1', 'lft' => 1, 'rgt' => 10, 'depth' => 0]);
@@ -21,9 +19,7 @@ class CategorySeeder
 
         if (DB::connection()->getDriverName() === 'pgsql') {
             $tablePrefix = DB::connection()->getTablePrefix();
-
             $sequenceName = $tablePrefix.'categories_id_seq';
-
             DB::connection()->statement('ALTER SEQUENCE '.$sequenceName.' RESTART WITH 7');
         }
     }
@@ -41,8 +37,6 @@ class ScopedCategorySeeder
 {
     public function run()
     {
-        DB::table('categories')->delete();
-
         ScopedCategory::unguard();
 
         ScopedCategory::create(['id' => 1, 'company_id' => 1, 'name' => 'Root 1', 'lft' => 1, 'rgt' => 10, 'depth' => 0]);
@@ -71,8 +65,6 @@ class MultiScopedCategorySeeder
 {
     public function run()
     {
-        DB::table('categories')->delete();
-
         MultiScopedCategory::unguard();
 
         MultiScopedCategory::create(['id' => 1, 'company_id' => 1, 'language' => 'en', 'name' => 'Root 1', 'lft' => 1, 'rgt' => 10, 'depth' => 0]);
@@ -100,9 +92,7 @@ class MultiScopedCategorySeeder
 
         if (DB::connection()->getDriverName() === 'pgsql') {
             $tablePrefix = DB::connection()->getTablePrefix();
-
             $sequenceName = $tablePrefix.'categories_id_seq';
-
             DB::connection()->statement('ALTER SEQUENCE '.$sequenceName.' RESTART WITH 21');
         }
     }
@@ -112,8 +102,6 @@ class OrderedCategorySeeder
 {
     public function run()
     {
-        DB::table('categories')->delete();
-
         OrderedCategory::unguard();
 
         OrderedCategory::create(['id' => 1, 'name' => 'Root Z', 'lft' => 1, 'rgt' => 10, 'depth' => 0]);
@@ -127,9 +115,7 @@ class OrderedCategorySeeder
 
         if (DB::connection()->getDriverName() === 'pgsql') {
             $tablePrefix = DB::connection()->getTablePrefix();
-
             $sequenceName = $tablePrefix.'categories_id_seq';
-
             DB::connection()->statement('ALTER SEQUENCE '.$sequenceName.' RESTART WITH 7');
         }
     }
@@ -139,8 +125,6 @@ class OrderedScopedCategorySeeder
 {
     public function run()
     {
-        DB::table('categories')->delete();
-
         OrderedScopedCategory::unguard();
 
         OrderedScopedCategory::create(['id' => 1, 'company_id' => 1, 'name' => 'Root 1', 'lft' => 1, 'rgt' => 10, 'depth' => 0]);
@@ -159,9 +143,7 @@ class OrderedScopedCategorySeeder
 
         if (DB::connection()->getDriverName() === 'pgsql') {
             $tablePrefix = DB::connection()->getTablePrefix();
-
             $sequenceName = $tablePrefix.'categories_id_seq';
-
             DB::connection()->statement('ALTER SEQUENCE '.$sequenceName.' RESTART WITH 11');
         }
     }

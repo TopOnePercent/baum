@@ -1,28 +1,36 @@
 <?php
 
-use Mockery as m;
+use Illuminate\Support\Facades\Event;
 
 class CategoryCustomEventsTest extends CategoryTestCase
 {
-    public function tearDown()
+    public function setUp()
     {
-        m::close();
+        parent::setUp();
+
+        $initialDispatcher = Event::getFacadeRoot();
+        Event::fake();
+        Category::setEventDispatcher($initialDispatcher);
     }
 
     public function testMovementEventsFire()
     {
-        $dispatcher = Category::getEventDispatcher();
-        Category::setEventDispatcher($events = m::mock('Illuminate\Events\Dispatcher'));
-
         $child = $this->categories('Child 1');
-
-        $events->shouldReceive('until')->once()->with('eloquent.moving: '.get_class($child), $child)->andReturn(true);
-        $events->shouldReceive('fire')->once()->with('eloquent.moved: '.get_class($child), $child)->andReturn(true);
 
         $child->moveToRightOf($this->categories('Child 3'));
 
-        Category::unsetEventDispatcher();
-        Category::setEventDispatcher($dispatcher);
+        // $events->shouldReceive('until')->once()->with('eloquent.moving: '.get_class($child), $child)->andReturn(true);
+        // $events->shouldReceive('fire')->once()->with('eloquent.moved: '.get_class($child), $child)->andReturn(true);
+
+        Event::assertDispatched('eloquent.moving: '. Category::class, function ($event) use ($child) {
+            // dd($event, $child);
+           // return $e->event === $event;
+        });
+
+        Event::assertDispatched('eloquent.moved: '. Category::class, function ($event) use ($child) {
+            // dd($event, $child);
+           // return $e->event === $event;
+        });
     }
 
     public function testMovementHaltsWhenReturningFalseFromMoving()
@@ -32,12 +40,13 @@ class CategoryCustomEventsTest extends CategoryTestCase
         $dispatcher = Category::getEventDispatcher();
 
         Category::setEventDispatcher($events = m::mock('Illuminate\Events\Dispatcher[until]'));
+
         $events->shouldReceive('until')->once()->with('eloquent.moving: '.get_class($unchanged), $unchanged)->andReturn(false);
 
-    // Force "moving" to return false
-    Category::moving(function ($node) {
-        return false;
-    });
+        // Force "moving" to return false
+        Category::moving(function ($node) {
+            return false;
+        });
 
         $unchanged->makeRoot();
 

@@ -1,14 +1,14 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Support\Facades\Schema;
 
 class ClusterMigrator
 {
     public function up()
     {
-        DB::schema()->dropIfExists('clusters');
+        Schema::dropIfExists('clusters');
 
-        DB::schema()->create('clusters', function ($t) {
+        Schema::create('clusters', function ($t) {
             $t->string('id');
 
             $t->string('parent_id')->nullable();
@@ -30,6 +30,6 @@ class ClusterMigrator
 
     public function down()
     {
-        DB::schema()->drop('clusters');
+        Schema::drop('clusters');
     }
 }

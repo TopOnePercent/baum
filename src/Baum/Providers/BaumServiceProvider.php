@@ -10,13 +10,6 @@ use Illuminate\Support\ServiceProvider;
 
 class BaumServiceProvider extends ServiceProvider
 {
-    /**
-   * Baum version.
-   *
-   * @var string
-   */
-  const VERSION = '1.1.1';
-
   /**
    * Register the service provider.
    *
