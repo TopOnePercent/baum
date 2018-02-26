@@ -2,13 +2,11 @@
 
 class ClusterTestCase extends BaumTestCase
 {
-    public static function setUpBeforeClass()
-    {
-        with(new ClusterMigrator())->up();
-    }
-
     public function setUp()
     {
+        parent::setUp();
+
+        with(new ClusterMigrator())->up();
         with(new ClusterSeeder())->run();
     }
 
