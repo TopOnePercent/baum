@@ -896,17 +896,17 @@ abstract class Node extends Model
     }
 
     /**
-    * Returns true if node is a direct descendant of $other.
-    *
-    * @param NestedSet
-    * @return bool
-    */
+     * Returns true if node is a direct descendant of $other.
+     *
+     * @param NestedSet
+     *
+     * @return bool
+     */
     public function isChildOf($other)
     {
-        return (
+        return
             intval($this->parent_id) === intval($other->id) &&
-            $this->inSameScope($other)
-        );
+            $this->inSameScope($other);
     }
 
     /**
@@ -1200,8 +1200,7 @@ abstract class Node extends Model
 
         if (!$pid) {
             $this->makeRoot();
-        }
-        else {
+        } else {
             $this->makeChildOf($pid);
         }
     }
@@ -1342,10 +1341,10 @@ abstract class Node extends Model
     }
 
     /**
-    * Return an key-value array indicating the node's depth with $seperator.
-    *
-    * @return Array
-    */
+     * Return an key-value array indicating the node's depth with $seperator.
+     *
+     * @return array
+     */
     public static function getNestedList($column, $key = null, $seperator = ' ', $symbol = '')
     {
         $instance = new static();
@@ -1358,7 +1357,7 @@ abstract class Node extends Model
         return array_combine(array_map(function ($node) use ($key) {
             return $node[$key];
         }, $nodes), array_map(function ($node) use ($seperator, $depthColumn, $column, $symbol) {
-            return str_repeat($seperator, $node[$depthColumn]) . $symbol . $node[$column];
+            return str_repeat($seperator, $node[$depthColumn]).$symbol.$node[$column];
         }, $nodes));
     }
 

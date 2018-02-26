@@ -63,8 +63,8 @@ class CategoryTreeValidationTest extends CategoryTestCase
     {
         $this->assertTrue(Category::isValidNestedSet());
 
-    // Force Root 2 to overlap with Root 1
-    $root = $this->categories('Root 2');
+        // Force Root 2 to overlap with Root 1
+        $root = $this->categories('Root 2');
         $root->lft = 0;
         $root->save();
 

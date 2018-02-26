@@ -37,7 +37,7 @@ class ClusterHierarchyTest extends ClusterTestCase
         $cluster = OrderedCluster::create(['name' => 'A new root is born']);
         $cluster->syncOriginal(); // ¿? --> This should be done already !?
 
-    $roots = OrderedCluster::roots()->get();
+        $roots = OrderedCluster::roots()->get();
 
         $this->assertCount(3, $roots);
         $this->assertEquals($cluster->getAttributes(), $roots->first()->getAttributes());
@@ -414,8 +414,8 @@ class ClusterHierarchyTest extends ClusterTestCase
         $b = Cluster::create(['name' => 'B']);
         $c = Cluster::create(['name' => 'C']);
 
-    // a > b > c
-    $b->makeChildOf($a);
+        // a > b > c
+        $b->makeChildOf($a);
         $c->makeChildOf($b);
 
         $a->reload();
@@ -458,14 +458,14 @@ class ClusterHierarchyTest extends ClusterTestCase
         $this->assertFalse($this->clusters('Child 1')->isAncestorOf($this->clusters('Child 1')));
     }
 
-		public function testIsChildOf()
-		{
+    public function testIsChildOf()
+    {
         $this->assertTrue($this->clusters('Child 1')->isChildOf($this->clusters('Root 1')));
         $this->assertTrue($this->clusters('Child 2')->isChildOf($this->clusters('Root 1')));
         $this->assertTrue($this->clusters('Child 2.1')->isChildOf($this->clusters('Child 2')));
         $this->assertFalse($this->clusters('Child 2.1')->isChildOf($this->clusters('Root 1')));
         $this->assertFalse($this->clusters('Child 2.1')->isChildOf($this->clusters('Child 1')));
-		}
+    }
 
     public function testIsSelfOrDescendantOf()
     {
@@ -597,27 +597,27 @@ class ClusterHierarchyTest extends ClusterTestCase
     public function testToHierarchyNestsCorrectly()
     {
         // Prune all categories
-    Cluster::query()->delete();
+        Cluster::query()->delete();
 
-    // Build a sample tree structure:
-    //
-    //   - A
-    //     |- A.1
-    //     |- A.2
-    //   - B
-    //     |- B.1
-    //     |- B.2
-    //         |- B.2.1
-    //         |- B.2.2
-    //           |- B.2.2.1
-    //         |- B.2.3
-    //     |- B.3
-    //   - C
-    //     |- C.1
-    //     |- C.2
-    //   - D
-    //
-    $a = Cluster::create(['name' => 'A']);
+        // Build a sample tree structure:
+        //
+        //   - A
+        //     |- A.1
+        //     |- A.2
+        //   - B
+        //     |- B.1
+        //     |- B.2
+        //         |- B.2.1
+        //         |- B.2.2
+        //           |- B.2.2.1
+        //         |- B.2.3
+        //     |- B.3
+        //   - C
+        //     |- C.1
+        //     |- C.2
+        //   - D
+        //
+        $a = Cluster::create(['name' => 'A']);
         $b = Cluster::create(['name' => 'B']);
         $c = Cluster::create(['name' => 'C']);
         $d = Cluster::create(['name' => 'D']);
@@ -657,8 +657,8 @@ class ClusterHierarchyTest extends ClusterTestCase
 
         $this->assertTrue(Cluster::isValidNestedSet());
 
-    // Build expectations (expected trees/subtrees)
-    $expectedWholeTree = [
+        // Build expectations (expected trees/subtrees)
+        $expectedWholeTree = [
       'A' => ['A.1' => null, 'A.2' => null],
       'B' => [
         'B.1' => null,
@@ -691,8 +691,8 @@ class ClusterHierarchyTest extends ClusterTestCase
 
         $expectedSubtreeD = ['D' => null];
 
-    // Perform assertions
-    $wholeTree = hmap(Cluster::all()->toHierarchy()->toArray());
+        // Perform assertions
+        $wholeTree = hmap(Cluster::all()->toHierarchy()->toArray());
         $this->assertArraysAreEqual($expectedWholeTree, $wholeTree);
 
         $subtreeA = hmap($this->clusters('A')->getDescendantsAndSelf()->toHierarchy()->toArray());
