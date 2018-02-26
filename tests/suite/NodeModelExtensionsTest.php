@@ -1,28 +1,12 @@
 <?php
 
 use Illuminate\Database\Capsule\Manager as DB;
-use Mockery as m;
 
 class NodeModelExtensionsTest extends BaumTestCase
 {
-    public static function setUpBeforeClass()
-    {
-        with(new CategoryMigrator())->up();
-    }
-
-    public function setUp()
-    {
-        DB::table('categories')->delete();
-    }
-
     protected function categories($name, $className = 'Category')
     {
         return forward_static_call_array([$className, 'where'], ['name', '=', $name])->first();
-    }
-
-    public function tearDown()
-    {
-        m::close();
     }
 
     public function testNewQueryReturnsEloquentBuilderWithExtendedQueryBuilder()
