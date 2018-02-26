@@ -18,13 +18,6 @@ class CategoryHierarchyTest extends CategoryTestCase
         $this->assertEquals($results, $expected);
     }
 
-    public function testAllStaticWithCustomOrder()
-    {
-        $results = OrderedCategory::all();
-        $expected = OrderedCategory::query()->orderBy('name')->get();
-
-        $this->assertEquals($results, $expected);
-    }
 
     public function testRootsStatic()
     {
@@ -38,17 +31,6 @@ class CategoryHierarchyTest extends CategoryTestCase
         foreach ($query->pluck('id') as $node) {
             $this->assertContains($node, $roots->pluck('id'));
         }
-    }
-
-    public function testRootsStaticWithCustomOrder()
-    {
-        $category = OrderedCategory::create(['name' => 'A new root is born']);
-        $category->syncOriginal(); // ¿? --> This should be done already !?
-
-        $roots = OrderedCategory::roots()->get();
-
-        $this->assertCount(3, $roots);
-        $this->assertEquals($category->getAttributes(), $roots->first()->getAttributes());
     }
 
     public function testRootStatic()
@@ -340,11 +322,11 @@ class CategoryHierarchyTest extends CategoryTestCase
         $parent = $this->categories('Root 1');
 
         $expected = [
-      $this->categories('Child 1'),
-      $this->categories('Child 2'),
-      $this->categories('Child 2.1'),
-      $this->categories('Child 3'),
-    ];
+            $this->categories('Child 1'),
+            $this->categories('Child 2'),
+            $this->categories('Child 2.1'),
+            $this->categories('Child 3'),
+        ];
 
         $this->assertCount(count($expected), $parent->getDescendants());
 
@@ -360,54 +342,54 @@ class CategoryHierarchyTest extends CategoryTestCase
         $this->assertEmpty($parent->getDescendants(0)->all());
 
         $this->assertEquals([
-      $this->categories('Child 1'),
-      $this->categories('Child 2'),
-      $this->categories('Child 3'),
-    ], $parent->getDescendants(1)->all());
+            $this->categories('Child 1'),
+            $this->categories('Child 2'),
+            $this->categories('Child 3'),
+        ], $parent->getDescendants(1)->all());
 
         $this->assertEquals([
-      $this->categories('Child 1'),
-      $this->categories('Child 2'),
-      $this->categories('Child 2.1'),
-      $this->categories('Child 3'),
-    ], $parent->getDescendants(2)->all());
+            $this->categories('Child 1'),
+            $this->categories('Child 2'),
+            $this->categories('Child 2.1'),
+            $this->categories('Child 3'),
+        ], $parent->getDescendants(2)->all());
 
         $this->assertEquals([
-      $this->categories('Child 1'),
-      $this->categories('Child 2'),
-      $this->categories('Child 2.1'),
-      $this->categories('Child 2.1.1'),
-      $this->categories('Child 3'),
-    ], $parent->getDescendants(3)->all());
+            $this->categories('Child 1'),
+            $this->categories('Child 2'),
+            $this->categories('Child 2.1'),
+            $this->categories('Child 2.1.1'),
+            $this->categories('Child 3'),
+        ], $parent->getDescendants(3)->all());
 
         $this->assertEquals([
-      $this->categories('Child 1'),
-      $this->categories('Child 2'),
-      $this->categories('Child 2.1'),
-      $this->categories('Child 2.1.1'),
-      $this->categories('Child 2.1.1.1'),
-      $this->categories('Child 3'),
-    ], $parent->getDescendants(4)->all());
+            $this->categories('Child 1'),
+            $this->categories('Child 2'),
+            $this->categories('Child 2.1'),
+            $this->categories('Child 2.1.1'),
+            $this->categories('Child 2.1.1.1'),
+            $this->categories('Child 3'),
+        ], $parent->getDescendants(4)->all());
 
         $this->assertEquals([
-      $this->categories('Child 1'),
-      $this->categories('Child 2'),
-      $this->categories('Child 2.1'),
-      $this->categories('Child 2.1.1'),
-      $this->categories('Child 2.1.1.1'),
-      $this->categories('Child 2.1.1.1.1'),
-      $this->categories('Child 3'),
-    ], $parent->getDescendants(5)->all());
+            $this->categories('Child 1'),
+            $this->categories('Child 2'),
+            $this->categories('Child 2.1'),
+            $this->categories('Child 2.1.1'),
+            $this->categories('Child 2.1.1.1'),
+            $this->categories('Child 2.1.1.1.1'),
+            $this->categories('Child 3'),
+        ], $parent->getDescendants(5)->all());
 
         $this->assertEquals([
-      $this->categories('Child 1'),
-      $this->categories('Child 2'),
-      $this->categories('Child 2.1'),
-      $this->categories('Child 2.1.1'),
-      $this->categories('Child 2.1.1.1'),
-      $this->categories('Child 2.1.1.1.1'),
-      $this->categories('Child 3'),
-    ], $parent->getDescendants(10)->all());
+            $this->categories('Child 1'),
+            $this->categories('Child 2'),
+            $this->categories('Child 2.1'),
+            $this->categories('Child 2.1.1'),
+            $this->categories('Child 2.1.1.1'),
+            $this->categories('Child 2.1.1.1.1'),
+            $this->categories('Child 3'),
+        ], $parent->getDescendants(10)->all());
     }
 
     public function testDescendantsRecursesChildren()
@@ -652,33 +634,33 @@ class CategoryHierarchyTest extends CategoryTestCase
 
         // Build expectations (expected trees/subtrees)
         $expectedWholeTree = [
-      'A' => ['A.1' => null, 'A.2' => null],
-      'B' => [
-        'B.1' => null,
-        'B.2' => [
-          'B.2.1' => null,
-          'B.2.2' => ['B.2.2.1' => null],
-          'B.2.3' => null,
-        ],
-        'B.3' => null,
-      ],
-      'C' => ['C.1' => null, 'C.2' => null],
-      'D' => null,
-    ];
+            'A' => ['A.1' => null, 'A.2' => null],
+            'B' => [
+                'B.1' => null,
+                'B.2' => [
+                    'B.2.1' => null,
+                    'B.2.2' => ['B.2.2.1' => null],
+                    'B.2.3' => null,
+                ],
+                'B.3' => null,
+            ],
+            'C' => ['C.1' => null, 'C.2' => null],
+            'D' => null,
+        ];
 
         $expectedSubtreeA = ['A' =>   ['A.1' => null, 'A.2' => null]];
 
         $expectedSubtreeB = [
-      'B' => [
-        'B.1' => null,
-        'B.2' => [
-          'B.2.1' => null,
-          'B.2.2' => ['B.2.2.1' => null],
-          'B.2.3' => null,
-        ],
-        'B.3' => null,
-      ],
-    ];
+            'B' => [
+                'B.1' => null,
+                'B.2' => [
+                    'B.2.1' => null,
+                    'B.2.2' => ['B.2.2.1' => null],
+                    'B.2.3' => null,
+                ],
+                'B.3' => null,
+            ],
+        ];
 
         $expectedSubtreeC = ['C.1' => null, 'C.2' => null];
 
@@ -724,44 +706,19 @@ class CategoryHierarchyTest extends CategoryTestCase
         $this->assertArraysAreEqual($expected, hmap($parent->getDescendantsAndSelf()->toHierarchy()->toArray()));
     }
 
-    public function testToHierarchyNestsCorrectlyWithOrder()
-    {
-        $expectedWhole = [
-            'Root A' => null,
-            'Root Z' => [
-                'Child A' => null,
-                'Child C' => null,
-                'Child G' => [
-                    'Child G.1' => null,
-                ],
-            ],
-        ];
-
-        $this->assertArraysAreEqual($expectedWhole, hmap(OrderedCategory::all()->toHierarchy()->toArray()));
-
-        $expectedSubtreeZ = [
-      'Root Z' => [
-        'Child A' => null,
-        'Child C' => null,
-        'Child G' => ['Child G.1' => null],
-      ],
-    ];
-        $this->assertArraysAreEqual($expectedSubtreeZ, hmap($this->categories('Root Z', 'OrderedCategory')->getDescendantsAndSelf()->toHierarchy()->toArray()));
-    }
-
     public function testGetNestedList()
     {
         $seperator = ' ';
         $nestedList = Category::getNestedList('name', 'id', $seperator);
 
         $expected = [
-      1 => str_repeat($seperator, 0).'Root 1',
-      2 => str_repeat($seperator, 1).'Child 1',
-      3 => str_repeat($seperator, 1).'Child 2',
-      4 => str_repeat($seperator, 2).'Child 2.1',
-      5 => str_repeat($seperator, 1).'Child 3',
-      6 => str_repeat($seperator, 0).'Root 2',
-    ];
+            1 => str_repeat($seperator, 0).'Root 1',
+            2 => str_repeat($seperator, 1).'Child 1',
+            3 => str_repeat($seperator, 1).'Child 2',
+            4 => str_repeat($seperator, 2).'Child 2.1',
+            5 => str_repeat($seperator, 1).'Child 3',
+            6 => str_repeat($seperator, 0).'Root 2',
+        ];
 
         $this->assertArraysAreEqual($expected, $nestedList);
     }

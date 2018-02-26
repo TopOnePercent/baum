@@ -28,4 +28,5 @@ foreach ($paths as $path) {
 require __DIR__.'/tests/suite/support.php';
 require __DIR__.'/tests/suite/BaumTestCase.php';
 require __DIR__.'/tests/suite/CategoryTestCase.php';
+require __DIR__.'/tests/suite/OrderedCategoryTestCase.php';
 require __DIR__.'/tests/suite/ClusterTestCase.php';
