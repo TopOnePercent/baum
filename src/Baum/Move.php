@@ -2,8 +2,8 @@
 
 namespace Baum;
 
-use Illuminate\Contracts\Events\Dispatcher;
 use Baum\Exceptions\MoveNotPossibleException;
+use Illuminate\Contracts\Events\Dispatcher;
 
 /**
  * Move.
