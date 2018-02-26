@@ -1,13 +1,15 @@
-# Baum <a href="https://travis-ci.org/gazsp/baum"><img src="https://travis-ci.org/gazsp/baum.svg?branch=master"></a> [![Coverage Status](https://coveralls.io/repos/gazsp/baum/badge.svg?branch=master&service=github)](https://coveralls.io/github/gazsp/baum?branch=master) [![StyleCI](https://styleci.io/repos/47506280/shield)](https://styleci.io/repos/47506280)
+# Baum 2.0 <a href="https://travis-ci.org/gazsp/baum"><img src="https://travis-ci.org/gazsp/baum.svg?branch=master"></a> [![Coverage Status](https://coveralls.io/repos/gazsp/baum/badge.svg?branch=master&service=github)](https://coveralls.io/github/gazsp/baum?branch=master) [![StyleCI](https://styleci.io/repos/47506280/shield)](https://styleci.io/repos/47506280)
 
-## Forked from [etrepat/baum](https://github.com/etrepat/baum) - Continuing development and fixing failing unit tests on Laravel 5.x
+## Nested Set implementation for Laravel 5.5+
 
-**If you find a bug, please file an issue and submit a pull request with a failing unit test**
+## The feature/2.0 branch is currently a work in progress and is probably broken - don't attempt to use it! ##
+
+> If you find a bug, please file an issue and submit a pull request with a failing unit test
 
 Baum is an implementation of the [Nested Set](http://en.wikipedia.org/wiki/Nested_set_model)
 pattern for [Laravel 5's](http://laravel.com/) Eloquent ORM.
 
-For **Laravel 4.2.x compatibility**, check the [1.0.x branch](https://github.com/etrepat/baum/tree/1.0.x-stable) branch or use the latest [1.0.x tagged release](https://github.com/etrepat/baum/releases).
+> For **Laravel 4.2.x compatibility**, check the [1.0.x branch](https://github.com/etrepat/baum/tree/1.0.x-stable) branch or use the latest [1.0.x tagged release](https://github.com/etrepat/baum/releases).
 
 ## Documentation
 
@@ -97,10 +99,10 @@ ordinary trees are suddenly quite fast. Nifty, isn't it?
 <a name="installation"></a>
 ## Installation
 
-Baum works with Laravel 5 onwards. You can add it to your `composer.json` file
+Baum works with Laravel 5.5 (and PHP 7) and above. You can add it to your `composer.json` file
 with:
 
-    "gazsp/baum": "~1.1"
+    "gazsp/baum": "2.0"
 
 Run `composer install` to install it.
 
