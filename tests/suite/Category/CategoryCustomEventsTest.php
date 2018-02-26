@@ -16,11 +16,11 @@ class CategoryCustomEventsTest extends CategoryTestCase
         $node = $this->categories('Child 1');
         $node->moveToRightOf($this->categories('Child 3'));
 
-        Event::assertDispatched('eloquent.moving: ' . Category::class, function ($event, $object) use ($node) {
+        Event::assertDispatched('eloquent.moving: '.Category::class, function ($event, $object) use ($node) {
             return $object->id == $node->id;
         });
 
-        Event::assertDispatched('eloquent.moved: ' . Category::class, function ($event, $object) use ($node) {
+        Event::assertDispatched('eloquent.moved: '.Category::class, function ($event, $object) use ($node) {
             return $object->id == $node->id;
         });
     }

@@ -77,7 +77,7 @@ abstract class Node extends Model
     /**
      * Fire events on descendant nodes when deleting.
      *
-     * @var boolean
+     * @var bool
      */
     protected $fireDescendantDeleteEvents = false;
 
@@ -1291,9 +1291,8 @@ abstract class Node extends Model
 
             if (!$this->fireDescendantDeleteEvents) {
                 $query->delete();
-            }
-            else {
-                $query->each(function($node) {
+            } else {
+                $query->each(function ($node) {
                     $node->delete();
                 });
             }

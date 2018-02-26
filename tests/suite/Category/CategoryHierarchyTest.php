@@ -732,7 +732,7 @@ class CategoryHierarchyTest extends CategoryTestCase
                 'Child A' => null,
                 'Child C' => null,
                 'Child G' => [
-                    'Child G.1' => null
+                    'Child G.1' => null,
                 ],
             ],
         ];
