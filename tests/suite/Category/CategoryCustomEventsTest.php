@@ -22,12 +22,12 @@ class CategoryCustomEventsTest extends CategoryTestCase
         // $events->shouldReceive('until')->once()->with('eloquent.moving: '.get_class($child), $child)->andReturn(true);
         // $events->shouldReceive('fire')->once()->with('eloquent.moved: '.get_class($child), $child)->andReturn(true);
 
-        Event::assertDispatched('eloquent.moving: '. Category::class, function ($event) use ($child) {
+        Event::assertDispatched('eloquent.moving: '.Category::class, function ($event) use ($child) {
             // dd($event, $child);
            // return $e->event === $event;
         });
 
-        Event::assertDispatched('eloquent.moved: '. Category::class, function ($event) use ($child) {
+        Event::assertDispatched('eloquent.moved: '.Category::class, function ($event) use ($child) {
             // dd($event, $child);
            // return $e->event === $event;
         });
@@ -57,8 +57,8 @@ class CategoryCustomEventsTest extends CategoryTestCase
         $this->assertEquals(4, $unchanged->getLeft());
         $this->assertEquals(7, $unchanged->getRight());
 
-    // Restore
-    Category::getEventDispatcher()->forget('eloquent.moving: '.get_class($unchanged));
+        // Restore
+        Category::getEventDispatcher()->forget('eloquent.moving: '.get_class($unchanged));
 
         Category::unsetEventDispatcher();
         Category::setEventDispatcher($dispatcher);

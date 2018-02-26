@@ -266,45 +266,45 @@ class CategoryScopedTest extends CategoryTestCase
         $this->assertArraysAreEqual($expectedWhole2, hmap(OrderedScopedCategory::where('company_id', 2)->get()->toHierarchy()->toArray()));
     }
 
-  /**
-   * @expectedException Baum\Exceptions\MoveNotPossibleException
-   */
-  public function testNodesCannotMoveBetweenScopes()
-  {
-      $child4 = $this->categories('Child 4', 'ScopedCategory');
-      $root1 = $this->categories('Root 1', 'ScopedCategory');
+    /**
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
+     */
+    public function testNodesCannotMoveBetweenScopes()
+    {
+        $child4 = $this->categories('Child 4', 'ScopedCategory');
+        $root1 = $this->categories('Root 1', 'ScopedCategory');
 
-      $child4->makeChildOf($root1);
-  }
+        $child4->makeChildOf($root1);
+    }
 
-  /**
-   * @expectedException Baum\Exceptions\MoveNotPossibleException
-   */
-  public function testNodesCannotMoveBetweenScopesMultiple()
-  {
-      $root1 = $this->categories('Root 1', 'MultiScopedCategory');
-      $child4 = $this->categories('Child 4', 'MultiScopedCategory');
+    /**
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
+     */
+    public function testNodesCannotMoveBetweenScopesMultiple()
+    {
+        $root1 = $this->categories('Root 1', 'MultiScopedCategory');
+        $child4 = $this->categories('Child 4', 'MultiScopedCategory');
 
-      $child4->makeChildOf($root1);
-  }
+        $child4->makeChildOf($root1);
+    }
 
-  /**
-   * @expectedException Baum\Exceptions\MoveNotPossibleException
-   */
-  public function testNodesCannotMoveBetweenScopesMultiple2()
-  {
-      $root1 = $this->categories('Racine 1', 'MultiScopedCategory');
-      $child2 = $this->categories('Hijo 2', 'MultiScopedCategory');
+    /**
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
+     */
+    public function testNodesCannotMoveBetweenScopesMultiple2()
+    {
+        $root1 = $this->categories('Racine 1', 'MultiScopedCategory');
+        $child2 = $this->categories('Hijo 2', 'MultiScopedCategory');
 
-      $child2->makeChildOf($root1);
-  }
+        $child2->makeChildOf($root1);
+    }
 
-  // TODO: Moving nodes between scopes is problematic ATM. Fix it or find a work-around.
-  public function testMoveNodeBetweenScopes()
-  {
-      $this->markTestSkipped();
+    // TODO: Moving nodes between scopes is problematic ATM. Fix it or find a work-around.
+    public function testMoveNodeBetweenScopes()
+    {
+        $this->markTestSkipped();
 
-    // $root1    = Menu::create(array('caption' => 'TL1', 'site_id' => 1, 'language' => 'en'));
+        // $root1    = Menu::create(array('caption' => 'TL1', 'site_id' => 1, 'language' => 'en'));
     // $child11  = Menu::create(array('caption' => 'C11', 'site_id' => 1, 'language' => 'en'));
     // $child12  = Menu::create(array('caption' => 'C12', 'site_id' => 1, 'language' => 'en'));
 
@@ -333,5 +333,5 @@ class CategoryScopedTest extends CategoryTestCase
 
     // $expected = array($this->menus('C21'), $this->menus('C22'), $this->menus('C11'));
     // $this->assertEquals($expected, $root2->children()->get()->all());
-  }
+    }
 }

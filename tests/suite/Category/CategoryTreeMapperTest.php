@@ -50,12 +50,12 @@ class CategoryTreeMapperTest extends BaumTestCase
         $this->assertTrue(Category::buildTree($tree));
         $this->assertTrue(Category::isValidNestedSet());
 
-    // Postgres fix
-    if (DB::connection()->getDriverName() === 'pgsql') {
-        $tablePrefix = DB::connection()->getTablePrefix();
-        $sequenceName = $tablePrefix.'categories_id_seq';
-        DB::connection()->statement('ALTER SEQUENCE '.$sequenceName.' RESTART WITH 10');
-    }
+        // Postgres fix
+        if (DB::connection()->getDriverName() === 'pgsql') {
+            $tablePrefix = DB::connection()->getTablePrefix();
+            $sequenceName = $tablePrefix.'categories_id_seq';
+            DB::connection()->statement('ALTER SEQUENCE '.$sequenceName.' RESTART WITH 10');
+        }
 
         $updated = [
       ['id' => 1, 'name' => 'A'],
@@ -98,7 +98,7 @@ class CategoryTreeMapperTest extends BaumTestCase
     public function testBuildTreeMoveNodes()
     {
         // Create a tree
-    $updated = [
+        $updated = [
       ['id' => 1, 'name' => 'A'],
       ['id' => 2, 'name' => 'B'],
       ['id' => 3, 'name' => 'C', 'children' => [
@@ -113,8 +113,8 @@ class CategoryTreeMapperTest extends BaumTestCase
         $this->assertTrue(Category::buildTree($updated));
         $this->assertTrue(Category::isValidNestedSet());
 
-    // Add some nodes
-    $updated = [
+        // Add some nodes
+        $updated = [
       ['id' => 1, 'name' => 'A'],
       ['id' => 2, 'name' => 'B'],
       ['id' => 3, 'name' => 'C', 'children' => [
@@ -132,8 +132,8 @@ class CategoryTreeMapperTest extends BaumTestCase
         $this->assertTrue(Category::buildTree($updated));
         $this->assertTrue(Category::isValidNestedSet());
 
-    // Move node 7 to be child of node 2
-    $updated = [
+        // Move node 7 to be child of node 2
+        $updated = [
       ['id' => 1, 'name' => 'A'],
       ['id' => 2, 'name' => 'B', 'children' => [
         ['id' => 7, 'name' => 'C.2', 'children' => [

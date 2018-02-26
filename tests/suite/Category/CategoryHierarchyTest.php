@@ -45,7 +45,7 @@ class CategoryHierarchyTest extends CategoryTestCase
         $category = OrderedCategory::create(['name' => 'A new root is born']);
         $category->syncOriginal(); // ¿? --> This should be done already !?
 
-    $roots = OrderedCategory::roots()->get();
+        $roots = OrderedCategory::roots()->get();
 
         $this->assertCount(3, $roots);
         $this->assertEquals($category->getAttributes(), $roots->first()->getAttributes());
@@ -416,8 +416,8 @@ class CategoryHierarchyTest extends CategoryTestCase
         $b = Category::create(['name' => 'B']);
         $c = Category::create(['name' => 'C']);
 
-    // a > b > c
-    $b->makeChildOf($a);
+        // a > b > c
+        $b->makeChildOf($a);
         $c->makeChildOf($b);
 
         $a->reload();
@@ -590,27 +590,27 @@ class CategoryHierarchyTest extends CategoryTestCase
     public function testToHierarchyNestsCorrectly()
     {
         // Prune all categories
-    Category::query()->delete();
+        Category::query()->delete();
 
-    // Build a sample tree structure:
-    //
-    //   - A
-    //     |- A.1
-    //     |- A.2
-    //   - B
-    //     |- B.1
-    //     |- B.2
-    //         |- B.2.1
-    //         |- B.2.2
-    //           |- B.2.2.1
-    //         |- B.2.3
-    //     |- B.3
-    //   - C
-    //     |- C.1
-    //     |- C.2
-    //   - D
-    //
-    $a = Category::create(['name' => 'A']);
+        // Build a sample tree structure:
+        //
+        //   - A
+        //     |- A.1
+        //     |- A.2
+        //   - B
+        //     |- B.1
+        //     |- B.2
+        //         |- B.2.1
+        //         |- B.2.2
+        //           |- B.2.2.1
+        //         |- B.2.3
+        //     |- B.3
+        //   - C
+        //     |- C.1
+        //     |- C.2
+        //   - D
+        //
+        $a = Category::create(['name' => 'A']);
         $b = Category::create(['name' => 'B']);
         $c = Category::create(['name' => 'C']);
         $d = Category::create(['name' => 'D']);
@@ -650,8 +650,8 @@ class CategoryHierarchyTest extends CategoryTestCase
 
         $this->assertTrue(Category::isValidNestedSet());
 
-    // Build expectations (expected trees/subtrees)
-    $expectedWholeTree = [
+        // Build expectations (expected trees/subtrees)
+        $expectedWholeTree = [
       'A' => ['A.1' => null, 'A.2' => null],
       'B' => [
         'B.1' => null,
@@ -684,8 +684,8 @@ class CategoryHierarchyTest extends CategoryTestCase
 
         $expectedSubtreeD = ['D' => null];
 
-    // Perform assertions
-    $wholeTree = hmap(Category::all()->toHierarchy()->toArray());
+        // Perform assertions
+        $wholeTree = hmap(Category::all()->toHierarchy()->toArray());
         $this->assertArraysAreEqual($expectedWholeTree, $wholeTree);
 
         $subtreeA = hmap($this->categories('A')->getDescendantsAndSelf()->toHierarchy()->toArray());
