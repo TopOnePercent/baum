@@ -2,7 +2,7 @@
 
 namespace Baum;
 
-use Illuminate\Events\Dispatcher;
+use Illuminate\Contracts\Events\Dispatcher;
 
 /**
  * Move.
@@ -372,7 +372,7 @@ class Move
      *
      * @return void
      */
-    public static function setEventDispatcher(Dispatcher $dispatcher = null)
+    public static function setEventDispatcher(Dispatcher $dispatcher)
     {
         static::$dispatcher = $dispatcher;
     }
