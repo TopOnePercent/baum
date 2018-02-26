@@ -34,10 +34,6 @@
         <env name="DB_CONNECTION" value="testing"/>
     </php>
 
-    <listeners>
-        <listener class="NunoMaduro\Collision\Adapters\Phpunit\Listener"/>
-    </listeners>
-
     <logging>
         <log type="coverage-html" target="build/coverage/php" title="gazsp/baum" charset="UTF-8" yui="true" highlight="true"
              lowUpperBound="30"
