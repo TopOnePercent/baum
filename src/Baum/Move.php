@@ -2,7 +2,7 @@
 
 namespace Baum;
 
-use Illuminate\Events\Dispatcher;
+use Illuminate\Contracts\Events\Dispatcher;
 
 /**
  * Move.
