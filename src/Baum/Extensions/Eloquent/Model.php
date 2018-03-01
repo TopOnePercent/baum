@@ -21,10 +21,6 @@ abstract class Model extends BaseModel
         // return $this;
 
         if ($this->exists || ($this->areSoftDeletesEnabled() && $this->trashed())) {
-            // echo "! Reloading node {$this->id}, parent_id {$this->parent_id}\n";
-
-            // throw new \Exception('Reload called');
-
             $fresh = $this->getFreshInstance();
             if (is_null($fresh)) {
                 throw with(new ModelNotFoundException())->setModel(get_called_class());
@@ -41,11 +37,6 @@ abstract class Model extends BaseModel
             $this->setRawAttributes($freshAttributes, true);
             $this->setRelations($fresh->getRelations());
             $this->exists = $fresh->exists;
-
-            // echo "! Reloaded node {$this->id}, parent_id {$this->parent_id}\n";
-
-            // echo "! Reloaded node {$this->id}\n";
-            // $this->refresh();
         } else {
             // Revert changes if model is not persisted
             $this->attributes = $this->original;

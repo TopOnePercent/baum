@@ -1186,14 +1186,14 @@ abstract class Node extends Model
     {
         $parentColumnKey = $this->getParentColumnName();
 
-        $oldParentId = null;
         if(array_key_exists($parentColumnKey, $this->original)) {
             $oldParentId = $this->original[$parentColumnKey];
         }
-        $newParentId = array_key_exists($parentColumnKey, $this->attributes) ? $this->attributes[$parentColumnKey] : null;
+        else {
+            $oldParentId = null;
+        }
 
-        // echo "moveToNewParent {$this->id}: {$oldParentId} -> {$newParentId}\n";
-        // exit;
+        $newParentId = array_key_exists($parentColumnKey, $this->attributes) ? $this->attributes[$parentColumnKey] : null;
 
         if (!$newParentId) {
             return $this->makeRoot();
@@ -1202,8 +1202,6 @@ abstract class Node extends Model
                 return $this->makeChildOf($newParentId);
             }
         }
-
-        // throw new \Exception("Failed to move node to new parent {$this->id} from $oldParentId to $newParentId");
     }
 
     /**

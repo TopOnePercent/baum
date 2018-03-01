@@ -106,8 +106,6 @@ class SetMapper
             // Find or create the node
             $node = $this->firstOrNew($this->getSearchAttributes($attributes));
 
-            // echo "Created node..\n";
-
             // Set the parent and data for the node
             $data = $this->getDataAttributes($attributes);
             if ($parent) {
@@ -119,8 +117,6 @@ class SetMapper
                 throw new \Exception("Unable to save node");
             };
 
-            // echo "Created node " . json_encode($node->toArray(), JSON_PRETTY_PRINT) . "\n";
-
             if (!$node->isRoot()) {
                 $node->makeLastChildOf($node->parent);
             }
@@ -131,7 +127,6 @@ class SetMapper
                 $children = $attributes[$this->getChildrenKeyName()];
 
                 if (count($children) > 0) {
-                    // echo "Creating " . count($children) . " children on parent node id {$node->id}\n";
                     $this->mapTreeRecursive($children, $node, $affectedKeys);
                 }
             }
@@ -176,8 +171,6 @@ class SetMapper
 
     protected function deleteUnaffected($keys = [])
     {
-        // echo "deleteUnaffected " . print_r($keys, true) . "\n";
-
         return $this->pruneScope()->whereNotIn($this->node->getKeyName(), $keys)->delete();
     }
 
