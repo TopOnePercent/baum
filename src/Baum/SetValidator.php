@@ -41,7 +41,7 @@ class SetValidator
      */
     public function fails()
     {
-        return !$this->passes();
+        return ! $this->passes();
     }
 
     /**
@@ -91,8 +91,8 @@ class SetValidator
     protected function validateDuplicates()
     {
         return
-      !$this->duplicatesExistForColumn($this->node->getQualifiedLeftColumnName()) &&
-      !$this->duplicatesExistForColumn($this->node->getQualifiedRightColumnName());
+      ! $this->duplicatesExistForColumn($this->node->getQualifiedLeftColumnName()) &&
+      ! $this->duplicatesExistForColumn($this->node->getQualifiedRightColumnName());
     }
 
     /**
@@ -145,7 +145,7 @@ class SetValidator
 
         $result = $query->first();
 
-        return !is_null($result);
+        return ! is_null($result);
     }
 
     /**
@@ -164,7 +164,7 @@ class SetValidator
             $rootLeft = $root->getLeft();
             $rootRight = $root->getRight();
 
-            if (!($rootLeft > $left && $rootRight > $right)) {
+            if (! ($rootLeft > $left && $rootRight > $right)) {
                 return false;
             }
 
@@ -188,7 +188,7 @@ class SetValidator
         foreach ($this->groupRootsByScope($roots) as $scope => $groupedRoots) {
             $valid = $this->isEachRootValid($groupedRoots);
 
-            if (!$valid) {
+            if (! $valid) {
                 return false;
             }
         }
@@ -212,7 +212,7 @@ class SetValidator
         foreach ($roots as $root) {
             $key = $this->keyForScope($root);
 
-            if (!isset($rootsGroupedByScope[$key])) {
+            if (! isset($rootsGroupedByScope[$key])) {
                 $rootsGroupedByScope[$key] = [];
             }
 

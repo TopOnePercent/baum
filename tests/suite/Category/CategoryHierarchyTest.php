@@ -18,7 +18,6 @@ class CategoryHierarchyTest extends CategoryTestCase
         $this->assertEquals($results, $expected);
     }
 
-
     public function testRootsStatic()
     {
         $query = Category::whereNull('parent_id')->get();

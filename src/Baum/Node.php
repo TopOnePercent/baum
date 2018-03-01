@@ -2,8 +2,8 @@
 
 namespace Baum;
 
-use Baum\Extensions\Eloquent\Collection;
 use Baum\Extensions\Eloquent\Model;
+use Baum\Extensions\Eloquent\Collection;
 
 /**
  * Node.
@@ -310,7 +310,7 @@ abstract class Node extends Model
      */
     public function getQualifiedScopedColumns()
     {
-        if (!$this->isScoped()) {
+        if (! $this->isScoped()) {
             return $this->getScopedColumns();
         }
 
@@ -555,7 +555,7 @@ abstract class Node extends Model
      */
     public function isRoot()
     {
-        return !$this->getParentId();
+        return ! $this->getParentId();
     }
 
     /**
@@ -575,7 +575,7 @@ abstract class Node extends Model
      */
     public function isTrunk()
     {
-        return !$this->isRoot() && !$this->isLeaf();
+        return ! $this->isRoot() && ! $this->isLeaf();
     }
 
     /**
@@ -585,7 +585,7 @@ abstract class Node extends Model
      */
     public function isChild()
     {
-        return !$this->isRoot();
+        return ! $this->isRoot();
     }
 
     /**
@@ -600,7 +600,7 @@ abstract class Node extends Model
         } else {
             $parentId = $this->getParentId();
 
-            if (!$parentId && $currentParent = static::find($parentId)) {
+            if (! $parentId && $currentParent = static::find($parentId)) {
                 return $currentParent->getRoot();
             } else {
                 return $this;
@@ -891,7 +891,7 @@ abstract class Node extends Model
      */
     public function getLevel()
     {
-        if (!$this->getParentId()) {
+        if (! $this->getParentId()) {
             return 0;
         }
 
@@ -1169,7 +1169,7 @@ abstract class Node extends Model
         $withHighestRight = $this->newNestedSetQuery()->reOrderBy($this->getRightColumnName(), 'desc')->take(1)->sharedLock()->first();
 
         $maxRgt = 0;
-        if (!is_null($withHighestRight)) {
+        if (! is_null($withHighestRight)) {
             $maxRgt = $withHighestRight->getRight();
         }
 
@@ -1186,19 +1186,18 @@ abstract class Node extends Model
     {
         $parentColumnKey = $this->getParentColumnName();
 
-        if(array_key_exists($parentColumnKey, $this->original)) {
+        if (array_key_exists($parentColumnKey, $this->original)) {
             $oldParentId = $this->original[$parentColumnKey];
-        }
-        else {
+        } else {
             $oldParentId = null;
         }
 
         $newParentId = array_key_exists($parentColumnKey, $this->attributes) ? $this->attributes[$parentColumnKey] : null;
 
-        if (!$newParentId) {
+        if (! $newParentId) {
             return $this->makeRoot();
         } else {
-            if($oldParentId != $newParentId) {
+            if ($oldParentId != $newParentId) {
                 return $this->makeChildOf($newParentId);
             }
         }
@@ -1237,14 +1236,14 @@ abstract class Node extends Model
 
             $self->descendantsAndSelf()->select($self->getKeyName())->lockForUpdate()->get();
 
-            $oldDepth = !is_null($self->getDepth()) ? $self->getDepth() : 0;
+            $oldDepth = ! is_null($self->getDepth()) ? $self->getDepth() : 0;
             $newDepth = $self->getLevel();
 
             $self->newNestedSetQuery()->where($self->getKeyName(), '=', $self->getKey())->update([$self->getDepthColumnName() => $newDepth]);
             $self->setAttribute($self->getDepthColumnName(), $newDepth);
 
             $diff = $newDepth - $oldDepth;
-            if (!$self->isLeaf() && $diff != 0) {
+            if (! $self->isLeaf() && $diff != 0) {
                 $self->descendants()->increment($self->getDepthColumnName(), $diff);
             }
         });
@@ -1284,7 +1283,7 @@ abstract class Node extends Model
             // Prune children, optionally one by one to file deleting / deleted events
             $query = $self->newNestedSetQuery()->where($lftCol, '>', $lft)->where($rgtCol, '<', $rgt);
 
-            if (!$this->fireDescendantDeleteEvents) {
+            if (! $this->fireDescendantDeleteEvents) {
                 $query->delete();
             } else {
                 $query->each(function ($node) {

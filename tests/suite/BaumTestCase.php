@@ -41,11 +41,11 @@ class BaumTestCase extends TestCase
 
     public function assertNodesAreEqual($a, $b)
     {
-        if(is_object($a)) {
+        if (is_object($a)) {
             $a = $a->getAttributes();
         }
 
-        if(is_object($b)) {
+        if (is_object($b)) {
             $b = $b->getAttributes();
         }
 
@@ -60,26 +60,28 @@ class BaumTestCase extends TestCase
         return forward_static_call_array([$className, 'where'], ['name', '=', $name])->first();
     }
 
-    protected function debugQueries() {
-        \DB::listen(function($query) {
+    protected function debugQueries()
+    {
+        \DB::listen(function ($query) {
             static $count = 1;
             static $queries = [];
 
-            if($count == 1) {
-                \Log::info("---");
+            if ($count == 1) {
+                \Log::info('---');
             }
 
             $replace = function ($sql, $bindings) {
                 $needle = '?';
-                foreach ($bindings as $replace){
+                foreach ($bindings as $replace) {
                     $pos = strpos($sql, $needle);
                     if ($pos !== false) {
-                        if ($replace === NULL) {
+                        if ($replace === null) {
                             $replace = 'NULL';
                         }
                         $sql = substr_replace($sql, $replace, $pos, strlen($needle));
                     }
                 }
+
                 return $sql;
             };
 
@@ -87,45 +89,43 @@ class BaumTestCase extends TestCase
 
             $number = $count++;
 
-            if(!isset($queries[$result])) {
+            if (! isset($queries[$result])) {
                 $queries[$result] = 1;
-            }
-            else {
+            } else {
                 $queries[$result]++;
             }
 
-            $ordinal = function($number) {
-                $ends = [ 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th' ];
+            $ordinal = function ($number) {
+                $ends = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'];
 
                 if ((($number % 100) >= 11) && (($number % 100) <= 13)) {
-                    return $number . 'th';
-                }
-                else {
-                    return $number . $ends[$number % 10];
+                    return $number.'th';
+                } else {
+                    return $number.$ends[$number % 10];
                 }
             };
 
             $queryRepeatCount = '';
-            if($queries[$result] > 1) {
+            if ($queries[$result] > 1) {
                 $x = $queries[$result];
                 $queryRepeatCount = " - {$ordinal($x)} occurrence";
             }
 
             echo "\n/* Query $number */";
-            echo "\n/*" . str_repeat("-", 256) . "*/";
+            echo "\n/*".str_repeat('-', 256).'*/';
             echo "\n{$result}";
             // echo "\n- {$query->time}mS{$queryRepeatCount}\n";
 
             $backtrace = debug_backtrace();
             $result = [];
-            array_walk($backtrace, function($a, $b) use (&$result) {
-                if(isset($a['file'])) {
-                    if(strpos($a['file'], 'vendor') === false) {
-                        if(!isset($a['class'])) {
+            array_walk($backtrace, function ($a, $b) use (&$result) {
+                if (isset($a['file'])) {
+                    if (strpos($a['file'], 'vendor') === false) {
+                        if (! isset($a['class'])) {
                             $a['class'] = '';
                         }
 
-                        $function = sprintf("%-50s", $a['class'] . '#' . $a['function']);
+                        $function = sprintf('%-50s', $a['class'].'#'.$a['function']);
                         $string = "$function | {$a['file']}:{$a['line']}";
                         array_push($result, $string);
                     }

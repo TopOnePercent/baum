@@ -76,21 +76,18 @@ class CategoryTreeMapperTest extends CategoryTestCase
         $updated = [
             ['id' => 1, 'name' => 'A'],
             ['id' => 2, 'name' => 'B'],
-            ['id' => 3, 'name' => 'C', 'children' =>
-                [
-                    ['id' => 4, 'name' => 'C.1', 'children' =>
-                        [
+            ['id' => 3, 'name' => 'C', 'children' => [
+                    ['id' => 4, 'name' => 'C.1', 'children' => [
                             ['id' => 5, 'name' => 'C.1.1'],
                             ['id' => 6, 'name' => 'C.1.2'],
-                        ]
+                        ],
                     ],
-                    ['id' => 7, 'name' => 'C.2', 'children' =>
-                        [
+                    ['id' => 7, 'name' => 'C.2', 'children' => [
                             ['name' => 'C.2.1'],
                             ['name' => 'C.2.2'],
-                        ]
+                        ],
                     ],
-                ]
+                ],
             ],
             ['id' => 9, 'name' => 'D'],
         ];
@@ -100,25 +97,21 @@ class CategoryTreeMapperTest extends CategoryTestCase
         // Move node 7 to be child of node 2
         $updated = [
             ['id' => 1, 'name' => 'A'],
-            ['id' => 2, 'name' => 'B', 'children' =>
-                [
-                    ['id' => 7, 'name' => 'C.2', 'children' =>
-                        [
+            ['id' => 2, 'name' => 'B', 'children' => [
+                    ['id' => 7, 'name' => 'C.2', 'children' => [
                             ['id' => 10, 'name' => 'C.2.1'],
                             ['id' => 11, 'name' => 'C.2.2'],
-                        ]
+                        ],
                     ],
-                ]
+                ],
             ],
-            ['id' => 3, 'name' => 'C', 'children' =>
-                [
-                    ['id' => 4, 'name' => 'C.1', 'children' =>
-                        [
+            ['id' => 3, 'name' => 'C', 'children' => [
+                    ['id' => 4, 'name' => 'C.1', 'children' => [
                             ['id' => 5, 'name' => 'C.1.1'],
                             ['id' => 6, 'name' => 'C.1.2'],
-                        ]
+                        ],
                     ],
-                ]
+                ],
             ],
             ['id' => 9, 'name' => 'D'],
         ];
@@ -137,17 +130,15 @@ class CategoryTreeMapperTest extends CategoryTestCase
         $subtree = [
             ['id' => 4, 'name' => 'Child 2.1'],
             ['name' => 'Child 2.2'],
-            ['name' => 'Child 2.3', 'children' =>
-                [
-                    ['name' => 'Child 2.3.1', 'children' =>
-                        [
+            ['name' => 'Child 2.3', 'children' => [
+                    ['name' => 'Child 2.3.1', 'children' => [
                             ['name' => 'Child 2.3.1.1'],
                             ['name' => 'Child 2.3.1.1'],
-                        ]
+                        ],
                     ],
                     ['name' => 'Child 2.3.2'],
                     ['name' => 'Child 2.3.3'],
-                ]
+                ],
             ],
             ['name' => 'Child 2.4'],
         ];
@@ -158,17 +149,15 @@ class CategoryTreeMapperTest extends CategoryTestCase
         $expected = [
             ['id' => 4, 'name' => 'Child 2.1'],
             ['id' => 7, 'name' => 'Child 2.2'],
-            ['id' => 8, 'name' => 'Child 2.3', 'children' =>
-                [
-                    ['id' => 9, 'name' => 'Child 2.3.1', 'children' =>
-                        [
+            ['id' => 8, 'name' => 'Child 2.3', 'children' => [
+                    ['id' => 9, 'name' => 'Child 2.3.1', 'children' => [
                             ['id' => 10, 'name' => 'Child 2.3.1.1'],
                             ['id' => 11, 'name' => 'Child 2.3.1.1'],
-                        ]
+                        ],
                     ],
                     ['id' => 12, 'name' => 'Child 2.3.2'],
                     ['id' => 13, 'name' => 'Child 2.3.3'],
-                ]
+                ],
             ],
             ['id' => 14, 'name' => 'Child 2.4'],
         ];
@@ -323,23 +312,22 @@ class CategoryTreeMapperTest extends CategoryTestCase
         $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
     }
 
-    protected function getDefaultTree() {
+    protected function getDefaultTree()
+    {
         $result = [
             ['id' => 1, 'name' => 'Root A'],
             ['id' => 2, 'name' => 'Root B'],
-            ['id' => 3, 'name' => 'Root C', 'children' =>
-                [
-                    ['id' => 4, 'name' => 'C.1', 'parent_id' => 3, 'children' =>
-                        [
+            ['id' => 3, 'name' => 'Root C', 'children' => [
+                    ['id' => 4, 'name' => 'C.1', 'parent_id' => 3, 'children' => [
                             ['id' => 5, 'name' => 'C.1.1'],
                             ['id' => 6, 'name' => 'C.1.2'],
-                        ]
+                        ],
                     ],
                     ['id' => 7, 'name' => 'C.2'],
                     ['id' => 8, 'name' => 'C.3'],
                 ],
             ],
-            ['id' => 9, 'name' => 'Root D']
+            ['id' => 9, 'name' => 'Root D'],
         ];
 
         return $result;

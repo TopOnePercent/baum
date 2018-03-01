@@ -1,8 +1,9 @@
 <?php
 
-class CategoryScopedTest extends BaumTestCase {
-
-    public function setUp() {
+class CategoryScopedTest extends BaumTestCase
+{
+    public function setUp()
+    {
         parent::setUp();
 
         with(new CategoryMigrator())->up();
@@ -64,6 +65,4 @@ class CategoryScopedTest extends BaumTestCase {
 
         $this->assertEquals($expected, $root3->getDescendants()->all());
     }
-
-
 }

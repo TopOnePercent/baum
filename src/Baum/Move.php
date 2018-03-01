@@ -2,8 +2,8 @@
 
 namespace Baum;
 
-use Baum\Exceptions\MoveNotPossibleException;
 use Illuminate\Contracts\Events\Dispatcher;
+use Baum\Exceptions\MoveNotPossibleException;
 
 /**
  * Move.
@@ -211,7 +211,7 @@ class Move
      */
     protected function guardAgainstImpossibleMove()
     {
-        if (!$this->node->exists) {
+        if (! $this->node->exists) {
             throw new MoveNotPossibleException('A new node cannot be moved.');
         }
 
@@ -219,7 +219,7 @@ class Move
             throw new MoveNotPossibleException("Position should be one of ['child', 'left', 'right'] but is {$this->position}.");
         }
 
-        if (!$this->promotingToRoot()) {
+        if (! $this->promotingToRoot()) {
             if (is_null($this->target)) {
                 if ($this->position === 'left' || $this->position === 'right') {
                     throw new MoveNotPossibleException("Could not resolve target node. This node cannot move any further to the {$this->position}.");
@@ -236,7 +236,7 @@ class Move
                 throw new MoveNotPossibleException('A node cannot be moved to a descendant of itself (inside moved tree).');
             }
 
-            if (!$this->node->inSameScope($this->target)) {
+            if (! $this->node->inSameScope($this->target)) {
                 throw new MoveNotPossibleException('A node cannot be moved to a different scope.');
             }
         }
@@ -249,7 +249,7 @@ class Move
      */
     protected function bound1()
     {
-        if (!is_null($this->_bound1)) {
+        if (! is_null($this->_bound1)) {
             return $this->_bound1;
         }
 
@@ -284,7 +284,7 @@ class Move
      */
     protected function bound2()
     {
-        if (!is_null($this->_bound2)) {
+        if (! is_null($this->_bound2)) {
             return $this->_bound2;
         }
 
@@ -300,7 +300,7 @@ class Move
      */
     protected function boundaries()
     {
-        if (!is_null($this->_boundaries)) {
+        if (! is_null($this->_boundaries)) {
             return $this->_boundaries;
         }
 
@@ -343,7 +343,7 @@ class Move
      */
     protected function hasChange()
     {
-        return !($this->bound1() == $this->node->getRight() || $this->bound1() == $this->node->getLeft());
+        return ! ($this->bound1() == $this->node->getRight() || $this->bound1() == $this->node->getLeft());
     }
 
     /**
@@ -388,7 +388,7 @@ class Move
      */
     protected function fireMoveEvent($event, $halt = true)
     {
-        if (!isset(static::$dispatcher)) {
+        if (! isset(static::$dispatcher)) {
             return true;
         }
 
