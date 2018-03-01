@@ -1,6 +1,5 @@
 <?php
 
-use Orchestra\Testbench\TestCase;
 
 class CategoryMultiScopedTest extends BaumTestCase
 {

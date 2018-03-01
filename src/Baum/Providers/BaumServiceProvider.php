@@ -4,8 +4,8 @@ namespace Baum\Providers;
 
 use Baum\Console\BaumCommand;
 use Baum\Console\InstallCommand;
-use Baum\Generators\MigrationGenerator;
 use Baum\Generators\ModelGenerator;
+use Baum\Generators\MigrationGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class BaumServiceProvider extends ServiceProvider

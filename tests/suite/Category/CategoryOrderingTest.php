@@ -33,7 +33,7 @@ class CategoryOrderingTest extends OrderedCategoryTestCase
                 'Child A' => null,
                 'Child C' => null,
                 'Child G' => [
-                    'Child G.1' => null
+                    'Child G.1' => null,
                 ],
             ],
         ];
@@ -66,5 +66,4 @@ class CategoryOrderingTest extends OrderedCategoryTestCase
         $expected = [OrderedCategory::find(5), OrderedCategory::find(2), OrderedCategory::find(3)];
         $this->assertEquals($expected, $children);
     }
-
 }

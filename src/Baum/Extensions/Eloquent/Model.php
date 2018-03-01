@@ -3,9 +3,9 @@
 namespace Baum\Extensions\Eloquent;
 
 use Baum\Extensions\Query\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 abstract class Model extends BaseModel
 {
@@ -30,7 +30,7 @@ abstract class Model extends BaseModel
             // being un-deleted when reloaded
             $freshAttributes = $fresh->getAttributes();
             $currentAttributes = $this->getAttributes();
-            if(isset($currentAttributes['deleted_at'])) {
+            if (isset($currentAttributes['deleted_at'])) {
                 $freshAttributes['deleted_at'] = $currentAttributes['deleted_at'];
             }
 
