@@ -259,8 +259,6 @@ class CategoryMovementTest extends CategoryTestCase
         $newChild->makeChildOf($this->categories('Root 1'));
         $lastChild = $this->categories('Root 1')->children()->get()->last();
 
-        // dd($newChild->getAttributes());
-
         $this->assertEquals($newChild->getAttributes(), $lastChild->getAttributes());
 
         $this->assertTrue(Category::isValidNestedSet());
