@@ -8,7 +8,7 @@ if (!function_exists('flatten_tree')) {
      * original array.
      *
      * @param  array        $tree     Array of nested nodes
-     * @param  array||null  $only     Array of keys to return in each node
+     * @param  array|null   $only     Array of keys to return in each node
      *                                or null for all of the keys
      * @param  array        &$result  Recursion temporary variable
      * @return array                  Flattened array
