@@ -50,6 +50,7 @@ class SetMapper
             forward_static_call([get_class($self->node), 'unguard']);
             $result = $self->mapTree($nodeList);
             forward_static_call([get_class($self->node), 'reguard']);
+
             return $result;
         });
     }
@@ -113,11 +114,11 @@ class SetMapper
             }
             $node->fill($data);
 
-            if (!$node->save()) {
-                throw new \Exception("Unable to save node");
-            };
+            if (! $node->save()) {
+                throw new \Exception('Unable to save node');
+            }
 
-            if (!$node->isRoot()) {
+            if (! $node->isRoot()) {
                 $node->makeLastChildOf($node->parent);
             }
 

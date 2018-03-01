@@ -13,7 +13,7 @@ class CategoryCustomEventsTest extends CategoryTestCase
         $node->makeRoot();
         $node->reload();
 
-        Event::assertDispatched('eloquent.moving: '. get_class($node), function ($event, $object) use ($node) {
+        Event::assertDispatched('eloquent.moving: '.get_class($node), function ($event, $object) use ($node) {
             return $object->id == $node->id;
         });
     }
@@ -25,11 +25,11 @@ class CategoryCustomEventsTest extends CategoryTestCase
         $node = $this->categories('Child 1');
         $node->moveToRightOf($this->categories('Child 3'));
 
-        Event::assertDispatched('eloquent.moving: '. get_class($node), function ($event, $object) use ($node) {
+        Event::assertDispatched('eloquent.moving: '.get_class($node), function ($event, $object) use ($node) {
             return $object->id == $node->id;
         });
 
-        Event::assertDispatched('eloquent.moved: '. get_class($node), function ($event, $object) use ($node) {
+        Event::assertDispatched('eloquent.moved: '.get_class($node), function ($event, $object) use ($node) {
             return $object->id == $node->id;
         });
     }

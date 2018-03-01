@@ -1,7 +1,7 @@
 <?php
 
-class OrderedClusterHeirarchyTestCase extends OrderedClusterTestCase {
-
+class OrderedClusterHeirarchyTestCase extends OrderedClusterTestCase
+{
     public function testAllStaticWithCustomOrder()
     {
         $results = OrderedCluster::all();
@@ -46,5 +46,4 @@ class OrderedClusterHeirarchyTestCase extends OrderedClusterTestCase {
 
         $this->assertArraysAreEqual($expectedSubtreeZ, hmap($this->clusters('Root Z', 'OrderedCluster')->getDescendantsAndSelf()->toHierarchy()->toArray()));
     }
-
 }

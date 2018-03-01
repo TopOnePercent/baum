@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('flatten_tree')) {
+if (! function_exists('flatten_tree')) {
 
     /**
      * Transform a hierarchical array of nodes to a flat array. The order of
@@ -13,16 +13,16 @@ if (!function_exists('flatten_tree')) {
      * @param  array        &$result  Recursion temporary variable
      * @return array                  Flattened array
      */
-    function flatten_tree($tree, $only = [], &$result = []) {
-        foreach($tree as $k=>$v) {
+    function flatten_tree($tree, $only = [], &$result = [])
+    {
+        foreach ($tree as $k=>$v) {
             $result[$v['id']] = $only ? array_only($v, $only) : $v;
 
-            if(isset($v['children'])) {
+            if (isset($v['children'])) {
                 flatten_tree($v['children'], $only, $result);
             }
         }
 
         return $result;
     }
-
 }
