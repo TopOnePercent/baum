@@ -10,14 +10,6 @@ class ClusterHierarchyTest extends ClusterTestCase
         $this->assertEquals($results, $expected);
     }
 
-    public function testAllStaticWithCustomOrder()
-    {
-        $results = OrderedCluster::all();
-        $expected = OrderedCluster::query()->orderBy('name')->get();
-
-        $this->assertEquals($results, $expected);
-    }
-
     public function testRootsStatic()
     {
         $query = Cluster::whereNull('parent_id')->get();
@@ -30,17 +22,6 @@ class ClusterHierarchyTest extends ClusterTestCase
         foreach ($query->pluck('id') as $node) {
             $this->assertContains($node, $roots->pluck('id'));
         }
-    }
-
-    public function testRootsStaticWithCustomOrder()
-    {
-        $cluster = OrderedCluster::create(['name' => 'A new root is born']);
-        $cluster->syncOriginal(); // ¿? --> This should be done already !?
-
-        $roots = OrderedCluster::roots()->get();
-
-        $this->assertCount(3, $roots);
-        $this->assertEquals($cluster->getAttributes(), $roots->first()->getAttributes());
     }
 
     public function testRootStatic()
@@ -90,14 +71,14 @@ class ClusterHierarchyTest extends ClusterTestCase
         $this->assertEquals($cluster->getRoot(), $cluster);
     }
 
-    public function testGetRootEqualsValueIfSetIfUnpersisted()
+    public function testGetRootEqualsValueIfUnpersisted()
     {
         $parent = Cluster::roots()->first();
 
         $child = new Cluster();
-        $child->setAttribute($child->getParentColumnName(), $parent->getKey());
+        $child->setAttribute('id', $parent->getKey());
 
-        $this->assertEquals($child->getRoot(), $parent);
+        $this->assertEquals($child->getRoot()->id, $parent->id);
     }
 
     public function testIsRoot()
@@ -729,30 +710,6 @@ class ClusterHierarchyTest extends ClusterTestCase
 
         $parent->reload();
         $this->assertArraysAreEqual($expected, hmap($parent->getDescendantsAndSelf()->toHierarchy()->toArray()));
-    }
-
-    public function testToHierarchyNestsCorrectlyWithOrder()
-    {
-        with(new OrderedClusterSeeder())->run();
-
-        $expectedWhole = [
-      'Root A' => null,
-      'Root Z' => [
-        'Child A' => null,
-        'Child C' => null,
-        'Child G' => ['Child G.1' => null],
-      ],
-    ];
-        $this->assertArraysAreEqual($expectedWhole, hmap(OrderedCluster::all()->toHierarchy()->toArray()));
-
-        $expectedSubtreeZ = [
-      'Root Z' => [
-        'Child A' => null,
-        'Child C' => null,
-        'Child G' => ['Child G.1' => null],
-      ],
-    ];
-        $this->assertArraysAreEqual($expectedSubtreeZ, hmap($this->clusters('Root Z', 'OrderedCluster')->getDescendantsAndSelf()->toHierarchy()->toArray()));
     }
 
     public function testGetNestedList()

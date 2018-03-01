@@ -50,7 +50,6 @@ class SetMapper
             forward_static_call([get_class($self->node), 'unguard']);
             $result = $self->mapTree($nodeList);
             forward_static_call([get_class($self->node), 'reguard']);
-
             return $result;
         });
     }
@@ -65,11 +64,10 @@ class SetMapper
      */
     public function mapTree($nodeList)
     {
+        $affectedKeys = [];
         $tree = $nodeList instanceof ArrayableInterface ? $nodeList->toArray() : $nodeList;
 
-        $affectedKeys = [];
-
-        $result = $this->mapTreeRecursive($tree, $this->node->getKey(), $affectedKeys);
+        $result = $this->mapTreeRecursive($tree, $this->node, $affectedKeys);
 
         if ($result && count($affectedKeys) > 0) {
             $this->deleteUnaffected($affectedKeys);
@@ -96,7 +94,7 @@ class SetMapper
      *
      * @return bool
      */
-    protected function mapTreeRecursive(array $tree, $parentKey = null, &$affectedKeys = [])
+    protected function mapTreeRecursive(array $tree, $parent = null, &$affectedKeys = [])
     {
         // For every attribute entry: We'll need to instantiate a new node either
         // from the database (if the primary key was supplied) or a new instance. Then,
@@ -105,20 +103,23 @@ class SetMapper
         // operations for any child node present. Setting the `parent_id` property at
         // each level will take care of the nesting work for us.
         foreach ($tree as $attributes) {
+            // Find or create the node
             $node = $this->firstOrNew($this->getSearchAttributes($attributes));
 
-            $data = $this->getDataAttributes($attributes);
-            if (!is_null($parentKey)) {
-                $data[$node->getParentColumnName()] = $parentKey;
-            }
+            // echo "Created node..\n";
 
+            // Set the parent and data for the node
+            $data = $this->getDataAttributes($attributes);
+            if ($parent) {
+                $data[$node->getParentColumnName()] = $parent->getKey();
+            }
             $node->fill($data);
 
-            $result = $node->save();
+            if (!$node->save()) {
+                throw new \Exception("Unable to save node");
+            };
 
-            if (!$result) {
-                return false;
-            }
+            // echo "Created node " . json_encode($node->toArray(), JSON_PRETTY_PRINT) . "\n";
 
             if (!$node->isRoot()) {
                 $node->makeLastChildOf($node->parent);
@@ -130,11 +131,8 @@ class SetMapper
                 $children = $attributes[$this->getChildrenKeyName()];
 
                 if (count($children) > 0) {
-                    $result = $this->mapTreeRecursive($children, $node->getKey(), $affectedKeys);
-
-                    if (!$result) {
-                        return false;
-                    }
+                    // echo "Creating " . count($children) . " children on parent node id {$node->id}\n";
+                    $this->mapTreeRecursive($children, $node, $affectedKeys);
                 }
             }
         }
@@ -178,6 +176,8 @@ class SetMapper
 
     protected function deleteUnaffected($keys = [])
     {
+        // echo "deleteUnaffected " . print_r($keys, true) . "\n";
+
         return $this->pruneScope()->whereNotIn($this->node->getKeyName(), $keys)->delete();
     }
 

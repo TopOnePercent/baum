@@ -1,6 +1,5 @@
 <?php
 
-
 class ClusterSeeder
 {
     public function run()

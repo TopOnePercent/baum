@@ -2,15 +2,9 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-// Set up Eloquent
-$config = [
-    'driver'   => 'sqlite',
-    'database' => ':memory:',
-    'prefix'   => '',
-];
-
+// Boot Eloquent
+// NOTE: We configure the database in BaumTestCase::getEnvironmentSetUp
 $capsule = new Illuminate\Database\Capsule\Manager();
-$capsule->addConnection($config);
 $capsule->setEventDispatcher(new Illuminate\Events\Dispatcher(new Illuminate\Container\Container()));
 $capsule->bootEloquent();
 $capsule->setAsGlobal();
@@ -30,3 +24,4 @@ require __DIR__.'/tests/suite/BaumTestCase.php';
 require __DIR__.'/tests/suite/CategoryTestCase.php';
 require __DIR__.'/tests/suite/OrderedCategoryTestCase.php';
 require __DIR__.'/tests/suite/ClusterTestCase.php';
+require __DIR__.'/tests/suite/OrderedClusterTestCase.php';

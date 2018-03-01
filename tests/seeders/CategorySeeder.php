@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as DB;
-
 class CategorySeeder
 {
     public function run()

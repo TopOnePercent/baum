@@ -18,18 +18,34 @@ abstract class Model extends BaseModel
      */
     public function reload()
     {
-        if ($this->exists || ($this->areSoftDeletesEnabled() && $this->trashed())) {
-            $fresh = $this->getFreshInstance();
+        // return $this;
 
+        if ($this->exists || ($this->areSoftDeletesEnabled() && $this->trashed())) {
+            // echo "! Reloading node {$this->id}, parent_id {$this->parent_id}\n";
+
+            // throw new \Exception('Reload called');
+
+            $fresh = $this->getFreshInstance();
             if (is_null($fresh)) {
                 throw with(new ModelNotFoundException())->setModel(get_called_class());
             }
 
-            $this->setRawAttributes($fresh->getAttributes(), true);
+            // Copy deleted_at attribute from current node to stop it
+            // being un-deleted when reloaded
+            $freshAttributes = $fresh->getAttributes();
+            $currentAttributes = $this->getAttributes();
+            if(isset($currentAttributes['deleted_at'])) {
+                $freshAttributes['deleted_at'] = $currentAttributes['deleted_at'];
+            }
 
+            $this->setRawAttributes($freshAttributes, true);
             $this->setRelations($fresh->getRelations());
-
             $this->exists = $fresh->exists;
+
+            // echo "! Reloaded node {$this->id}, parent_id {$this->parent_id}\n";
+
+            // echo "! Reloaded node {$this->id}\n";
+            // $this->refresh();
         } else {
             // Revert changes if model is not persisted
             $this->attributes = $this->original;

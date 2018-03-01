@@ -16,15 +16,6 @@ class CategoryRelationsTest extends CategoryTestCase
         $this->assertInstanceOf('Baum\Node', $category->parent()->getRelated());
     }
 
-    public function testParentRelationRefersToCorrectField()
-    {
-        $category = new Category();
-
-        $this->assertEquals($category->getParentColumnName(), $category->parent()->getForeignKey());
-
-        $this->assertEquals($category->getQualifiedParentColumnName(), $category->parent()->getQualifiedForeignKey());
-    }
-
     public function testParentRelation()
     {
         $this->assertEquals($this->categories('Child 2.1')->parent()->first(), $this->categories('Child 2'));
@@ -44,15 +35,6 @@ class CategoryRelationsTest extends CategoryTestCase
         $category = new Category();
 
         $this->assertInstanceOf('Baum\Node', $category->children()->getRelated());
-    }
-
-    public function testChildrenRelationReferesToCorrectField()
-    {
-        $category = new Category();
-
-        $this->assertEquals($category->getParentColumnName(), $category->children()->getPlainForeignKey());
-
-        $this->assertEquals($category->getQualifiedParentColumnName(), $category->children()->getForeignKey());
     }
 
     public function testChildrenRelation()
@@ -104,16 +86,6 @@ class CategoryRelationsTest extends CategoryTestCase
         $children = $this->categories('Root 1')->children()->get()->all();
 
         $expected = [$this->categories('Child 3'), $this->categories('Child 2'), $this->categories('Child 1')];
-        $this->assertEquals($expected, $children);
-    }
-
-    public function testChildrenRelationObeysCustomOrdering()
-    {
-        with(new OrderedCategorySeeder())->run();
-
-        $children = OrderedCategory::find(1)->children()->get()->all();
-
-        $expected = [OrderedCategory::find(5), OrderedCategory::find(2), OrderedCategory::find(3)];
         $this->assertEquals($expected, $children);
     }
 

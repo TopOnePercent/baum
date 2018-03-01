@@ -65,7 +65,7 @@ abstract class Node extends Model
      *
      * @var int
      */
-    protected static $moveToNewParentId = null;
+    protected $newParentId = null;
 
     /**
      * Columns which restrict what we consider our Nested Set list.
@@ -121,10 +121,6 @@ abstract class Node extends Model
 
         static::creating(function ($node) {
             $node->setDefaultLeftAndRight();
-        });
-
-        static::saving(function ($node) {
-            $node->storeNewParent();
         });
 
         static::saved(function ($node) {
@@ -1182,34 +1178,32 @@ abstract class Node extends Model
     }
 
     /**
-     * Store the parent_id if the attribute is modified so as we are able to move
-     * the node to this new parent after saving.
-     *
-     * @return void
-     */
-    public function storeNewParent()
-    {
-        if ($this->isDirty($this->getParentColumnName()) && ($this->exists || !$this->isRoot())) {
-            static::$moveToNewParentId = $this->getParentId();
-        } else {
-            static::$moveToNewParentId = false;
-        }
-    }
-
-    /**
      * Move to the new parent if appropiate.
      *
      * @return void
      */
-    public function moveToNewParent()
+    private function moveToNewParent()
     {
-        $pid = static::$moveToNewParentId;
+        $parentColumnKey = $this->getParentColumnName();
 
-        if (!$pid) {
-            $this->makeRoot();
-        } else {
-            $this->makeChildOf($pid);
+        $oldParentId = null;
+        if(array_key_exists($parentColumnKey, $this->original)) {
+            $oldParentId = $this->original[$parentColumnKey];
         }
+        $newParentId = array_key_exists($parentColumnKey, $this->attributes) ? $this->attributes[$parentColumnKey] : null;
+
+        // echo "moveToNewParent {$this->id}: {$oldParentId} -> {$newParentId}\n";
+        // exit;
+
+        if (!$newParentId) {
+            return $this->makeRoot();
+        } else {
+            if($oldParentId != $newParentId) {
+                return $this->makeChildOf($newParentId);
+            }
+        }
+
+        // throw new \Exception("Failed to move node to new parent {$this->id} from $oldParentId to $newParentId");
     }
 
     /**
@@ -1217,7 +1211,7 @@ abstract class Node extends Model
      *
      * @return \Baum\Node
      */
-    public function setDepth()
+    private function setDepth()
     {
         $self = $this;
 
@@ -1283,8 +1277,11 @@ abstract class Node extends Model
             $rgt = $self->getRight();
 
             // Apply a lock to the rows which fall past the deletion point
-            $self->newNestedSetQuery()->where($lftCol, '>=', $lft)->select($self->getKeyName())
-                ->lockForUpdate()->get();
+            $self->newNestedSetQuery()
+                ->where($lftCol, '>=', $lft)
+                ->select($self->getKeyName())
+                ->lockForUpdate()
+                ->get();
 
             // Prune children, optionally one by one to file deleting / deleted events
             $query = $self->newNestedSetQuery()->where($lftCol, '>', $lft)->where($rgtCol, '<', $rgt);

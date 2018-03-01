@@ -1,6 +1,6 @@
 <?php
 
-class OrderedCategoryTest extends OrderedCategoryTestCase
+class CategoryOrderingTest extends OrderedCategoryTestCase
 {
     public function testAllStaticWithCustomOrder()
     {
@@ -48,7 +48,6 @@ class OrderedCategoryTest extends OrderedCategoryTestCase
         );
     }
 
-
     public function testRootsStaticWithCustomOrder()
     {
         $category = OrderedCategory::create(['name' => 'A new root is born']);
@@ -59,4 +58,13 @@ class OrderedCategoryTest extends OrderedCategoryTestCase
         $this->assertCount(3, $roots);
         $this->assertEquals($category->getAttributes(), $roots->first()->getAttributes());
     }
+
+    public function testChildrenRelationObeysCustomOrdering()
+    {
+        $children = OrderedCategory::find(1)->children()->get()->all();
+
+        $expected = [OrderedCategory::find(5), OrderedCategory::find(2), OrderedCategory::find(3)];
+        $this->assertEquals($expected, $children);
+    }
+
 }

@@ -1,11 +1,14 @@
 <?php
 
-class CategoryScopedTest extends CategoryTestCase
+use Orchestra\Testbench\TestCase;
+
+class CategoryMultiScopedTest extends BaumTestCase
 {
     public function setUp()
     {
         parent::setUp();
 
+        with(new CategoryMigrator())->up();
         with(new MultiScopedCategorySeeder())->run();
     }
 
@@ -126,66 +129,6 @@ class CategoryScopedTest extends CategoryTestCase
         $this->assertEquals($expected, $child3->getSiblingsAndSelf()->all());
     }
 
-    public function testSimpleMovements()
-    {
-        with(new ScopedCategorySeeder())->run();
-
-        $this->assertTrue(ScopedCategory::isValidNestedSet());
-
-        $root3 = ScopedCategory::create(['name' => 'Root 3', 'company_id' => 2]);
-        $this->assertTrue(ScopedCategory::isValidNestedSet());
-
-        $this->categories('Child 6', 'ScopedCategory')->makeChildOf($root3);
-        $this->assertTrue(ScopedCategory::isValidNestedSet());
-
-        $root3->reload();
-        $expected = [$this->categories('Child 6', 'ScopedCategory')];
-        $this->assertEquals($expected, $root3->children()->get()->all());
-    }
-
-    public function testSimpleSubtreeMovements()
-    {
-        with(new ScopedCategorySeeder())->run();
-
-        $this->assertTrue(ScopedCategory::isValidNestedSet());
-
-        $root3 = ScopedCategory::create(['name' => 'Root 3', 'company_id' => 2]);
-        $this->assertTrue(ScopedCategory::isValidNestedSet());
-
-        $this->categories('Child 5', 'ScopedCategory')->makeChildOf($root3);
-        $this->assertTrue(ScopedCategory::isValidNestedSet());
-
-        $root3->reload();
-        $expected = [
-      $this->categories('Child 5', 'ScopedCategory'),
-      $this->categories('Child 5.1', 'ScopedCategory'),
-    ];
-        $this->assertEquals($expected, $root3->getDescendants()->all());
-    }
-
-    public function testFullSubtreeMovements()
-    {
-        with(new ScopedCategorySeeder())->run();
-
-        $this->assertTrue(ScopedCategory::isValidNestedSet());
-
-        $root3 = ScopedCategory::create(['name' => 'Root 3', 'company_id' => 2]);
-        $this->assertTrue(ScopedCategory::isValidNestedSet());
-
-        $this->categories('Root 2', 'ScopedCategory')->makeChildOf($root3);
-        $this->assertTrue(ScopedCategory::isValidNestedSet());
-
-        $root3->reload();
-        $expected = [
-      $this->categories('Root 2', 'ScopedCategory'),
-      $this->categories('Child 4', 'ScopedCategory'),
-      $this->categories('Child 5', 'ScopedCategory'),
-      $this->categories('Child 5.1', 'ScopedCategory'),
-      $this->categories('Child 6', 'ScopedCategory'),
-    ];
-        $this->assertEquals($expected, $root3->getDescendants()->all());
-    }
-
     public function testSimpleMovementsMultiple()
     {
         $this->assertTrue(MultiScopedCategory::isValidNestedSet());
@@ -242,27 +185,25 @@ class CategoryScopedTest extends CategoryTestCase
 
     public function testToHierarchyNestsCorrectlyWithScopedOrder()
     {
-        with(new OrderedScopedCategorySeeder())->run();
-
         $expectedWhole1 = [
-      'Root 1' => [
-          'Child 1' => null,
-          'Child 2' => [
-              'Child 2.1' => null,
-          ],
-          'Child 3' => null,
-      ],
-    ];
+            'Root 1' => [
+                'Child 1' => null,
+                'Child 2' => [
+                    'Child 2.1' => null,
+                ],
+                'Child 3' => null,
+            ],
+        ];
 
         $expectedWhole2 = [
-      'Root 2' => [
-          'Child 4' => null,
-          'Child 5' => [
-              'Child 5.1' => null,
-          ],
-          'Child 6' => null,
-      ],
-    ];
+            'Root 2' => [
+                'Child 4' => null,
+                'Child 5' => [
+                    'Child 5.1' => null,
+                ],
+                'Child 6' => null,
+            ],
+        ];
 
         $this->assertArraysAreEqual($expectedWhole1, hmap(OrderedScopedCategory::where('company_id', 1)->get()->toHierarchy()->toArray()));
         $this->assertArraysAreEqual($expectedWhole2, hmap(OrderedScopedCategory::where('company_id', 2)->get()->toHierarchy()->toArray()));
