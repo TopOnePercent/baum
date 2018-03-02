@@ -110,10 +110,8 @@ trait NestedSet {
      *
      * @return void
      */
-    protected static function boot()
+    protected static function bootNestedSet()
     {
-        parent::boot();
-
         static::creating(function ($node) {
             $node->setDefaultLeftAndRight();
         });
