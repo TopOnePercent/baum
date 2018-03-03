@@ -1,7 +1,6 @@
 <?php
 
 if (! function_exists('flatten_tree')) {
-
     /**
      * Transform a hierarchical array of nodes to a flat array. The order of
      * the nodes returned in the array will match the order they appear in the
@@ -25,4 +24,27 @@ if (! function_exists('flatten_tree')) {
 
         return $result;
     }
+}
+
+if (! function_exists('is_node')) {
+    /**
+     * Check if an object is a Baum node
+     *
+     * @param  mixed  $object   Variable to check
+     * @return boolean
+     */
+    function is_node($object) {
+        $result = false;
+
+        if (is_object($object)) {
+            $traits = class_uses($object);
+
+            if ($object instanceof \Baum\Node || array_key_exists("Baum\Traits\NestedSet", $traits)) {
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
+
 }
