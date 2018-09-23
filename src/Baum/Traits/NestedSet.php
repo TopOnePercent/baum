@@ -3,9 +3,9 @@
 namespace Baum\Traits;
 
 use Baum\Extensions\Eloquent\Collection;
+use Baum\Move;
 
 trait NestedSet {
-
     /**
      * Column name to store the reference to parent's node.
      *
@@ -46,7 +46,7 @@ trait NestedSet {
      *
      * @var array
      */
-    protected $guarded = ['id', 'parent_id', 'lft', 'rgt', 'depth'];
+    protected static $_guarded = ['id', 'parent_id', 'lft', 'rgt', 'depth'];
 
     /**
      * Indicates whether we should move to a new parent.
@@ -103,12 +103,15 @@ trait NestedSet {
      *
      * @return void
      */
-    protected static function boot()
+    protected static function bootNestedSet()
     {
-        parent::boot();
+        static::retrieved(function ($node) {
+            $node->setGuards();
+        });
 
         static::creating(function ($node) {
             $node->setDefaultLeftAndRight();
+            $node->setGuards();
         });
 
         static::saved(function ($node) {
@@ -1163,6 +1166,15 @@ trait NestedSet {
 
         $this->setAttribute($this->getLeftColumnName(), $maxRgt + 1);
         $this->setAttribute($this->getRightColumnName(), $maxRgt + 2);
+    }
+
+    /**
+     * Set guards on node, called when retrieved or creating
+     *
+     * @return void
+     */
+    public function setGuards() {
+        $this->guarded = array_merge(static::$_guarded, $this->guarded);
     }
 
     /**
