@@ -2,8 +2,8 @@
 
 namespace Baum;
 
-use Baum\Extensions\Eloquent\Model;
 use Baum\Traits\NestedSet;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Node.

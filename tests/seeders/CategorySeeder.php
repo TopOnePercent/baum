@@ -24,10 +24,14 @@ class CategorySeeder
 
     public function nestUptoAt($node, $levels = 10, $attrs = [])
     {
+        Category::unguard();
+
         for ($i = 0; $i < $levels; $i++, $node = $new) {
             $new = Category::create(array_merge($attrs, ['name' => "{$node->name}.1"]));
             $new->makeChildOf($node);
         }
+
+        Category::reguard();
     }
 }
 
