@@ -1076,6 +1076,19 @@ trait NestedSet {
     }
 
     /**
+     * Add a child node to a node (a more OO method than makeChildOf)
+     *
+     * @param [type] $node [description]
+     */
+    public function addChild($node) {
+        $parentIdKey = $this->getparentColumnName();
+
+        $node->$parentIdKey = $this->getKey();
+
+        return $node->save();
+    }
+
+    /**
      * Make the node the first child of ...
      *
      * @return \Baum\Node
@@ -1200,6 +1213,11 @@ trait NestedSet {
 
         $newParentId = array_key_exists($parentColumnKey, $this->attributes)
             ? $this->attributes[$parentColumnKey] : null;
+
+        // Should we actually move?
+        if ($oldParentId == $newParentId) {
+            return;
+        }
 
         if (! $newParentId) {
             return $this->makeRoot();
