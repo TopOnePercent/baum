@@ -32,7 +32,7 @@ before_install:
   - composer require "illuminate/filesystem:${ILLUMINATE}" --prefer-dist --no-update
   - composer require "illuminate/support:${ILLUMINATE}" --prefer-dist --no-update
   - composer require --dev "orchestra/testbench:3.5.*" --prefer-dist --no-update
-  - composer require --dev "phpunit/phpunit:6" --prefer-dist --no-update
+  # - composer require --dev "phpunit/phpunit:6" --prefer-dist --no-update
 
 #  if: ILLUMINATE=5.5.*
 #    - composer require --dev "orchestra/testbench:3.5.*"
