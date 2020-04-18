@@ -29,9 +29,10 @@ before_install:
   - composer require "illuminate/events:${ILLUMINATE}" --prefer-dist --no-update
   - composer require "illuminate/filesystem:${ILLUMINATE}" --prefer-dist --no-update
   - composer require "illuminate/support:${ILLUMINATE}" --prefer-dist --no-update
-  
-  if: ILLUMINATE=5.5.*
-    - composer require --dev "orchestra/testbench:3.5.*"
+  - composer require --dev "orchestra/testbench:3.5.*" 
+
+#  if: ILLUMINATE=5.5.*
+#    - composer require --dev "orchestra/testbench:3.5.*"
 
 # optionally set up exclusions and allowed failures in the matrix
 #matrix:
