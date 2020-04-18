@@ -38,6 +38,11 @@
             "src/helpers/tree_helper.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Baum\\Tests\\": "tests"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [

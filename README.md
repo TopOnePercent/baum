@@ -1,4 +1,11 @@
-# Baum 2.0 <a href="https://travis-ci.org/gazsp/baum"><img src="https://travis-ci.org/gazsp/baum.svg?branch=feature/2.0"></a> [![Coverage Status](https://coveralls.io/repos/gazsp/baum/badge.svg?branch=feature/2.0&service=github)](https://coveralls.io/github/gazsp/baum?branch=feature/2.0) [![StyleCI](https://styleci.io/repos/47506280/shield?branch=feature/2.0)](https://styleci.io/analyses/8LLJOw#)
+# Baum 2.0.0 
+
+[![this](https://img.shields.io/badge/warning-development%20build-red)]()
+[![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=2.0.1)](https://travis-ci.org/gazsp/baum)
+[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=2.0.1)](https://coveralls.io/github/gazsp/baum?branch=2.0.0)
+[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=2.0.1&style=flat)](https://github.styleci.io/repos/47506280)
+
+**THIS IS A DEVELOPMENT BUILD**
 
 ## Nested Set implementation for Laravel 5.5+
 
