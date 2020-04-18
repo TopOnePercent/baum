@@ -20,8 +20,8 @@ env:
   # - ILLUMINATE=6.* # LTS | End of Life: 2022-09-03
   # - ILLUMINATE=7.* # End of Life: 2021-03-03
   #- ILLUMINATE=dev-master
-  - TESTBENCH=3.5.*
-  - TESTBENCH=3.6.*
+  # - TESTBENCH=3.5.*
+  # - TESTBENCH=3.6.*
   
 
 before_install:
@@ -38,10 +38,10 @@ before_install:
 #    - composer require --dev "orchestra/testbench:3.5.*"
 
 # optionally set up exclusions and allowed failures in the matrix
-matrix:
-  exclude:
-    - env: ILLUMINATE=5.5.* 
-      NOT env: TESTBENCH=3.5.*
+#matrix:
+#  exclude:
+#    - env: ILLUMINATE=5.5.* 
+#      NOT env: TESTBENCH=3.5.*
 #    - php: 7.1
 #      env: ILLUMINATE=7.*
 #  allow_failures:
