@@ -6,15 +6,14 @@ use Orchestra\Testbench\TestCase;
 
 class UnitAbstract extends TestCase
 {
-
     /**
      * Setup the test environment.
      */
     protected function setUp(): void
     {
         parent::setUp();
-		$this->loadMigrationsFrom(__DIR__ . '/database/migrations');
-        $this->withFactories(__DIR__ . '/database/factories');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->withFactories(__DIR__.'/database/factories');
         $this->artisan('migrate');
     }
 
@@ -51,12 +50,11 @@ class UnitAbstract extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-        	\Baum\Providers\BaumServiceProvider::class,
+            \Baum\Providers\BaumServiceProvider::class,
             //\Poing\Earmark\EarmarkServiceProvider::class,
             //\Poing\Ylem\YlemServiceProvider::class,
             //'Cartalyst\Sentry\SentryServiceProvider',
             //'YourProject\YourPackage\YourPackageServiceProvider',
         ];
     }
-    
 }
