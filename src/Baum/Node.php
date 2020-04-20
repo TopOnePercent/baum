@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * Nested sets are appropiate when you want either an ordered tree (menus,
  * commercial categories, etc.) or an efficient way of querying big trees.
  */
-abstract class Node extends Model {
+abstract class Node extends Model
+{
     use NestedSet;
 }

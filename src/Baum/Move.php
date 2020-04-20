@@ -2,8 +2,8 @@
 
 namespace Baum;
 
-use Illuminate\Contracts\Events\Dispatcher;
 use Baum\Exceptions\MoveNotPossibleException;
+use Illuminate\Contracts\Events\Dispatcher;
 
 /**
  * Move.
@@ -133,7 +133,7 @@ class Move
      */
     public function updateStructure()
     {
-        list($a, $b, $c, $d) = $this->boundaries();
+        [$a, $b, $c, $d] = $this->boundaries();
 
         // select the rows between the leftmost & the rightmost boundaries and apply a lock
         $this->applyLockBetween($a, $d);
@@ -168,10 +168,10 @@ class Move
     ELSE $wrappedParent END";
 
         $updateConditions = [
-    $leftColumn   => $connection->raw($lftSql),
-    $rightColumn  => $connection->raw($rgtSql),
-    $parentColumn => $connection->raw($parentSql),
-    ];
+            $leftColumn   => $connection->raw($lftSql),
+            $rightColumn  => $connection->raw($rgtSql),
+            $parentColumn => $connection->raw($parentSql),
+        ];
 
         if ($this->node->timestamps) {
             $updateConditions[$this->node->getUpdatedAtColumn()] = $this->node->freshTimestamp();
@@ -307,11 +307,11 @@ class Move
         // we have defined the boundaries of two non-overlapping intervals,
         // so sorting puts both the intervals and their boundaries in order
         $this->_boundaries = [
-    $this->node->getLeft(),
-    $this->node->getRight(),
-    $this->bound1(),
-    $this->bound2(),
-    ];
+            $this->node->getLeft(),
+            $this->node->getRight(),
+            $this->bound1(),
+            $this->bound2(),
+        ];
         sort($this->_boundaries);
 
         return $this->_boundaries;

@@ -1,6 +1,5 @@
 <?php
 
-
 class CategoryMultiScopedTest extends BaumTestCase
 {
     public function setUp()
@@ -155,9 +154,9 @@ class CategoryMultiScopedTest extends BaumTestCase
 
         $root2->reload();
         $expected = [
-      $this->categories('Hijo 2', 'MultiScopedCategory'),
-      $this->categories('Hijo 2.1', 'MultiScopedCategory'),
-    ];
+            $this->categories('Hijo 2', 'MultiScopedCategory'),
+            $this->categories('Hijo 2.1', 'MultiScopedCategory'),
+        ];
         $this->assertEquals($expected, $root2->getDescendants()->all());
     }
 
@@ -173,12 +172,12 @@ class CategoryMultiScopedTest extends BaumTestCase
 
         $root2->reload();
         $expected = [
-      $this->categories('Raiz 1', 'MultiScopedCategory'),
-      $this->categories('Hijo 1', 'MultiScopedCategory'),
-      $this->categories('Hijo 2', 'MultiScopedCategory'),
-      $this->categories('Hijo 2.1', 'MultiScopedCategory'),
-      $this->categories('Hijo 3', 'MultiScopedCategory'),
-    ];
+            $this->categories('Raiz 1', 'MultiScopedCategory'),
+            $this->categories('Hijo 1', 'MultiScopedCategory'),
+            $this->categories('Hijo 2', 'MultiScopedCategory'),
+            $this->categories('Hijo 2.1', 'MultiScopedCategory'),
+            $this->categories('Hijo 3', 'MultiScopedCategory'),
+        ];
         $this->assertEquals($expected, $root2->getDescendants()->all());
     }
 
