@@ -16,6 +16,7 @@
             "homepage": "http://red-robot.co.uk"
         }
     ],
+    "prefer-stable": true,
     "require": {
         "php": ">=7.2",
         "illuminate/console": ">=5.8",
