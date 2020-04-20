@@ -19,9 +19,9 @@ class ModelGenerator extends Generator
         $stub = $this->getStub('model');
 
         $this->files->put($path, $this->parseStub($stub, [
-      'table' => $this->tableize($name),
-      'class' => $this->classify($name),
-    ]));
+            'table' => $this->tableize($name),
+            'class' => $this->classify($name),
+        ]));
 
         return $path;
     }

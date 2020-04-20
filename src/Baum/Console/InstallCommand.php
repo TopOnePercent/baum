@@ -2,9 +2,9 @@
 
 namespace Baum\Console;
 
-use Illuminate\Console\Command;
-use Baum\Generators\ModelGenerator;
 use Baum\Generators\MigrationGenerator;
+use Baum\Generators\ModelGenerator;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
 class InstallCommand extends Command

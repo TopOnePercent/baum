@@ -28,12 +28,13 @@ if (! function_exists('flatten_tree')) {
 
 if (! function_exists('is_node')) {
     /**
-     * Check if an object is a Baum node
+     * Check if an object is a Baum node.
      *
      * @param  mixed  $object   Variable to check
-     * @return boolean
+     * @return bool
      */
-    function is_node($object) {
+    function is_node($object)
+    {
         $result = false;
 
         if (is_object($object)) {
@@ -46,5 +47,4 @@ if (! function_exists('is_node')) {
 
         return $result;
     }
-
 }
