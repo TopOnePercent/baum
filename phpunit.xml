@@ -10,10 +10,11 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Basic Test Suite">
-            <file>tests/Baseline/BaselineTest.php</file>
-            <file>tests/Baseline/EloquentTest.php</file>
-
+        <testsuite name="Baseline Eloquent Test">
+            <directory>tests/Baseline</directory>
+        </testsuite>
+        <testsuite name="Basic Baum Test">
+            <directory>tests/Basic</directory>
         </testsuite>
     </testsuites>
     <filter>
