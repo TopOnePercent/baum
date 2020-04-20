@@ -11,7 +11,8 @@ use Baum\SetValidator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-trait NestedSet {
+trait NestedSet
+{
     /**
      * Column name to store the reference to parent's node.
      *
@@ -1076,11 +1077,12 @@ trait NestedSet {
     }
 
     /**
-     * Add a child node to a node (a more OO method than makeChildOf)
+     * Add a child node to a node (a more OO method than makeChildOf).
      *
      * @param [type] $node [description]
      */
-    public function addChild($node) {
+    public function addChild($node)
+    {
         $parentIdKey = $this->getparentColumnName();
 
         $node->$parentIdKey = $this->getKey();
@@ -1188,11 +1190,12 @@ trait NestedSet {
     }
 
     /**
-     * Set guards on node, called when retrieved or creating
+     * Set guards on node, called when retrieved or creating.
      *
      * @return void
      */
-    public function setGuards() {
+    public function setGuards()
+    {
         $this->guarded = array_merge(static::$_guarded, $this->guarded);
     }
 
@@ -1435,7 +1438,7 @@ trait NestedSet {
      */
     protected function computeLevel()
     {
-        list($node, $nesting) = $this->determineDepth($this);
+        [$node, $nesting] = $this->determineDepth($this);
 
         if ($node->equals($this)) {
             return $this->ancestors()->count();
@@ -1589,6 +1592,4 @@ trait NestedSet {
     {
         return with(new static())->areSoftDeletesEnabled();
     }
-
-
 }
