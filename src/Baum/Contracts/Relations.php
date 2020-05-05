@@ -4,5 +4,4 @@ namespace Baum\Contracts;
 
 interface Relations
 {
-
 }
