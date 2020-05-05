@@ -12,7 +12,7 @@ class CategoryMovementTest extends CategoryTestCase
     }
 
     /**
-     * @expectedException Baum\MoveNotPossibleException
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
      */
     public function testMoveLeftRaisesAnExceptionWhenNotPossible()
     {
@@ -58,7 +58,7 @@ class CategoryMovementTest extends CategoryTestCase
     }
 
     /**
-     * @expectedException Baum\MoveNotPossibleException
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
      */
     public function testMoveToLeftOfRaisesAnExceptionWhenNotPossible()
     {
@@ -99,7 +99,7 @@ class CategoryMovementTest extends CategoryTestCase
     }
 
     /**
-     * @expectedException Baum\MoveNotPossibleException
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
      */
     public function testMoveRightRaisesAnExceptionWhenNotPossible()
     {
@@ -147,7 +147,7 @@ class CategoryMovementTest extends CategoryTestCase
     }
 
     /**
-     * @expectedException Baum\MoveNotPossibleException
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
      */
     public function testMoveToRightOfRaisesAnExceptionWhenNotPossible()
     {
@@ -260,6 +260,7 @@ class CategoryMovementTest extends CategoryTestCase
         $lastChild = $this->categories('Root 1')->children()->get()->last();
 
         $this->assertEquals($newChild->getAttributes(), $lastChild->getAttributes());
+
         $this->assertTrue(Category::isValidNestedSet());
     }
 
@@ -462,7 +463,7 @@ class CategoryMovementTest extends CategoryTestCase
     }
 
     /**
-     * @expectedException Baum\MoveNotPossibleException
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
      */
     public function testUnpersistedNodeCannotBeMoved()
     {
@@ -472,7 +473,7 @@ class CategoryMovementTest extends CategoryTestCase
     }
 
     /**
-     * @expectedException Baum\MoveNotPossibleException
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
      */
     public function testUnpersistedNodeCannotBeMadeChild()
     {
@@ -482,7 +483,7 @@ class CategoryMovementTest extends CategoryTestCase
     }
 
     /**
-     * @expectedException Baum\MoveNotPossibleException
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
      */
     public function testNodesCannotBeMovedToItself()
     {
@@ -492,7 +493,7 @@ class CategoryMovementTest extends CategoryTestCase
     }
 
     /**
-     * @expectedException Baum\MoveNotPossibleException
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
      */
     public function testNodesCannotBeMadeChildOfThemselves()
     {
@@ -502,7 +503,7 @@ class CategoryMovementTest extends CategoryTestCase
     }
 
     /**
-     * @expectedException Baum\MoveNotPossibleException
+     * @expectedException Baum\Exceptions\MoveNotPossibleException
      */
     public function testNodesCannotBeMovedToDescendantsOfThemselves()
     {

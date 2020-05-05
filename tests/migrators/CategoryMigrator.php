@@ -1,14 +1,14 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Support\Facades\Schema;
 
 class CategoryMigrator
 {
     public function up()
     {
-        DB::schema()->dropIfExists('categories');
+        Schema::dropIfExists('categories');
 
-        DB::schema()->create('categories', function ($t) {
+        Schema::create('categories', function ($t) {
             $t->increments('id');
 
             $t->integer('parent_id')->nullable();
@@ -30,6 +30,6 @@ class CategoryMigrator
 
     public function down()
     {
-        DB::schema()->drop('categories');
+        Schema::drop('categories');
     }
 }

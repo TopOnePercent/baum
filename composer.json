@@ -1,15 +1,31 @@
 {
-  "name": "gazsp/baum",
-  "type": "library",
-  "description": "Baum is an implementation of the Nested Set pattern for Eloquent models.",
-  "keywords": ["nested set", "laravel", "laravel 5", "eloquent", "database"],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Estanislau Trepat",
-      "email": "estanis@etrepat.com",
-      "homepage": "http://etrepat.com"
+    "name": "gazsp/baum",
+    "type": "library",
+    "description": "Baum is an implementation of the Nested Set pattern for Eloquent models.",
+    "keywords": ["nested set", "mptt", "laravel", "laravel 5", "eloquent", "database"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Estanislau Trepat",
+            "email": "estanis@etrepat.com",
+            "homepage": "http://etrepat.com"
+        },
+        {
+            "name": "Gary Pearman",
+            "email": "gaz@red-robot.co.uk",
+            "homepage": "http://red-robot.co.uk"
+        }
+    ],
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.2",
+        "illuminate/console": ">=5.8",
+        "illuminate/database": ">=5.8",
+        "illuminate/events": ">=5.8",
+        "illuminate/filesystem": ">=5.8",
+        "illuminate/support": ">=5.8"
     },
+<<<<<<< HEAD
     {
       "name": "Gary Pearman",
       "email": "gaz@red-robot.co.uk",
@@ -35,6 +51,29 @@
   "autoload": {
     "psr-0": {
       "Baum": "src/"
+=======
+    "require-dev": {
+        "orchestra/testbench": "^5"
+    },
+    "autoload": {
+        "psr-0": {
+            "Baum": "src/"
+        },
+        "files": [
+            "src/helpers/tree_helper.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Baum\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Baum\\Providers\\BaumServiceProvider"
+            ]
+        }
+>>>>>>> 2.0.1
     }
-  }
 }

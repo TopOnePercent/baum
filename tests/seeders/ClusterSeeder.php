@@ -1,13 +1,9 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as DB;
-
 class ClusterSeeder
 {
     public function run()
     {
-        DB::table('clusters')->delete();
-
         Cluster::unguard();
 
         Cluster::create(['id' => '7461d8f5-2ea9-4788-99c4-9d0244f0bfb1', 'name' => 'Root 1', 'lft' => 1, 'rgt' => 10, 'depth' => 0]);
@@ -33,8 +29,6 @@ class OrderedClusterSeeder
 {
     public function run()
     {
-        DB::table('clusters')->delete();
-
         OrderedCluster::unguard();
 
         OrderedCluster::create(['id' => '7461d8f5-2ea9-4788-99c4-9d0244f0bfb1', 'name' => 'Root Z', 'lft' => 1, 'rgt' => 10, 'depth' => 0]);

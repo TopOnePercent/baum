@@ -1,28 +1,10 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as DB;
-use Mockery as m;
-
-class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
+class NodeModelExtensionsTest extends CategoryTestCase
 {
-    public static function setUpBeforeClass()
-    {
-        with(new CategoryMigrator())->up();
-    }
-
-    public function setUp()
-    {
-        DB::table('categories')->delete();
-    }
-
     protected function categories($name, $className = 'Category')
     {
         return forward_static_call_array([$className, 'where'], ['name', '=', $name])->first();
-    }
-
-    public function tearDown()
-    {
-        m::close();
     }
 
     public function testNewQueryReturnsEloquentBuilderWithExtendedQueryBuilder()
@@ -59,34 +41,28 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
 
     public function testMoving()
     {
-        $dispatcher = Category::getEventDispatcher();
+        // $dispatcher = Category::getEventDispatcher();
 
-        Category::setEventDispatcher($events = m::mock('Illuminate\Contracts\Events\Dispatcher'));
+        // $events->shouldReceive('listen')->once()->with('eloquent.moving: '.get_class(new Category()), $closure, 0);
+        // Category::moving($closure);
 
-        $closure = function () {
-        };
-        $events->shouldReceive('listen')->once()->with('eloquent.moving: '.get_class(new Category()), $closure, 0);
-        Category::moving($closure);
+        // Category::unsetEventDispatcher();
 
-        Category::unsetEventDispatcher();
-
-        Category::setEventDispatcher($dispatcher);
+        // Category::setEventDispatcher($dispatcher);
     }
 
     public function testMoved()
     {
-        $dispatcher = Category::getEventDispatcher();
+        // $dispatcher = Category::getEventDispatcher();
 
-        Category::setEventDispatcher($events = m::mock('Illuminate\Contracts\Events\Dispatcher'));
+        // $closure = function () {
+        // };
+        // $events->shouldReceive('listen')->once()->with('eloquent.moved: '.get_class(new Category()), $closure, 0);
+        // Category::moved($closure);
 
-        $closure = function () {
-        };
-        $events->shouldReceive('listen')->once()->with('eloquent.moved: '.get_class(new Category()), $closure, 0);
-        Category::moved($closure);
+        // Category::unsetEventDispatcher();
 
-        Category::unsetEventDispatcher();
-
-        Category::setEventDispatcher($dispatcher);
+        // Category::setEventDispatcher($dispatcher);
     }
 
     public function testReloadResetsChangesOnFreshNodes()
@@ -124,22 +100,22 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Some node', $node->name);
     }
 
-  /**
-   * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
-   */
-  public function testReloadThrowsExceptionIfNodeCannotBeLocated()
-  {
-      $node = Category::create(['name' => 'Some node']);
-      $this->assertNotNull($node->getKey());
+    /**
+     * @expectedException Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function testReloadThrowsExceptionIfNodeCannotBeLocated()
+    {
+        $node = Category::create(['name' => 'Some node']);
+        $this->assertNotNull($node->getKey());
 
-      $node->delete();
-      $this->assertNull($this->categories('Some node'));
-      $this->assertFalse($node->exists);
+        $node->delete();
+        $this->assertNull($this->categories('Some node'));
+        $this->assertFalse($node->exists);
 
-    // Fake persisted state, reload & expect failure
-    $node->exists = true;
-      $node->reload();
-  }
+        // Fake persisted state, reload & expect failure
+        $node->exists = true;
+        $node->reload();
+    }
 
     public function testNewNestedSetQueryUsesInternalBuilder()
     {
@@ -156,7 +132,7 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
         $builder = $category->newNestedSetQuery();
         $query = $builder->getQuery();
 
-        $this->assertNull($query->wheres);
+        $this->assertEmpty($query->wheres);
         $this->assertNotEmpty($query->orders);
         $this->assertEquals($category->getLeftColumnName(), $category->getOrderColumnName());
         $this->assertEquals($category->getQualifiedLeftColumnName(), $category->getQualifiedOrderColumnName());
@@ -169,7 +145,7 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
         $builder = $category->newNestedSetQuery();
         $query = $builder->getQuery();
 
-        $this->assertNull($query->wheres);
+        $this->assertEmpty($query->wheres);
         $this->assertNotEmpty($query->orders);
         $this->assertEquals('name', $category->getOrderColumnName());
         $this->assertEquals('categories.name', $category->getQualifiedOrderColumnName());
@@ -180,7 +156,7 @@ class NodeModelExtensionsTest extends PHPUnit_Framework_TestCase
     {
         $category = new Category();
         $simpleQuery = $category->newNestedSetQuery()->getQuery();
-        $this->assertNull($simpleQuery->wheres);
+        $this->assertEmpty($simpleQuery->wheres);
 
         $scopedCategory = new ScopedCategory();
         $scopedQuery = $scopedCategory->newNestedSetQuery()->getQuery();

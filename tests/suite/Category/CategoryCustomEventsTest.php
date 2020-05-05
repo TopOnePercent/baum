@@ -1,57 +1,70 @@
 <?php
 
-use Mockery as m;
+use Illuminate\Support\Facades\Event;
 
 class CategoryCustomEventsTest extends CategoryTestCase
 {
-    public function tearDown()
+    public function testMovingEventFired()
     {
-        m::close();
+        Event::fake();
+
+        $node = $this->categories('Child 2');
+
+        $node->makeRoot();
+        $node->reload();
+
+        Event::assertDispatched('eloquent.moving: '.get_class($node), function ($event, $object) use ($node) {
+            return $object->id == $node->id;
+        });
     }
 
     public function testMovementEventsFire()
     {
-        $dispatcher = Category::getEventDispatcher();
-        Category::setEventDispatcher($events = m::mock('Illuminate\Events\Dispatcher'));
+        Event::fake();
 
-        $child = $this->categories('Child 1');
+        $node = $this->categories('Child 1');
+        $node->moveToRightOf($this->categories('Child 3'));
 
-        $events->shouldReceive('until')->once()->with('eloquent.moving: '.get_class($child), $child)->andReturn(true);
-        $events->shouldReceive('fire')->once()->with('eloquent.moved: '.get_class($child), $child)->andReturn(true);
+        Event::assertDispatched('eloquent.moving: '.get_class($node), function ($event, $object) use ($node) {
+            return $object->id == $node->id;
+        });
 
-        $child->moveToRightOf($this->categories('Child 3'));
-
-        Category::unsetEventDispatcher();
-        Category::setEventDispatcher($dispatcher);
+        Event::assertDispatched('eloquent.moved: '.get_class($node), function ($event, $object) use ($node) {
+            return $object->id == $node->id;
+        });
     }
 
-    public function testMovementHaltsWhenReturningFalseFromMoving()
+    public function testDoesNotMoveWhenReturningFalseFromMoving()
     {
-        $unchanged = $this->categories('Child 2');
+        $node = $this->categories('Child 2');
 
-        $dispatcher = Category::getEventDispatcher();
+        Category::moving(function ($node) {
+            return false;
+        });
 
-        Category::setEventDispatcher($events = m::mock('Illuminate\Events\Dispatcher[until]'));
-        $events->shouldReceive('until')->once()->with('eloquent.moving: '.get_class($unchanged), $unchanged)->andReturn(false);
+        $node->makeRoot();
+        $node->reload();
 
-    // Force "moving" to return false
-    Category::moving(function ($node) {
-        return false;
-    });
+        $this->assertEquals(1, $node->getParentId());
+        $this->assertEquals(1, $node->getLevel());
+        $this->assertEquals(4, $node->getLeft());
+        $this->assertEquals(7, $node->getRight());
+    }
 
-        $unchanged->makeRoot();
+    public function testDoesMoveWhenReturningTrueFromMoving()
+    {
+        $node = $this->categories('Child 2');
 
-        $unchanged->reload();
+        Category::moving(function ($node) {
+            return true;
+        });
 
-        $this->assertEquals(1, $unchanged->getParentId());
-        $this->assertEquals(1, $unchanged->getLevel());
-        $this->assertEquals(4, $unchanged->getLeft());
-        $this->assertEquals(7, $unchanged->getRight());
+        $node->makeRoot();
+        $node->reload();
 
-    // Restore
-    Category::getEventDispatcher()->forget('eloquent.moving: '.get_class($unchanged));
-
-        Category::unsetEventDispatcher();
-        Category::setEventDispatcher($dispatcher);
+        $this->assertEquals(null, $node->getParentId());
+        $this->assertEquals(0, $node->getLevel());
+        $this->assertEquals(9, $node->getLeft());
+        $this->assertEquals(12, $node->getRight());
     }
 }

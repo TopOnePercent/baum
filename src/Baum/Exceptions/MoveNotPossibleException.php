@@ -1,6 +1,6 @@
 <?php
 
-namespace Baum;
+namespace Baum\Exceptions;
 
 class MoveNotPossibleException extends \RuntimeException
 {

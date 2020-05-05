@@ -11,6 +11,8 @@ class Cluster extends Node
 
     public $timestamps = false;
 
+    protected $fillable = ['name'];
+
     protected static function boot()
     {
         parent::boot();
