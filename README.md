@@ -1,23 +1,28 @@
 # Baum v2
 
-[![this](https://img.shields.io/badge/warning-development%20build-red)]()
 [![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=master)](https://travis-ci.org/gazsp/baum)
 [![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=master)](https://coveralls.io/github/gazsp/baum?branch=master)
 [![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=master&style=flat)](https://github.styleci.io/repos/47506280)
 
-**THIS IS A DEVELOPMENT BUILD**
-
-## Nested Set implementation for Laravel 5.5+
-
-## The feature/2.0 branch is currently a work in progress and is probably broken - don't attempt to use it! ##
-
-> If you find a bug, please file an issue and submit a pull request with a failing unit test
+## Nested Set implementation for Laravel
 
 Baum is an implementation of the [Nested Set](http://en.wikipedia.org/wiki/Nested_set_model)
-pattern for [Laravel 5's](http://laravel.com/) Eloquent ORM.
+pattern for the [Laravel](http://laravel.com/) Eloquent ORM.
 
-> For **Laravel 4.2.x compatibility**, check the [1.0.x branch](https://github.com/etrepat/baum/tree/1.0.x-stable) branch or use the latest [1.0.x tagged release](https://github.com/etrepat/baum/releases).
+---
 
+[![this](https://img.shields.io/badge/warning-work%20in%20progress-red)]()
+
+*If you find a bug*, **please** file an issue and submit a pull request with a failing unit test.
+
+---
+
+## Installation
+
+Baum v2 works with Laravel 5.8 (and PHP 7.2) and above. You can add it to your project with:
+```
+composer require gazsp/baum
+```
 ## Documentation
 
 * [About Nested Sets](#about)

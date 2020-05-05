@@ -1,14 +1,16 @@
 <?php
 
-class CategoryMultiScopedTest extends BaumTestCase
-{
-    public function setUp()
-    {
-        parent::setUp();
+namespace Baum\Tests\Suite\Category;
 
-        with(new CategoryMigrator())->up();
-        with(new MultiScopedCategorySeeder())->run();
-    }
+class CategoryMultiScopedTest extends CategoryAbstract
+{
+//     public function setUp()
+//     {
+//         parent::setUp();
+//
+//         with(new CategoryMigrator())->up();
+//         with(new MultiScopedCategorySeeder())->run();
+//     }
 
     public function testInSameScope()
     {

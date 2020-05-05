@@ -1,6 +1,10 @@
 <?php
 
-class CategoryTreeRebuildingTest extends CategoryTestCase
+namespace Baum\Tests\Suite\Category;
+
+use Baum\Tests\Suite\Models\Category;
+
+class CategoryTreeRebuildingTest extends CategoryAbstract
 {
     public function testRebuild()
     {

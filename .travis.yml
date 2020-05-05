@@ -40,16 +40,16 @@ matrix:
       env: TESTBENCH=3.9.*
     - php: hhvm
       env: TESTBENCH=4.*
-  allow_failures:
-    # https://github.com/sebastianbergmann/phpunit/issues/4038
-    - php: 7.3
-      env: TESTBENCH=4.*
-    - php: 7.3
-      env: TESTBENCH=5.*
-    - php: 7.4
-      env: TESTBENCH=4.*
-    - php: 7.4
-      env: TESTBENCH=5.*
+#  allow_failures:
+#    # https://github.com/sebastianbergmann/phpunit/issues/4038
+#    - php: 7.3
+#      env: TESTBENCH=4.*
+#    - php: 7.3
+#      env: TESTBENCH=5.*
+#    - php: 7.4
+#      env: TESTBENCH=4.*
+#    - php: 7.4
+#      env: TESTBENCH=5.*
 
 before_script:
   - travis_retry composer self-update

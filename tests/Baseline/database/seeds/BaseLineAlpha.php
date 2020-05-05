@@ -11,6 +11,6 @@ class BaseLineAlpha extends Seeder
      */
     public function run()
     {
-        factory(App\BaseLineAlpha::class, 50)->create();
+        factory(BaseLineAlpha::class, 50)->create();
     }
 }

@@ -16,6 +16,7 @@
         <testsuite name="Basic Baum Test">
             <directory>tests/Basic</directory>
         </testsuite>
+
     </testsuites>
     <filter>
         <whitelist>

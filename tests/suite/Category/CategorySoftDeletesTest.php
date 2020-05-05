@@ -1,6 +1,8 @@
 <?php
 
-// class CategorySoftDeletesTest extends CategoryTestCase
+namespace Baum\Tests\Suite\Category;
+
+// class CategorySoftDeletesTest extends CategoryAbstract
 // {
 //     public function testReload()
 //     {

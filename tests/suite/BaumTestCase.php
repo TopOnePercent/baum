@@ -1,5 +1,7 @@
 <?php
 
+namespace Baum\Tests\Suite;
+
 use Orchestra\Testbench\TestCase;
 
 class BaumTestCase extends TestCase
@@ -10,26 +12,26 @@ class BaumTestCase extends TestCase
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
-    protected function getEnvironmentSetUp($app)
-    {
-        $config = [
-            'driver'   => 'sqlite',
-            'database' => ':memory:',
-            'prefix'   => '',
-        ];
-
-        // $config = [
-        //     'driver' => 'mysql',
-        //     'host' => 'localhost',
-        //     'username' => 'root',
-        //     'password' => '',
-        //     'database' => 'baum_testing'
-        // ];
-
-        // Setup database
-        $app['config']->set('database.default', 'default');
-        $app['config']->set('database.connections.default', $config);
-    }
+//     protected function getEnvironmentSetUp($app)
+//     {
+//         $config = [
+//             'driver'   => 'sqlite',
+//             'database' => ':memory:',
+//             'prefix'   => '',
+//         ];
+//
+//         // $config = [
+//         //     'driver' => 'mysql',
+//         //     'host' => 'localhost',
+//         //     'username' => 'root',
+//         //     'password' => '',
+//         //     'database' => 'baum_testing'
+//         // ];
+//
+//         // Setup database
+//         $app['config']->set('database.default', 'default');
+//         $app['config']->set('database.connections.default', $config);
+//     }
 
     public function assertArraysAreEqual($expected, $actual, $message = '')
     {

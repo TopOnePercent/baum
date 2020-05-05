@@ -1,6 +1,10 @@
 <?php
 
-class CategoryRelationsTest extends CategoryTestCase
+namespace Baum\Tests\Suite\Category;
+
+use Baum\Tests\Suite\Models\Category;
+
+class CategoryRelationsTest extends CategoryAbstract
 {
     public function testParentRelationIsABelongsTo()
     {
