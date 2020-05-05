@@ -245,4 +245,13 @@ class BasicBaumTest extends UnitAbstract
 
         $this->assertEquals(3, $data->getImmediateDescendants()->count());
     }
+
+    /** @test */
+    public function makeBaumTest()
+    {
+        $this->artisan('make:baum AlphaTest --force')
+            ->expectsOutput('Model created successfully.')
+            ->assertExitCode(0);
+    }
+
 }

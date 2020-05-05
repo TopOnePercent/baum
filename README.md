@@ -130,7 +130,9 @@ the following line into the `providers` array:
 After the package is correctly installed the easiest way to get started is to
 run the provided generator:
 
-    php artisan baum:install MODEL
+```
+php artisan make:baum {model_name}
+```
 
 Replace model by the class name you plan to use for your Nested Set model.
 

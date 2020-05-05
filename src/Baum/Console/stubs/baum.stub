@@ -1,0 +1,10 @@
+<?php
+
+namespace {{ namespace }};
+
+use Baum\Node;
+
+class {{ class }} extends Node
+{
+    // protected $fillable = ['name'];
+}
