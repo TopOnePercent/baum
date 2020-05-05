@@ -1,8 +1,8 @@
 # Baum v2
 
-[![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=master)](https://travis-ci.org/gazsp/baum)
-[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=master)](https://coveralls.io/github/gazsp/baum?branch=master)
-[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=master&style=flat)](https://github.styleci.io/repos/47506280)
+[![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=2.0.2)](https://travis-ci.org/gazsp/baum)
+[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=2.0.2)](https://coveralls.io/github/gazsp/baum?branch=2.0.2)
+[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=2.0.2&style=flat)](https://github.styleci.io/repos/47506280)
 
 ## Nested Set implementation for Laravel
 
