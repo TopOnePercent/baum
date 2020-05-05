@@ -253,5 +253,4 @@ class BasicBaumTest extends UnitAbstract
             ->expectsOutput('Model created successfully.')
             ->assertExitCode(0);
     }
-
 }
