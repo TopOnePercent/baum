@@ -142,7 +142,7 @@ class ModelMakeCommand extends GeneratorCommand
 //         return $this->option('pivot')
 //                     ? $this->resolveStubPath('/stubs/model.pivot.stub')
 //                     : $this->resolveStubPath('/stubs/baum.stub');
-		return $this->resolveStubPath('/stubs/baum.stub');
+        return $this->resolveStubPath('/stubs/baum.stub');
     }
 
     /**

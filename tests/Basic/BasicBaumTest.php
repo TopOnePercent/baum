@@ -260,5 +260,4 @@ class BasicBaumTest extends UnitAbstract
             ->assertExitCode(0);
 
     }
-
 }
