@@ -1,8 +1,8 @@
 # Baum v2
 
-[![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=2.0.2)](https://travis-ci.org/gazsp/baum)
-[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=2.0.2)](https://coveralls.io/github/gazsp/baum?branch=2.0.2)
-[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=2.0.2&style=flat)](https://github.styleci.io/repos/47506280)
+[![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=master)](https://travis-ci.org/gazsp/baum)
+[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=master)](https://coveralls.io/github/gazsp/baum?branch=master)
+[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=master&style=flat)](https://github.styleci.io/repos/47506280)
 
 ## Nested Set implementation for Laravel
 
@@ -111,18 +111,10 @@ ordinary trees are suddenly quite fast. Nifty, isn't it?
 <a name="installation"></a>
 ## Installation
 
-Baum works with Laravel 5.5 (and PHP 7) and above. You can add it to your `composer.json` file
-with:
-
-    "gazsp/baum": "2.0"
-
-Run `composer install` to install it.
-
-As with most Laravel 5 packages you'll then need to register the Baum
-*service provider*. To do that, head over your `config/app.php` file and add
-the following line into the `providers` array:
-
-    'Baum\Providers\BaumServiceProvider',
+Baum works with Laravel 5.8 (and PHP 7.2) and above. You can add it to your project with:
+```
+composer require gazsp/baum:2.*
+```
 
 <a name="getting-started"></a>
 ## Getting started
