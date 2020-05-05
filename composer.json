@@ -25,33 +25,6 @@
         "illuminate/filesystem": ">=5.8",
         "illuminate/support": ">=5.8"
     },
-<<<<<<< HEAD
-    {
-      "name": "Gary Pearman",
-      "email": "gaz@red-robot.co.uk",
-      "homepage": "http://red-robot.co.uk"
-    }
-
-  ],
-  "require": {
-    "php": ">=5.5.9",
-    "illuminate/console": "5.2.0 - 5.4.36",
-    "illuminate/database": "5.2.0 - 5.4.36",
-    "illuminate/events": "5.2.0 - 5.4.36",
-    "illuminate/filesystem": "5.2.0 - 5.4.36",
-    "illuminate/support": "5.2.0 - 5.4.36"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "4.*",
-    "mockery/mockery": "^0.9",
-    "d11wtq/boris": "^1.0.10",
-    "satooshi/php-coveralls": "^2.0",
-    "fabpot/php-cs-fixer": "^1.11"
-  },
-  "autoload": {
-    "psr-0": {
-      "Baum": "src/"
-=======
     "require-dev": {
         "orchestra/testbench": "^5"
     },
@@ -74,6 +47,5 @@
                 "Baum\\Providers\\BaumServiceProvider"
             ]
         }
->>>>>>> 2.0.1
     }
 }

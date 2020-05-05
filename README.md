@@ -1,15 +1,9 @@
-# Baum 2.0.0 
+# Baum v2
 
-<<<<<<< HEAD
-## Forked from [etrepat/baum](https://github.com/etrepat/baum) - Continuing development and fixing failing unit tests for Laravel 5.x (Currently supports Laravel 5.2 - 5.4)
-
-### Version 2.0 supporting Laravel 5.5, traits, etc is *in progress*. Please check the [feature/2.0](https://github.com/gazsp/baum/tree/feature/2.0) branch for more info.
-=======
 [![this](https://img.shields.io/badge/warning-development%20build-red)]()
-[![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=2.0.1)](https://travis-ci.org/gazsp/baum)
-[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=2.0.1)](https://coveralls.io/github/gazsp/baum?branch=2.0.0)
-[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=2.0.1&style=flat)](https://github.styleci.io/repos/47506280)
->>>>>>> 2.0.1
+[![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=master)](https://travis-ci.org/gazsp/baum)
+[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=master)](https://coveralls.io/github/gazsp/baum?branch=master)
+[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=master&style=flat)](https://github.styleci.io/repos/47506280)
 
 **THIS IS A DEVELOPMENT BUILD**
 
