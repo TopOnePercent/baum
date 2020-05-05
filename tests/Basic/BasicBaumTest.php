@@ -248,16 +248,15 @@ class BasicBaumTest extends UnitAbstract
 
     /** @test */
     public function makeBaumTest()
-    {    
-		$faker = \Faker\Factory::create();
-    
-        $this->artisan('make:baum ' . $faker->domainWord)
+    {
+        $faker = \Faker\Factory::create();
+
+        $this->artisan('make:baum '.$faker->domainWord)
             ->expectsOutput('Model created successfully.')
             ->assertExitCode(0);
 
-        $this->artisan('make:baum ' . $faker->domainWord . ' --force')
+        $this->artisan('make:baum '.$faker->domainWord.' --force')
             ->expectsOutput('Model created successfully.')
             ->assertExitCode(0);
-
     }
 }
