@@ -8,7 +8,7 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false">
+         stopOnFailure="true">
     <testsuites>
         <testsuite name="Baseline Eloquent Test">
             <directory>tests/Baseline</directory>
@@ -21,7 +21,10 @@
             <file>tests/Main/Standard/CategoryCustomEventsTest.php</file>
             <file>tests/Main/Standard/CategoryHierarchyTest.php</file>
             <file>tests/Main/Standard/CategoryHierarchyTest.php</file>
+            <file>tests/Main/Standard/CategoryMovementTest.php</file>
         </testsuite>
+
+
 <!-- 
         <testsuite name="Baum Under Test">
             <file>tests/Main/Standard/CategoryMovementTest.php</file>

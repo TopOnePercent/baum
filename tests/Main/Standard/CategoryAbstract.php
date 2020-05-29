@@ -3,18 +3,18 @@
 namespace Baum\Tests\Main\Standard;
 
 use Baum\Tests\Suite\Models\Category;
-use Baum\Tests\Suite\UnitAbstract;
+use Baum\Tests\Main\UnitAbstract;
 
 class CategoryAbstract extends UnitAbstract
 {
     /**
      * Setup the test environment.
      */
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->catagory_create();
-    }
+//     protected function setUp(): void
+//     {
+//         parent::setUp();
+//         $this->catagory_create();
+//     }
 
     protected function categories($name, $className = Category::class)
     {
