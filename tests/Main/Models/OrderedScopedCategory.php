@@ -2,9 +2,6 @@
 
 namespace Baum\Tests\Main\Models;
 
-use  Baum\Tests\Main\Models\OrderedCategory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 class OrderedScopedCategory extends OrderedCategory
 {
     protected $scoped = ['company_id'];
