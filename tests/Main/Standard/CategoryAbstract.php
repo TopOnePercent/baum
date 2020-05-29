@@ -2,8 +2,8 @@
 
 namespace Baum\Tests\Main\Standard;
 
-use Baum\Tests\Suite\Models\Category;
 use Baum\Tests\Main\UnitAbstract;
+use Baum\Tests\Suite\Models\Category;
 
 class CategoryAbstract extends UnitAbstract
 {
