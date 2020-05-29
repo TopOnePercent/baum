@@ -1,8 +1,8 @@
 <?php
 
 namespace Baum\Tests\Main\Cluster;
-use Baum\Tests\Main\UnitAbstract;
 
+use Baum\Tests\Main\UnitAbstract;
 
 class OrderedClusterHeirarchyTestCase extends UnitAbstract
 {

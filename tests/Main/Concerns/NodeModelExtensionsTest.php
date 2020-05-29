@@ -1,23 +1,16 @@
 <?php
 
 namespace Baum\Tests\Main\Concerns;
+
 //use Baum\Tests\Main\UnitAbstract;
 //use Orchestra\Testbench\TestCase;
 
 use Baum\Tests\Main\Models\Category;
-use Baum\Tests\Main\Models\ScopedCategory;
 use Baum\Tests\Main\Models\MultiScopedCategory;
 use Baum\Tests\Main\Models\OrderedCategory;
-use Baum\Tests\Main\Models\OrderedScopedCategory;
+use Baum\Tests\Main\Models\ScopedCategory;
 use Baum\Tests\Main\Models\SoftCategory;
-
-use Baum\Tests\Main\Models\Cluster;
-use Baum\Tests\Main\Models\ScopedCluster;
-use Baum\Tests\Main\Models\OrderedCluster;
-use Baum\Tests\Main\Models\SoftCluster;
-
 use Baum\Tests\Main\Support\PopulateData;
-
 
 trait NodeModelExtensionsTest
 {
@@ -119,18 +112,17 @@ trait NodeModelExtensionsTest
         $this->assertEquals('Some node', $node->name);
     }
 
-
 //     public function testReloadThrowsExceptionIfNodeCannotBeLocated()
 //     {
-// 		$build = Category::buildTree(PopulateData::basicTree());
-// 
+    // 		$build = Category::buildTree(PopulateData::basicTree());
+//
 //         $node = Category::create(['name' => 'Some node']);
 //         $this->expectException($node->getKey());
-// 
+//
 //         $node->delete();
 //         $this->expectException($this->categories('Some node'));
 //         $this->assertFalse($node->exists);
-// 
+//
 //         // Fake persisted state, reload & expect failure
 //         $node->exists = true;
 //         $node->reload();

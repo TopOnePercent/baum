@@ -1,7 +1,6 @@
 <?php
 
 namespace Baum\Tests\Main;
-use Baum\Tests\Main\UnitAbstract;
 
 class QueryBuilderExtensionTest extends UnitAbstract
 {

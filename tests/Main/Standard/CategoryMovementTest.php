@@ -4,34 +4,18 @@ namespace Baum\Tests\Main\Standard;
 
 namespace Baum\Tests\Main\Standard;
 
-use Baum\Seeder\CategorySeeder;
-
-use Baum\Tests\Main\Models\Category;
-use Baum\Tests\Main\Models\ScopedCategory;
-use Baum\Tests\Main\Models\MultiScopedCategory;
-use Baum\Tests\Main\Models\OrderedCategory;
-use Baum\Tests\Main\Models\OrderedScopedCategory;
-use Baum\Tests\Main\Models\SoftCategory;
-
-use Baum\Tests\Main\Models\Cluster;
-use Baum\Tests\Main\Models\ScopedCluster;
-use Baum\Tests\Main\Models\OrderedCluster;
-use Baum\Tests\Main\Models\SoftCluster;
-
-use Baum\Tests\Main\Support\PopulateData;
-use Baum\Tests\Main\UnitAbstract;
-use Baum\Tests\Main\Concerns\NodeModelExtensionsTest;
 use Baum\Exceptions\MoveNotPossibleException;
+use Baum\Tests\Main\Concerns\NodeModelExtensionsTest;
+use Baum\Tests\Main\Models\Category;
+use Baum\Tests\Main\Support\PopulateData;
 
 class CategoryMovementTest extends CategoryAbstract
 {
+    use NodeModelExtensionsTest;
 
-	use NodeModelExtensionsTest;
-	
     public function testMoveLeft()
     {
-
-		$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
         $this->categories('A3')->moveLeft();
 
@@ -40,11 +24,9 @@ class CategoryMovementTest extends CategoryAbstract
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    /**
-     */
     public function testMoveLeftRaisesAnExceptionWhenNotPossible()
     {
-		$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
         $node = $this->categories('A3');
 
@@ -55,7 +37,7 @@ class CategoryMovementTest extends CategoryAbstract
 
     public function testMoveLeftDoesNotChangeDepth()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->categories('B3')->moveLeft();
 
@@ -66,10 +48,10 @@ class CategoryMovementTest extends CategoryAbstract
 
     public function testMoveLeftWithSubtree()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
-		$node = $this->categories('B3');
-		$node->children()->create(['name' => 'B3.1']);
+        $node = $this->categories('B3');
+        $node->children()->create(['name' => 'B3.1']);
         $node->children()->create(['name' => 'B3.2']);
         $node->children()->create(['name' => 'B3.3']);
 
@@ -84,7 +66,7 @@ class CategoryMovementTest extends CategoryAbstract
 
         $this->assertEquals(1, $this->categories('B2')->getDepth());
         $this->assertEquals(1, $this->categories('B3')->getDepth());
-        
+
         $this->assertEquals(2, $this->categories('B3.1')->getDepth());
         $this->assertEquals(2, $this->categories('B3.2')->getDepth());
         $this->assertEquals(2, $this->categories('B3.3')->getDepth());
@@ -92,7 +74,7 @@ class CategoryMovementTest extends CategoryAbstract
 
     public function testMoveToLeftOf()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->categories('B2.3')->moveToLeftOf($this->categories('B2.1'));
 
@@ -101,11 +83,9 @@ class CategoryMovementTest extends CategoryAbstract
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    /**
-     */
     public function testMoveToLeftOfRaisesAnExceptionWhenNotPossible()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->expectException(MoveNotPossibleException::class);
         $this->categories('B2.1')->moveToLeftOf($this->categories('B2.1')->getLeftSibling());
@@ -113,7 +93,7 @@ class CategoryMovementTest extends CategoryAbstract
 
     public function testMoveToLeftOfDoesNotChangeDepth()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->categories('B2.3')->moveToLeftOf($this->categories('B2.1'));
 
@@ -125,10 +105,10 @@ class CategoryMovementTest extends CategoryAbstract
 
     public function testMoveToLeftOfWithSubtree()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
-		$node = $this->categories('B3');
-		$node->children()->create(['name' => 'B3.1']);
+        $node = $this->categories('B3');
+        $node->children()->create(['name' => 'B3.1']);
         $node->children()->create(['name' => 'B3.2']);
         $node->children()->create(['name' => 'B3.3']);
 
@@ -143,7 +123,7 @@ class CategoryMovementTest extends CategoryAbstract
 
         $this->assertEquals(1, $this->categories('B2')->getDepth());
         $this->assertEquals(1, $this->categories('B3')->getDepth());
-        
+
         $this->assertEquals(2, $this->categories('B3.1')->getDepth());
         $this->assertEquals(2, $this->categories('B3.2')->getDepth());
         $this->assertEquals(2, $this->categories('B3.3')->getDepth());
@@ -151,7 +131,7 @@ class CategoryMovementTest extends CategoryAbstract
 
     public function testMoveRight()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->categories('A2')->moveRight();
 
@@ -160,11 +140,9 @@ class CategoryMovementTest extends CategoryAbstract
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    /**
-     */
     public function testMoveRightRaisesAnExceptionWhenNotPossible()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->expectException(MoveNotPossibleException::class);
 
@@ -176,7 +154,7 @@ class CategoryMovementTest extends CategoryAbstract
 
     public function testMoveRightDoesNotChangeDepth()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->categories('B2')->moveRight();
 
@@ -188,7 +166,7 @@ class CategoryMovementTest extends CategoryAbstract
 
     public function testMoveRightWithSubtree()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->categories('B2')->moveRight();
 
@@ -209,7 +187,7 @@ class CategoryMovementTest extends CategoryAbstract
 
     public function testMoveToRightOf()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->categories('A1')->moveToRightOf($this->categories('B1'));
 
@@ -220,20 +198,18 @@ class CategoryMovementTest extends CategoryAbstract
         $this->assertTrue(Category::isValidNestedSet());
     }
 
-    /**
-     */
     public function testMoveToRightOfRaisesAnExceptionWhenNotPossible()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
-		$this->expectException(MoveNotPossibleException::class);
+        $this->expectException(MoveNotPossibleException::class);
 
         $this->categories('B1')->moveToRightOf($this->categories('B1')->getRightSibling());
     }
 
     public function testMoveToRightOfDoesNotChangeDepth()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->categories('B2.1')->moveToRightOf($this->categories('B2.1'));
 

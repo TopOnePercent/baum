@@ -1,7 +1,5 @@
 <?php
 
-
-
 class OrderedCategoryTestCase extends BaumTestCase
 {
     public function setUp()

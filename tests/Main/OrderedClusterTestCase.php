@@ -1,8 +1,5 @@
 <?php
 
-use Orchestra\Testbench\TestCase;
-
-
 class OrderedClusterTestCase extends BaumTestCase
 {
     public function setUp()

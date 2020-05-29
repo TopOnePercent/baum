@@ -1,8 +1,8 @@
 <?php
 
 namespace Baum\Tests\Suite\Cluster;
-use Baum\Tests\Suite\ClusterTestCase;
 
+use Baum\Tests\Suite\ClusterTestCase;
 
 class ClusterHierarchyTest extends ClusterTestCase
 {

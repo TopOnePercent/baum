@@ -1,6 +1,7 @@
 <?php
 
 namespace Baum\Tests\Suite\Cluster;
+
 use Baum\Tests\Suite\ClusterTestCase;
 
 class ClusterMovementTest extends ClusterTestCase

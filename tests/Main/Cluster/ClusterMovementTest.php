@@ -1,6 +1,7 @@
 <?php
 
 namespace Baum\Tests\Main\Cluster;
+
 use Baum\Tests\Main\UnitAbstract;
 
 class ClusterMovementTest extends UnitAbstract
