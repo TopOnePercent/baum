@@ -1,15 +1,16 @@
 <?php
 
-namespace Baum\Tests\Suite;
+use Orchestra\Testbench\TestCase;
 
-class ClusterTestCase extends BaumTestCase
+
+class OrderedClusterTestCase extends BaumTestCase
 {
     public function setUp()
     {
         parent::setUp();
 
         with(new ClusterMigrator())->up();
-        with(new ClusterSeeder())->run();
+        with(new OrderedClusterSeeder())->run();
     }
 
     protected function clusters($name, $className = 'Cluster')

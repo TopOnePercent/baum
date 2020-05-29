@@ -1,6 +1,6 @@
 <?php
 
-namespace Baum\Tests\Suite;
+namespace Baum\Tests\Main;
 
 class ClusterTestCase extends BaumTestCase
 {

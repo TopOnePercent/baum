@@ -14,6 +14,11 @@
             "name": "Gary Pearman",
             "email": "gaz@red-robot.co.uk",
             "homepage": "http://red-robot.co.uk"
+        },
+        {
+            "name": "Brian LaVallee",
+            "email": "brian.lavallee@invite-comm.jp",
+            "homepage": "https://invite-comm.jp"
         }
     ],
     "prefer-stable": true,

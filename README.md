@@ -1,13 +1,19 @@
 # Baum v2
 
-[![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=master)](https://travis-ci.org/gazsp/baum)
-[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=master)](https://coveralls.io/github/gazsp/baum?branch=master)
-[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=master&style=flat)](https://github.styleci.io/repos/47506280)
+[![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=2.0.3)](https://travis-ci.org/gazsp/baum)
+[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=2.0.3)](https://coveralls.io/github/gazsp/baum?branch=2.0.3)
+[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=2.0.3&style=flat)](https://github.styleci.io/repos/47506280)
 
 ## Nested Set implementation for Laravel
 
 Baum is an implementation of the [Nested Set](http://en.wikipedia.org/wiki/Nested_set_model)
 pattern for the [Laravel](http://laravel.com/) Eloquent ORM.
+
+### Key Considerations for using a Nested Set Pattern:
+
+1. The Nested Set pattern is appropriate where the tree element and one or two attributes are the only data.
+1. The Nested Set pattern is a **poor choice** when more complex relational data exists for the elements in the tree.
+1. The Nested Set pattern is **best when** you need to query a tree more frequently than you need to modify the tree.
 
 ---
 
@@ -19,10 +25,11 @@ pattern for the [Laravel](http://laravel.com/) Eloquent ORM.
 
 ## Installation
 
-Baum v2 works with Laravel 5.8 (and PHP 7.2) and above. You can add it to your project with:
+Baum v2 works with Laravel 5.8 (and PHP 7.2) and above. You can add it to your own project with:
 ```
 composer require gazsp/baum
 ```
+
 ## Documentation
 
 * [About Nested Sets](#about)
@@ -45,8 +52,7 @@ Nested sets are appropriate for ordered trees (e.g. menus, commercial categories
 and big trees that must be queried efficiently (e.g. threaded posts).
 
 See the [wikipedia entry for nested sets](http://en.wikipedia.org/wiki/Nested_set_model)
-for more info. Also, this is a good introductory tutorial:
-[http://www.evanpetersen.com/item/nested-sets.html](http://www.evanpetersen.com/item/nested-sets.html)
+for more info.
 
 <a name="theory"></a>
 ## The theory behind, a TL;DR version

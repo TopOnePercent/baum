@@ -27,7 +27,7 @@ trait MyTrait
             } else {
                 $preserve = is_string($preserve) ? [$preserve] : $preserve;
 
-                $current = array_only($node, $preserve);
+                $current = Arr::only($node, $preserve);
                 if (array_key_exists('children', $node)) {
                     $children = $node['children'];
 

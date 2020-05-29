@@ -1,6 +1,6 @@
 <?php
 
-namespace Baum\Tests\Suite\Models;
+namespace Baum\Tests\Main\Models;
 
 use Baum\Node;
 use Illuminate\Database\Eloquent\SoftDeletes;

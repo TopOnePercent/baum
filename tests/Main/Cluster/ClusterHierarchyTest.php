@@ -1,10 +1,10 @@
 <?php
 
-namespace Baum\Tests\Suite\Cluster;
-use Baum\Tests\Suite\ClusterTestCase;
+namespace Baum\Tests\Main\Cluster;
+use Baum\Tests\Main\UnitAbstract;
 
 
-class ClusterHierarchyTest extends ClusterTestCase
+class ClusterHierarchyTest extends UnitAbstract
 {
     public function testAllStatic()
     {

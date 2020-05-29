@@ -15,7 +15,7 @@ if (! function_exists('flatten_tree')) {
     function flatten_tree($tree, $only = [], &$result = [])
     {
         foreach ($tree as $k=>$v) {
-            $result[$v['id']] = $only ? array_only($v, $only) : $v;
+            $result[$v['id']] = $only ? Arr::only($v, $only) : $v;
 
             if (isset($v['children'])) {
                 flatten_tree($v['children'], $only, $result);

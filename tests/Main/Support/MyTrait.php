@@ -1,6 +1,13 @@
 <?php
 
-if (! function_exists('hmap')) {
+namespace Baum\Tests\Main\Support;
+
+trait MyTrait
+{
+    public function stub($data)
+    {
+        return $data;
+    }
 
     /**
      * Simple function which aids in converting the tree hierarchy into something
@@ -10,13 +17,13 @@ if (! function_exists('hmap')) {
      *
      * @return array
      */
-    function hmap(array $nodes, $preserve = null)
+    public function hierarchy(array $nodes, $preserve = null)
     {
         $output = [];
 
         foreach ($nodes as $node) {
             if (is_null($preserve)) {
-                $output[$node['name']] = empty($node['children']) ? null : hmap($node['children']);
+                $output[$node['name']] = empty($node['children']) ? null : $this->hierarchy($node['children']);
             } else {
                 $preserve = is_string($preserve) ? [$preserve] : $preserve;
 
@@ -35,29 +42,12 @@ if (! function_exists('hmap')) {
 
         return $output;
     }
-}
 
-if (! function_exists('array_ints_keys')) {
-
-    /**
-     * Cast provided keys's values into ints. This is to wrestle with PDO driver
-     * inconsistencies.
-     *
-     * @param array $input
-     * @param mixed $keys
-     *
-     * @return array
-     */
-    function array_ints_keys(array $input, $keys = 'id')
+    public function assertArraysAreEqual($expected, $actual, $message = '')
     {
-        $keys = is_string($keys) ? [$keys] : $keys;
+        $ex = json_encode($expected, JSON_PRETTY_PRINT);
+        $ac = json_encode($actual, JSON_PRETTY_PRINT);
 
-        array_walk_recursive($input, function (&$value, $key) use ($keys) {
-            if (array_search($key, $keys) !== false) {
-                $value = (int) $value;
-            }
-        });
-
-        return $input;
+        return $this->assertEquals($ex, $ac, $message);
     }
 }
