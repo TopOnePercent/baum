@@ -3,8 +3,8 @@
 namespace Baum;
 
 use Closure;
-use Illuminate\Support\Contracts\ArrayableInterface;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Contracts\ArrayableInterface;
 
 class SetMapper
 {

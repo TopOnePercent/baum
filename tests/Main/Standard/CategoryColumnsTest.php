@@ -2,21 +2,13 @@
 
 namespace Baum\Tests\Main\Standard;
 
+use Baum\Tests\Main\Concerns\NodeModelExtensionsTest;
 use Baum\Tests\Main\Models\Category;
-use Baum\Tests\Main\Models\ScopedCategory;
 use Baum\Tests\Main\Models\MultiScopedCategory;
 use Baum\Tests\Main\Models\OrderedCategory;
-use Baum\Tests\Main\Models\OrderedScopedCategory;
-use Baum\Tests\Main\Models\SoftCategory;
-
-use Baum\Tests\Main\Models\Cluster;
-use Baum\Tests\Main\Models\ScopedCluster;
-use Baum\Tests\Main\Models\OrderedCluster;
-use Baum\Tests\Main\Models\SoftCluster;
-
+use Baum\Tests\Main\Models\ScopedCategory;
 use Baum\Tests\Main\Support\PopulateData;
 use Baum\Tests\Main\UnitAbstract;
-use Baum\Tests\Main\Concerns\NodeModelExtensionsTest;
 
 //use Baum\Tests\Suite\Support\Testable;
 //use Baum\Tests\Suite\Support\Cast;
@@ -42,11 +34,11 @@ class CategoryColumnsTest extends UnitAbstract
 
     public function testGetParentId()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
-    	
-    	$child = Category::find(6);
-    	$this->assertEquals(4, $child->getRoot()->id);
-    	
+        $build = Category::buildTree(PopulateData::basicTree());
+
+        $child = Category::find(6);
+        $this->assertEquals(4, $child->getRoot()->id);
+
         //$this->assertNull($this->categories('Root 1')->getParentId());
 
         //$this->assertEquals($this->categories('Child 1')->getParentId(), 1);
@@ -68,7 +60,7 @@ class CategoryColumnsTest extends UnitAbstract
 
     public function testGetLeft()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 //     	$child = Category::find(3);
         $this->assertEquals(4, Category::find(3)->getLeft());
         $this->assertEquals(7, Category::find(4)->getLeft());
@@ -89,11 +81,10 @@ class CategoryColumnsTest extends UnitAbstract
 
     public function testGetRight()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 //     	$child = Category::find(5);
         $this->assertEquals(5, Category::find(3)->getRight());
         $this->assertEquals(11, Category::find(6)->getRight());
-
     }
 
     public function testGetOrderColumName()
@@ -111,7 +102,7 @@ class CategoryColumnsTest extends UnitAbstract
     public function testGetOrder()
     {
         //$category = $this->categories('Root 1');
-		//$this->assertEquals($category->getOrder(), $category->getLeft());
+        //$this->assertEquals($category->getOrder(), $category->getLeft());
     }
 
     public function testGetOrderColumnNameNonDefault()
@@ -128,7 +119,7 @@ class CategoryColumnsTest extends UnitAbstract
 
     public function testGetOrderNonDefault()
     {
-		$build = OrderedCategory::buildTree(PopulateData::basicTree());
+        $build = OrderedCategory::buildTree(PopulateData::basicTree());
         $category = $this->categories('A1', OrderedCategory::class);
         $this->assertEquals($category->getOrder(), 'A1');
     }
@@ -174,14 +165,14 @@ class CategoryColumnsTest extends UnitAbstract
 
     public function testGetOthersAtSameDepth()
     {
-		$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
         $this->assertEquals(1, $this->categories('A1')->getOthersAtSameDepth()->count());
 //         $this->assertEquals('Root 2', $this->categories('Root 1')->getOthersAtSameDepth()->first()->name);
-// 
+//
 //         $this->assertEquals(2, $this->categories('Child 1')->getOthersAtSameDepth()->count());
 //         $this->assertEquals(0, $this->categories('Child 2.1')->getOthersAtSameDepth()->count());
-// 
+//
 //         $this->assertEquals('Child 2', $this->categories('Child 1')->getOthersAtSameDepth()->get()[0]->name);
 //         $this->assertEquals('Child 3', $this->categories('Child 1')->getOthersAtSameDepth()->get()[1]->name);
     }

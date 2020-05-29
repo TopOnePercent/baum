@@ -2,31 +2,16 @@
 
 namespace Baum\Tests\Main\Standard;
 
-use Baum\Seeder\CategorySeeder;
-
-use Baum\Tests\Main\Models\Category;
-use Baum\Tests\Main\Models\ScopedCategory;
-use Baum\Tests\Main\Models\MultiScopedCategory;
-use Baum\Tests\Main\Models\OrderedCategory;
-use Baum\Tests\Main\Models\OrderedScopedCategory;
-use Baum\Tests\Main\Models\SoftCategory;
-
-use Baum\Tests\Main\Models\Cluster;
-use Baum\Tests\Main\Models\ScopedCluster;
-use Baum\Tests\Main\Models\OrderedCluster;
-use Baum\Tests\Main\Models\SoftCluster;
-
-use Baum\Tests\Main\Support\PopulateData;
-use Baum\Tests\Main\UnitAbstract;
 use Baum\Tests\Main\Concerns\NodeModelExtensionsTest;
-
-//use Baum\Tests\Main\Support\Cast;
+use Baum\Tests\Main\Models\Category;
 use Baum\Tests\Main\Support\MyTrait;
+use Baum\Tests\Main\Support\PopulateData;
+//use Baum\Tests\Main\Support\Cast;
+use Baum\Tests\Main\UnitAbstract;
 
 class CategoryHierarchyTest extends UnitAbstract
 {
     use MyTrait, NodeModelExtensionsTest;
-
 
     public function testAllStatic()
     {
@@ -46,7 +31,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testRootsStatic()
     {
-		$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
         $query = Category::whereNull('parent_id')->get();
         $roots = Category::roots()->get();
@@ -61,13 +46,13 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testRootStatic()
     {
-		$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
         $this->assertEquals(Category::root()->name, 'A1');
     }
 
     public function testAllLeavesStatic()
-    {  
-    	$build = Category::buildTree(PopulateData::basicTree());
+    {
+        $build = Category::buildTree(PopulateData::basicTree());
 
         $allLeaves = Category::allLeaves()->get();
 
@@ -83,7 +68,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testAllTrunksStatic()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $allTrunks = Category::allTrunks()->get();
 
@@ -95,7 +80,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetRoot()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
         $this->assertEquals($this->categories('A1'), $this->categories('A1')->getRoot());
         $this->assertEquals($this->categories('A1'), $this->categories('A2')->getRoot());
@@ -125,7 +110,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testIsRoot()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
         $this->assertTrue($this->categories('A1')->isRoot());
         $this->assertFalse($this->categories('A2')->isRoot());
@@ -138,22 +123,22 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetLeaves()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
-        $leaves = [$this->categories('A2'), $this->categories('A3'),];
+        $leaves = [$this->categories('A2'), $this->categories('A3')];
         $this->assertEquals($leaves, $this->categories('A1')->getLeaves()->all());
 
-        $leaves = [$this->categories('B2'), $this->categories('B3'),];
+        $leaves = [$this->categories('B2'), $this->categories('B3')];
         $this->assertEquals($leaves, $this->categories('B1')->getLeaves()->all());
     }
 
     public function testGetLeavesInIteration()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
         $node = $this->categories('A1');
 
-        $expectedIds = [2, 3,];
+        $expectedIds = [2, 3];
 
         foreach ($node->getLeaves() as $i => $leaf) {
             $this->assertEquals($expectedIds[$i], $leaf->getKey());
@@ -162,7 +147,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetTrunks()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $trunks = [$this->categories('B2')];
 
@@ -171,8 +156,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetTrunksInIteration()
     {
-
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $node = $this->categories('B1');
 
@@ -185,7 +169,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testIsLeaf()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
         $this->assertTrue($this->categories('A2')->isLeaf());
         $this->assertTrue($this->categories('A3')->isLeaf());
@@ -201,7 +185,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testIsTrunk()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->assertFalse($this->categories('A1')->isTrunk());
         $this->assertFalse($this->categories('A2')->isTrunk());
@@ -219,7 +203,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testWithoutNodeScope()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $child = $this->categories('B2.1');
 
@@ -230,7 +214,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testWithoutSelfScope()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $child = $this->categories('B2.2');
 
@@ -241,7 +225,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testWithoutRootScope()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $child = $this->categories('B2.3');
 
@@ -252,7 +236,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testLimitDepthScope()
     {
-		$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $node = $this->categories('B1');
 
@@ -262,7 +246,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetAncestorsAndSelf()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $child = $this->categories('B2.2');
 
@@ -273,7 +257,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetAncestorsAndSelfWithoutRoot()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $child = $this->categories('B2.2');
 
@@ -284,13 +268,13 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetAncestors()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $child = $this->categories('B2.2');
 
         $expected = [
-        	$this->categories('B1'), 
-        	$this->categories('B2'),
+            $this->categories('B1'),
+            $this->categories('B2'),
         ];
 
         $this->assertEquals($expected, $child->getAncestors()->all());
@@ -298,12 +282,12 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetAncestorsWithoutRoot()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $child = $this->categories('B2.2');
 
         $expected = [
-        	$this->categories('B2')
+            $this->categories('B2'),
         ];
 
         $this->assertEquals($expected, $child->getAncestorsWithoutRoot()->all());
@@ -311,7 +295,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetDescendantsAndSelf()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
         $parent = $this->categories('B1');
         $expected = [
             $parent,
@@ -327,7 +311,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetDescendantsAndSelfWithLimit()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
         $parent = $this->categories('B1');
 
         $expected = [
@@ -348,13 +332,13 @@ class CategoryHierarchyTest extends UnitAbstract
         ];
 
         $this->assertEquals($expected, $parent->getDescendantsAndSelf(1)->all());
-        
+
         $this->assertEquals([$parent], $parent->getDescendantsAndSelf(0)->all());
     }
 
     public function testGetDescendants()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
         $parent = $this->categories('B1');
 
         $expected = [
@@ -372,7 +356,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetDescendantsWithLimit()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
         $parent = $this->categories('B1');
 
         $expected = [
@@ -393,9 +377,8 @@ class CategoryHierarchyTest extends UnitAbstract
         ];
 
         $this->assertEquals($expected, $parent->getDescendantsAndSelf(1)->all());
-        
-        $this->assertEmpty($parent->getDescendants(0)->all());
 
+        $this->assertEmpty($parent->getDescendants(0)->all());
     }
 
     public function testDescendantsRecursesChildren()
@@ -419,7 +402,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetImmediateDescendants()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $expected = [
             $this->categories('B2'),
@@ -427,8 +410,8 @@ class CategoryHierarchyTest extends UnitAbstract
         ];
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('B1')->getImmediateDescendants()->all()
+            $expected,
+            $this->categories('B1')->getImmediateDescendants()->all()
         );
 
         $expected = [
@@ -438,8 +421,8 @@ class CategoryHierarchyTest extends UnitAbstract
         ];
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('B2')->getImmediateDescendants()->all()
+            $expected,
+            $this->categories('B2')->getImmediateDescendants()->all()
         );
 
         $this->assertEmpty($this->categories('B2.2')->getImmediateDescendants()->all());
@@ -447,207 +430,207 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testIsSelfOrAncestorOf()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->assertTrue(
-        	$this->categories('B2.2')->isSelfOrAncestorOf(
-        		$this->categories('B2.2')
-        	)
+            $this->categories('B2.2')->isSelfOrAncestorOf(
+                $this->categories('B2.2')
+            )
         );
 
         $this->assertTrue(
-        	$this->categories('B2')->isSelfOrAncestorOf(
-        		$this->categories('B2.2')
-        	)
+            $this->categories('B2')->isSelfOrAncestorOf(
+                $this->categories('B2.2')
+            )
         );
 
         $this->assertTrue(
-        	$this->categories('B2')->isSelfOrAncestorOf(
-        		$this->categories('B2.2')
-        	)
+            $this->categories('B2')->isSelfOrAncestorOf(
+                $this->categories('B2.2')
+            )
         );
 
         $this->assertFalse(
-        	$this->categories('A1')->isSelfOrAncestorOf(
-        		$this->categories('B2.2')
-        	)
+            $this->categories('A1')->isSelfOrAncestorOf(
+                $this->categories('B2.2')
+            )
         );
 
         $this->assertTrue(
-        	$this->categories('B2')->isSelfOrAncestorOf(
-        		$this->categories('B2')
-        	)
+            $this->categories('B2')->isSelfOrAncestorOf(
+                $this->categories('B2')
+            )
         );
 
         $this->assertTrue(
-        	$this->categories('B1')->isSelfOrAncestorOf(
-        		$this->categories('B2')
-        	)
+            $this->categories('B1')->isSelfOrAncestorOf(
+                $this->categories('B2')
+            )
         );
 
         $this->assertFalse(
-        	$this->categories('A1')->isSelfOrAncestorOf(
-        		$this->categories('B2')
-        	)
+            $this->categories('A1')->isSelfOrAncestorOf(
+                $this->categories('B2')
+            )
         );
-        
+
         $this->assertTrue(
-        	$this->categories('B1')->isSelfOrAncestorOf(
-        		$this->categories('B1')
-        	)
+            $this->categories('B1')->isSelfOrAncestorOf(
+                $this->categories('B1')
+            )
         );
 
         $this->assertFalse(
-        	$this->categories('A1')->isSelfOrAncestorOf(
-        		$this->categories('B1')
-        	)
-        );                                        
+            $this->categories('A1')->isSelfOrAncestorOf(
+                $this->categories('B1')
+            )
+        );
     }
 
     public function testIsAncestorOf()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->assertTrue(
-        	$this->categories('B1')->isAncestorOf(
-        		$this->categories('B2.1')
-        	)
-        );
-        
-        $this->assertTrue(
-        	$this->categories('B1')->isAncestorOf(
-        		$this->categories('B2.2')
-        	)
-        );
-        
-        $this->assertTrue(
-        	$this->categories('B1')->isAncestorOf(
-        		$this->categories('B2.3')
-        	)
+            $this->categories('B1')->isAncestorOf(
+                $this->categories('B2.1')
+            )
         );
 
         $this->assertTrue(
-        	$this->categories('B2')->isAncestorOf(
-        		$this->categories('B2.1')
-        	)
+            $this->categories('B1')->isAncestorOf(
+                $this->categories('B2.2')
+            )
         );
-        
+
         $this->assertTrue(
-        	$this->categories('B2')->isAncestorOf(
-        		$this->categories('B2.2')
-        	)
+            $this->categories('B1')->isAncestorOf(
+                $this->categories('B2.3')
+            )
         );
-        
+
         $this->assertTrue(
-        	$this->categories('B2')->isAncestorOf(
-        		$this->categories('B2.3')
-        	)
+            $this->categories('B2')->isAncestorOf(
+                $this->categories('B2.1')
+            )
+        );
+
+        $this->assertTrue(
+            $this->categories('B2')->isAncestorOf(
+                $this->categories('B2.2')
+            )
+        );
+
+        $this->assertTrue(
+            $this->categories('B2')->isAncestorOf(
+                $this->categories('B2.3')
+            )
         );
 
         $this->assertFalse(
-        	$this->categories('B3')->isAncestorOf(
-        		$this->categories('B2.1')
-        	)
+            $this->categories('B3')->isAncestorOf(
+                $this->categories('B2.1')
+            )
         );
-        
+
         $this->assertFalse(
-        	$this->categories('B3')->isAncestorOf(
-        		$this->categories('B2.2')
-        	)
+            $this->categories('B3')->isAncestorOf(
+                $this->categories('B2.2')
+            )
         );
-        
+
         $this->assertFalse(
-        	$this->categories('B3')->isAncestorOf(
-        		$this->categories('B2.3')
-        	)
+            $this->categories('B3')->isAncestorOf(
+                $this->categories('B2.3')
+            )
         );
     }
 
     public function testIsSelfOrDescendantOf()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->assertTrue(
-        	$this->categories('B2.2')->isSelfOrDescendantOf(
-        		$this->categories('B1')
-        	)
+            $this->categories('B2.2')->isSelfOrDescendantOf(
+                $this->categories('B1')
+            )
         );
-        
+
         $this->assertTrue(
-        	$this->categories('B2')->isSelfOrDescendantOf(
-        		$this->categories('B1')
-        	)
+            $this->categories('B2')->isSelfOrDescendantOf(
+                $this->categories('B1')
+            )
         );
-        
+
         $this->assertTrue(
-        	$this->categories('B1')->isSelfOrDescendantOf(
-        		$this->categories('B1')
-        	)
+            $this->categories('B1')->isSelfOrDescendantOf(
+                $this->categories('B1')
+            )
         );
 
         $this->assertFalse(
-        	$this->categories('B2.2')->isSelfOrDescendantOf(
-        		$this->categories('A1')
-        	)
+            $this->categories('B2.2')->isSelfOrDescendantOf(
+                $this->categories('A1')
+            )
         );
-        
+
         $this->assertFalse(
-        	$this->categories('B2')->isSelfOrDescendantOf(
-        		$this->categories('A2')
-        	)
+            $this->categories('B2')->isSelfOrDescendantOf(
+                $this->categories('A2')
+            )
         );
-        
+
         $this->assertFalse(
-        	$this->categories('B1')->isSelfOrDescendantOf(
-        		$this->categories('A3')
-        	)
+            $this->categories('B1')->isSelfOrDescendantOf(
+                $this->categories('A3')
+            )
         );
     }
 
     public function testIsDescendantOf()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->assertTrue(
-        	$this->categories('B2.2')->isDescendantOf(
-        		$this->categories('B1')
-        	)
+            $this->categories('B2.2')->isDescendantOf(
+                $this->categories('B1')
+            )
         );
-        
+
         $this->assertTrue(
-        	$this->categories('B2')->isDescendantOf(
-        		$this->categories('B1')
-        	)
-        );
-        
-        $this->assertFalse(
-        	$this->categories('B1')->isDescendantOf(
-        		$this->categories('B1')
-        	)
+            $this->categories('B2')->isDescendantOf(
+                $this->categories('B1')
+            )
         );
 
         $this->assertFalse(
-        	$this->categories('B2.2')->isDescendantOf(
-        		$this->categories('A1')
-        	)
+            $this->categories('B1')->isDescendantOf(
+                $this->categories('B1')
+            )
         );
-        
+
         $this->assertFalse(
-        	$this->categories('B2')->isDescendantOf(
-        		$this->categories('A2')
-        	)
+            $this->categories('B2.2')->isDescendantOf(
+                $this->categories('A1')
+            )
         );
-        
+
         $this->assertFalse(
-        	$this->categories('B1')->isDescendantOf(
-        		$this->categories('A3')
-        	)
+            $this->categories('B2')->isDescendantOf(
+                $this->categories('A2')
+            )
+        );
+
+        $this->assertFalse(
+            $this->categories('B1')->isDescendantOf(
+                $this->categories('A3')
+            )
         );
     }
 
     public function testGetSiblingsAndSelf()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $expected = [
             $this->categories('A1'),
@@ -655,13 +638,13 @@ class CategoryHierarchyTest extends UnitAbstract
         ];
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('A1')->getSiblingsAndSelf()->all()
+            $expected,
+            $this->categories('A1')->getSiblingsAndSelf()->all()
         );
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('B1')->getSiblingsAndSelf()->all()
+            $expected,
+            $this->categories('B1')->getSiblingsAndSelf()->all()
         );
 
         $expected = [
@@ -670,13 +653,13 @@ class CategoryHierarchyTest extends UnitAbstract
         ];
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('A2')->getSiblingsAndSelf()->all()
+            $expected,
+            $this->categories('A2')->getSiblingsAndSelf()->all()
         );
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('A3')->getSiblingsAndSelf()->all()
+            $expected,
+            $this->categories('A3')->getSiblingsAndSelf()->all()
         );
 
         $expected = [
@@ -686,24 +669,24 @@ class CategoryHierarchyTest extends UnitAbstract
         ];
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('B2.1')->getSiblingsAndSelf()->all()
+            $expected,
+            $this->categories('B2.1')->getSiblingsAndSelf()->all()
         );
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('B2.2')->getSiblingsAndSelf()->all()
+            $expected,
+            $this->categories('B2.2')->getSiblingsAndSelf()->all()
         );
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('B2.3')->getSiblingsAndSelf()->all()
+            $expected,
+            $this->categories('B2.3')->getSiblingsAndSelf()->all()
         );
     }
 
     public function testGetSiblings()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $expected = [
             $this->categories('B2.2'),
@@ -711,8 +694,8 @@ class CategoryHierarchyTest extends UnitAbstract
         ];
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('B2.1')->getSiblings()->all()
+            $expected,
+            $this->categories('B2.1')->getSiblings()->all()
         );
 
         $expected = [
@@ -721,8 +704,8 @@ class CategoryHierarchyTest extends UnitAbstract
         ];
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('B2.2')->getSiblings()->all()
+            $expected,
+            $this->categories('B2.2')->getSiblings()->all()
         );
 
         $expected = [
@@ -731,119 +714,119 @@ class CategoryHierarchyTest extends UnitAbstract
         ];
 
         $this->assertEquals(
-        	$expected, 
-        	$this->categories('B2.3')->getSiblings()->all()
+            $expected,
+            $this->categories('B2.3')->getSiblings()->all()
         );
     }
 
     public function testGetLeftSibling()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->assertEquals(
-        	$this->categories('B2.2'), 
-        	$this->categories('B2.3')->getLeftSibling()
+            $this->categories('B2.2'),
+            $this->categories('B2.3')->getLeftSibling()
         );
 
         $this->assertEquals(
-        	$this->categories('B2.1'), 
-        	$this->categories('B2.2')->getLeftSibling()
+            $this->categories('B2.1'),
+            $this->categories('B2.2')->getLeftSibling()
         );
     }
 
     public function testGetLeftSiblingOfFirstRootIsNull()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
         $this->assertNull(Category::first()->getLeftSibling());
     }
 
     public function testGetLeftSiblingWithNoneIsNull()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
         $this->assertNull($this->categories('B2.1')->getLeftSibling());
     }
 
     public function testGetLeftSiblingOfLeftmostNodeIsNull()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
         $this->assertNull($this->categories('A2')->getLeftSibling());
     }
 
     public function testGetRightSibling()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->assertEquals(
-        	$this->categories('B2.2'), 
-        	$this->categories('B2.1')->getRightSibling()
+            $this->categories('B2.2'),
+            $this->categories('B2.1')->getRightSibling()
         );
 
         $this->assertEquals(
-        	$this->categories('B2.3'), 
-        	$this->categories('B2.2')->getRightSibling()
+            $this->categories('B2.3'),
+            $this->categories('B2.2')->getRightSibling()
         );
     }
 
     public function testGetRightSiblingOfRoots()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
         $this->assertEquals(
-        	$this->categories('B1'), 
-        	$this->categories('A1')->getRightSibling()
+            $this->categories('B1'),
+            $this->categories('A1')->getRightSibling()
         );
     }
 
     public function testGetRightSiblingWithNoneIsNull()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
         $this->assertNull($this->categories('B1')->getRightSibling());
     }
 
     public function testGetRightSiblingOfRightmostNodeIsNull()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
         $this->assertNull($this->categories('B3')->getRightSibling());
     }
 
     public function testInsideSubtree()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->assertFalse(
-        	$this->categories('B2')->insideSubtree(
-        		$this->categories('A1')
-        	)
+            $this->categories('B2')->insideSubtree(
+                $this->categories('A1')
+            )
         );
 
         $this->assertFalse(
-        	$this->categories('B2.1')->insideSubtree(
-        		$this->categories('A1')
-        	)
-        );
-        
-        $this->assertTrue(
-        	$this->categories('B2')->insideSubtree(
-        		$this->categories('B1')
-        	)
+            $this->categories('B2.1')->insideSubtree(
+                $this->categories('A1')
+            )
         );
 
         $this->assertTrue(
-        	$this->categories('B2.1')->insideSubtree(
-        		$this->categories('B1')
-        	)
+            $this->categories('B2')->insideSubtree(
+                $this->categories('B1')
+            )
         );
 
         $this->assertTrue(
-        	$this->categories('B2.1')->insideSubtree(
-        		$this->categories('B2')
-        	)
+            $this->categories('B2.1')->insideSubtree(
+                $this->categories('B1')
+            )
+        );
+
+        $this->assertTrue(
+            $this->categories('B2.1')->insideSubtree(
+                $this->categories('B2')
+            )
         );
     }
 
     public function testGetLevel()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $this->assertEquals(0, $this->categories('B1')->getLevel());
         $this->assertEquals(1, $this->categories('B2')->getLevel());
@@ -852,14 +835,14 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testToHierarchyReturnsAnEloquentCollection()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
         $categories = Category::all()->toHierarchy();
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $categories);
     }
 
     public function testToHierarchyReturnsHierarchicalData()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
         $categories = Category::all()->toHierarchy();
 
         $this->assertEquals(2, $categories->count());
@@ -991,9 +974,9 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testToHierarchyNestsCorrectlyNotSequential()
     {
-    	$build = Category::buildTree(PopulateData::basicTree());
+        $build = Category::buildTree(PopulateData::basicTree());
 
-		$root = Category::create(['name' => 'C1']);
+        $root = Category::create(['name' => 'C1']);
         $root->children()->create(['name' => 'C2.1']);
         $root->children()->create(['name' => 'C2.2']);
 
@@ -1006,19 +989,19 @@ class CategoryHierarchyTest extends UnitAbstract
             ],
         ];
 
-		$root->reload();
+        $root->reload();
         $this->assertArraysAreEqual(
-        	$expected, 
-        	$this->hierarchy(
-        		$this->categories('C1')->getDescendantsAndSelf()->toHierarchy()->toArray()
-        	)
+            $expected,
+            $this->hierarchy(
+                $this->categories('C1')->getDescendantsAndSelf()->toHierarchy()->toArray()
+            )
         );
     }
 
     public function testGetNestedList()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
-    
+        $build = Category::buildTree(PopulateData::deepTree());
+
         $seperator = ' ';
         $nestedList = Category::getNestedList('name', 'id', $seperator);
 
@@ -1039,7 +1022,7 @@ class CategoryHierarchyTest extends UnitAbstract
 
     public function testGetNestedListSymbol()
     {
-    	$build = Category::buildTree(PopulateData::deepTree());
+        $build = Category::buildTree(PopulateData::deepTree());
 
         $symbol = '- ';
         $seperator = ' ';
