@@ -285,9 +285,9 @@ class CategoryMovementTest extends UnitAbstract
 //         $this->assertEquals(0, $node->getLevel());
 //         $this->assertEquals(9, $node->getLeft());
 //         $this->assertEquals(12, $node->getRight());
-// 
+//
 //         $this->assertEquals(1, $this->categories('Child 2.1')->getLevel());
-// 
+//
 //         $this->assertTrue(Category::isValidNestedSet());
     }
 
@@ -412,7 +412,6 @@ class CategoryMovementTest extends UnitAbstract
 
         $this->assertEquals(17, $this->categories('B2.3')->getLeft());
         $this->assertEquals(18, $this->categories('B2.3')->getRight());
-
     }
 
     public function testMakeFirstChildOf()
@@ -554,7 +553,6 @@ class CategoryMovementTest extends UnitAbstract
 
     public function testMakeLastChildOfSwappingRoots()
     {
-
         $build = Category::buildTree(PopulateData::deepTree());
 
         $newRoot = Category::create(['name' => 'Root 3']);
@@ -602,62 +600,62 @@ class CategoryMovementTest extends UnitAbstract
 
     /**
      * expectedException Baum\Exceptions\MoveNotPossibleException
-     *         $this->expectException(MoveNotPossibleException::class);
+     *         $this->expectException(MoveNotPossibleException::class);.
      */
     public function testUnpersistedNodeCannotBeMoved()
     {
         $build = Category::buildTree(PopulateData::deepTree());
 
         $unpersisted = new Category(['name' => 'Unpersisted']);
-		$this->expectException(MoveNotPossibleException::class);
+        $this->expectException(MoveNotPossibleException::class);
         $unpersisted->moveToRightOf($this->categories('A1'));
     }
 
     /**
-     * expectedException Baum\Exceptions\MoveNotPossibleException
+     * expectedException Baum\Exceptions\MoveNotPossibleException.
      */
     public function testUnpersistedNodeCannotBeMadeChild()
     {
         $build = Category::buildTree(PopulateData::deepTree());
 
         $unpersisted = new Category(['name' => 'Unpersisted']);
-		$this->expectException(MoveNotPossibleException::class);
+        $this->expectException(MoveNotPossibleException::class);
         $unpersisted->makeChildOf($this->categories('A1'));
     }
 
     /**
-     * expectedException Baum\Exceptions\MoveNotPossibleException
+     * expectedException Baum\Exceptions\MoveNotPossibleException.
      */
     public function testNodesCannotBeMovedToItself()
     {
         $build = Category::buildTree(PopulateData::deepTree());
 
         $node = $this->categories('A2');
-		$this->expectException(MoveNotPossibleException::class);
+        $this->expectException(MoveNotPossibleException::class);
         $node->moveToRightOf($node);
     }
 
     /**
-     * expectedException Baum\Exceptions\MoveNotPossibleException
+     * expectedException Baum\Exceptions\MoveNotPossibleException.
      */
     public function testNodesCannotBeMadeChildOfThemselves()
     {
         $build = Category::buildTree(PopulateData::deepTree());
 
         $node = $this->categories('A1');
-		$this->expectException(MoveNotPossibleException::class);
+        $this->expectException(MoveNotPossibleException::class);
         $node->makeChildOf($node);
     }
 
     /**
-     * expectedException Baum\Exceptions\MoveNotPossibleException
+     * expectedException Baum\Exceptions\MoveNotPossibleException.
      */
     public function testNodesCannotBeMovedToDescendantsOfThemselves()
     {
         $build = Category::buildTree(PopulateData::deepTree());
 
         $node = $this->categories('A1');
-		$this->expectException(MoveNotPossibleException::class);
+        $this->expectException(MoveNotPossibleException::class);
         $node->makeChildOf($this->categories('A2'));
     }
 
