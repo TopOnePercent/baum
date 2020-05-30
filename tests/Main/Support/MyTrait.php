@@ -84,5 +84,4 @@ trait MyTrait
 
         return $output;
     }
-
 }

@@ -2,18 +2,14 @@
 
 namespace Baum\Tests\Main\Standard;
 
+use Baum\Exceptions\MoveNotPossibleException;
 use Baum\Tests\Main\Concerns\NodeModelExtensionsTest;
-use Baum\Tests\Main\Models\Category;
 use Baum\Tests\Main\Models\MultiScopedCategory;
-use Baum\Tests\Main\Models\OrderedCategory;
 use Baum\Tests\Main\Models\OrderedScopedCategory;
 use Baum\Tests\Main\Models\ScopedCategory;
+use Baum\Tests\Main\Support\MyTrait;
 use Baum\Tests\Main\Support\PopulateData;
 use Baum\Tests\Main\UnitAbstract;
-use Baum\Tests\Main\Support\MyTrait;
-use Baum\Exceptions\MoveNotPossibleException;
-
-
 
 class CategoryMultiScopedTest extends UnitAbstract
 {
@@ -25,12 +21,10 @@ class CategoryMultiScopedTest extends UnitAbstract
 //         with(new MultiScopedCategorySeeder())->run();
 //     }
 
-	use MyTrait, NodeModelExtensionsTest;
-
+    use MyTrait, NodeModelExtensionsTest;
 
     public function testInSameScope()
     {
-
         $build = ScopedCategory::buildTree(PopulateData::multiScoped());
 
         $root1 = $this->categories('Root 1', ScopedCategory::class);
@@ -220,9 +214,9 @@ class CategoryMultiScopedTest extends UnitAbstract
 
     public function testToHierarchyNestsCorrectlyWithScopedOrder()
     {
-		$this->markTestSkipped();
-		$build = OrderedScopedCategory::buildTree(PopulateData::multiScoped());
-// 
+        $this->markTestSkipped();
+        $build = OrderedScopedCategory::buildTree(PopulateData::multiScoped());
+//
 //         $expectedWhole1 = [
 //             'Root 1' => [
 //                 'Child 1' => null,
@@ -232,7 +226,7 @@ class CategoryMultiScopedTest extends UnitAbstract
 //                 'Child 3' => null,
 //             ],
 //         ];
-// 
+//
 //         $expectedWhole2 = [
 //             'Root 2' => [
 //                 'Child 4' => null,
@@ -242,30 +236,30 @@ class CategoryMultiScopedTest extends UnitAbstract
 //                 'Child 6' => null,
 //             ],
 //         ];
-// 
+//
 // //         $this->assertArraysAreEqual($expectedWhole1, $this->hmap(OrderedScopedCategory::where('company_id', 1)->get()->toHierarchy()->toArray()));
 // //         $this->assertArraysAreEqual($expectedWhole2, $this->hmap(OrderedScopedCategory::where('company_id', 2)->get()->toHierarchy()->toArray()));
-// 
+//
 // 		$parent = $this->categories('Root 1', OrderedScopedCategory::class);
-// 		
+//
 //         $expected = [
 //             $parent,
 //             $this->categories('Child 1', OrderedScopedCategory::class),
 //             $this->categories('Child 2', OrderedScopedCategory::class),
 //             $this->categories('Child 2.1', OrderedScopedCategory::class),
 //             $this->categories('Child 3', OrderedScopedCategory::class),
-// 
+//
 //         ];
-// 
+//
 //         $this->assertEquals($expected, $parent->getDescendantsAndSelf()->all());
-// 
+//
 // 		//$parent->getDescendantsAndSelf()->all()
-// 
-// 
+//
+//
     }
 
     /**
-     * expectedException Baum\Exceptions\MoveNotPossibleException
+     * expectedException Baum\Exceptions\MoveNotPossibleException.
      */
     public function testNodesCannotMoveBetweenScopes()
     {
@@ -279,7 +273,7 @@ class CategoryMultiScopedTest extends UnitAbstract
     }
 
     /**
-     * expectedException Baum\Exceptions\MoveNotPossibleException
+     * expectedException Baum\Exceptions\MoveNotPossibleException.
      */
     public function testNodesCannotMoveBetweenScopesMultiple()
     {
@@ -294,7 +288,7 @@ class CategoryMultiScopedTest extends UnitAbstract
     }
 
     /**
-     * expectedException Baum\Exceptions\MoveNotPossibleException
+     * expectedException Baum\Exceptions\MoveNotPossibleException.
      */
     public function testNodesCannotMoveBetweenScopesMultiple2()
     {
