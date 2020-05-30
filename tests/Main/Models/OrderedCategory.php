@@ -2,7 +2,9 @@
 
 namespace Baum\Tests\Main\Models;
 
-class OrderedCategory extends MultiScopedCategory
+use Baum\Tests\Main\Models\Category;
+
+class OrderedCategory extends Category
 {
     protected $orderColumn = 'name';
 

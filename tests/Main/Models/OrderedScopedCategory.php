@@ -2,7 +2,9 @@
 
 namespace Baum\Tests\Main\Models;
 
-class OrderedScopedCategory extends OrderedCategory
+use Baum\Tests\Main\Models\Category;
+
+class OrderedScopedCategory extends Category
 {
     protected $scoped = ['company_id'];
 

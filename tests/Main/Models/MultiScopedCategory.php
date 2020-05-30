@@ -2,7 +2,9 @@
 
 namespace Baum\Tests\Main\Models;
 
-class MultiScopedCategory extends ScopedCategory
+use Baum\Tests\Main\Models\Category;
+
+class MultiScopedCategory extends Category
 {
     protected $scoped = ['company_id', 'language'];
 
