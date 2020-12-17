@@ -38,9 +38,12 @@ before_install:
 #    - composer require --dev "orchestra/testbench:3.5.*"
 
 jobs:
+  exclude:
+    - php: 7.2
+      env: LARAVEL=8
   allow_failures:
-  #- php: 8.0
-  - php: nightly
+    - env: LARAVEL=8 # Need to fix phpunit.xml
+    - php: nightly
 
 # optionally set up exclusions and allowed failures in the matrix
 #matrix:
