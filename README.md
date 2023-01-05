@@ -808,5 +808,4 @@ Baum is licensed under the terms of the [MIT License](http://opensource.org/lice
 
 ---
 
-Coded by [Estanislau Trepat (etrepat)](http://etrepat.com). I'm also
-[@etrepat](http://twitter.com/etrepat) on twitter.
+
