@@ -20,13 +20,6 @@ pattern for the [Laravel](http://laravel.com/) Eloquent ORM.
 
 ---
 
-## Installation
-
-Baum v2 works with Laravel 5.8 (and PHP 7.2) and above. You can add it to your own project with:
-```
-composer require gazsp/baum
-```
-
 ## Documentation
 
 * [About Nested Sets](#about)
@@ -116,7 +109,7 @@ ordinary trees are suddenly quite fast. Nifty, isn't it?
 
 Baum works with Laravel 5.8 (and PHP 7.2) and above. You can add it to your project with:
 ```
-composer require gazsp/baum:2.*
+composer require toponepercent/baum
 ```
 
 <a name="getting-started"></a>
