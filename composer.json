@@ -19,11 +19,11 @@
     "prefer-stable": true,
     "require": {
         "php": ">=7.2",
-        "illuminate/console": ">=5.8",
-        "illuminate/database": ">=5.8",
-        "illuminate/events": ">=5.8",
-        "illuminate/filesystem": ">=5.8",
-        "illuminate/support": ">=5.8"
+        "illuminate/console": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
+        "illuminate/database": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
+        "illuminate/events": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
+        "illuminate/filesystem": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
+        "illuminate/support": "~5.8.0|^6.0|^7.0|^8.0|^9.0"
     },
     "require-dev": {
         "orchestra/testbench": "^5",
