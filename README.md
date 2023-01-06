@@ -805,8 +805,3 @@ Please see the [CONTRIBUTING.md](https://github.com/etrepat/baum/blob/master/CON
 
 Baum is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT)
 (See LICENSE file for details).
-
----
-
-Coded by [Estanislau Trepat (etrepat)](http://etrepat.com). I'm also
-[@etrepat](http://twitter.com/etrepat) on twitter.
