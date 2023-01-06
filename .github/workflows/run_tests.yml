@@ -2,35 +2,44 @@ name: Tests
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+    - master
   pull_request:
-    branches: [ "master" ]
-
-permissions:
-  contents: read
+    branches:
+    - "*"
+  schedule:
+  - cron: '0 0 * * *'
 
 jobs:
-  build:
+  php-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
 
-    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        php: [8.0, 7.4, 7.3, 7.2, 7.1]
+
+    name: P${{ matrix.php }}
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
       with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+        php-version: ${{ matrix.php }}
+        coverage: none
+        tools: composer:v2
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      run: |
+        composer install -o --quiet
 
-    - name: Run tests
+    - name: Execute Unit Tests
       run: composer test
