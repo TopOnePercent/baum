@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - "*"
+  schedule:
+  - cron: '0 0 * * *'
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    strategy:
+      matrix:
+        php: [8.0, 7.4, 7.3, 7.2]
+
+    name: P${{ matrix.php }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        coverage: none
+        tools: composer:v2
+
+    - name: Install dependencies
+      run: |
+        composer install -o --quiet
+
+    - name: Execute Tests
+      run: composer test
+      

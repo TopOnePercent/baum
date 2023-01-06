@@ -1,8 +1,7 @@
 # Baum v2
 
-[![Build Status](https://travis-ci.org/gazsp/baum.svg?branch=2.0.3)](https://travis-ci.org/gazsp/baum)
-[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=2.0.3)](https://coveralls.io/github/gazsp/baum?branch=2.0.3)
-[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=2.0.3&style=flat)](https://github.styleci.io/repos/47506280)
+[![Tests](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml/badge.svg?branch=master)](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml)
+[![Coverage Status](https://img.shields.io/badge/coverage-40.11%25-red)](https://github.com/TopOnePercent/baum)
 
 ## Nested Set implementation for Laravel
 
@@ -16,8 +15,6 @@ pattern for the [Laravel](http://laravel.com/) Eloquent ORM.
 1. The Nested Set pattern is **best when** you need to query a tree more frequently than you need to modify the tree.
 
 ---
-
-[![this](https://img.shields.io/badge/warning-work%20in%20progress-red)]()
 
 *If you find a bug*, **please** file an issue and submit a pull request with a failing unit test.
 
@@ -784,35 +781,14 @@ $nestedList = Category::getNestedList('name');
 // );
 ```
 
-<a name="further-information"></a>
-## Further information
-
-You may find additional information, usage examples and/or frequently
-asked questions about Baum in the [wiki](https://github.com/etrepat/baum/wiki).
-
-Feel free to browse the wiki after finishing this README:
-
-[https://github.com/etrepat/baum/wiki](https://github.com/etrepat/baum/wiki)
-
 <a name="contributing"></a>
 ## Contributing
 
-Thinking of contributing? Maybe you've found some nasty bug? That's great news!
+Thinking of contributing? Maybe you've found some nasty bug or want to add a new feature? That's great news!
 
-1. Fork & clone the project: `git clone git@github.com:your-username/baum.git`.
-2. Run the tests and make sure that they pass with your setup: `phpunit`.
-3. Create your bugfix/feature branch and code away your changes. Add tests for your changes.
-4. Make sure all the tests still pass: `phpunit`.
-5. Push to your fork and submit new a pull request.
-
-Please see the [CONTRIBUTING.md](https://github.com/etrepat/baum/blob/master/CONTRIBUTING.md) file for extended guidelines and/or recommendations.
+Please see the [CONTRIBUTING.md](https://github.com/TopOnePercent/baum/blob/master/CONTRIBUTING.md) file for extended guidelines and/or recommendations.
 
 ## License
 
 Baum is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT)
 (See LICENSE file for details).
-
----
-
-Coded by [Estanislau Trepat (etrepat)](http://etrepat.com). I'm also
-[@etrepat](http://twitter.com/etrepat) on twitter.

@@ -1,8 +1,8 @@
 {
-    "name": "gazsp/baum",
+    "name": "toponepercent/baum",
     "type": "library",
     "description": "Baum is an implementation of the Nested Set pattern for Eloquent models.",
-    "keywords": ["nested set", "mptt", "laravel", "laravel 5", "eloquent", "database"],
+    "keywords": ["nested set", "mptt", "laravel", "eloquent", "database"],
     "license": "MIT",
     "authors": [
         {
@@ -19,20 +19,24 @@
             "name": "Brian LaVallee",
             "email": "brian.lavallee@invite-comm.jp",
             "homepage": "https://invite-comm.jp"
+        },
+        {
+            "name": "Top One Percent LTD",
+            "email": "developers@theforesight.co.uk",
+            "homepage": "http://theforesight.co.uk"
         }
     ],
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2",
-        "illuminate/console": ">=5.8",
-        "illuminate/database": ">=5.8",
-        "illuminate/events": ">=5.8",
-        "illuminate/filesystem": ">=5.8",
-        "illuminate/support": ">=5.8"
+        "php": "^7.2|^8.0",
+        "illuminate/console": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
+        "illuminate/database": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
+        "illuminate/events": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
+        "illuminate/filesystem": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
+        "illuminate/support": "~5.8.0|^6.0|^7.0|^8.0|^9.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^5",
-        "php-coveralls/php-coveralls": "^2.2"
+        "orchestra/testbench": "^5"
     },
     "autoload": {
         "psr-0": {
@@ -53,5 +57,10 @@
                 "Baum\\Providers\\BaumServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": [
+            "@php ./vendor/bin/phpunit"
+        ]
     }
 }
