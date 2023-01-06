@@ -1,8 +1,7 @@
 # Baum v2
 
 [![Tests](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml/badge.svg?branch=master)](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml)
-[![Coverage Status](https://coveralls.io/repos/github/gazsp/baum/badge.svg?branch=master)](https://coveralls.io/github/gazsp/baum?branch=master)
-[![StyleCI](https://github.styleci.io/repos/47506280/shield?branch=master&style=flat)](https://github.styleci.io/repos/47506280)
+[![Coverage Status](https://img.shields.io/badge/coverage-40.11%25-red)](https://github.com/TopOnePercent/baum)
 
 ## Nested Set implementation for Laravel
 
@@ -16,8 +15,6 @@ pattern for the [Laravel](http://laravel.com/) Eloquent ORM.
 1. The Nested Set pattern is **best when** you need to query a tree more frequently than you need to modify the tree.
 
 ---
-
-[![this](https://img.shields.io/badge/warning-work%20in%20progress-red)]()
 
 *If you find a bug*, **please** file an issue and submit a pull request with a failing unit test.
 

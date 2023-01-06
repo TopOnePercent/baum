@@ -31,8 +31,7 @@
         "illuminate/support": "~5.8.0|^6.0|^7.0|^8.0|^9.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^5",
-        "php-coveralls/php-coveralls": "^2.2"
+        "orchestra/testbench": "^5"
     },
     "autoload": {
         "psr-0": {
