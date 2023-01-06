@@ -48,5 +48,10 @@
                 "Baum\\Providers\\BaumServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": [
+            "@php ./vendor/bin/phpunit"
+        ]
     }
 }
