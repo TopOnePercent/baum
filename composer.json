@@ -1,8 +1,8 @@
 {
-    "name": "gazsp/baum",
+    "name": "toponepercent/baum",
     "type": "library",
     "description": "Baum is an implementation of the Nested Set pattern for Eloquent models.",
-    "keywords": ["nested set", "mptt", "laravel", "laravel 5", "eloquent", "database"],
+    "keywords": ["nested set", "mptt", "laravel", "eloquent", "database"],
     "license": "MIT",
     "authors": [
         {
@@ -14,6 +14,11 @@
             "name": "Gary Pearman",
             "email": "gaz@red-robot.co.uk",
             "homepage": "http://red-robot.co.uk"
+        },
+        {
+            "name": "TOP ONE PERCENT LTD",
+            "email": "developers@theforesight.co.uk",
+            "homepage": "http://theforesight.co.uk"
         }
     ],
     "prefer-stable": true,

@@ -41,5 +41,5 @@ jobs:
       run: |
         composer install -o --quiet
 
-    - name: Execute Unit Tests
+    - name: Execute  Tests
       run: composer test
