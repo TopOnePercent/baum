@@ -12,6 +12,7 @@ class UnitAbstract extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
         $this->withFactories(__DIR__.'/database/factories');
         $this->artisan('migrate:refresh');
@@ -56,5 +57,13 @@ class UnitAbstract extends TestCase
             //'Cartalyst\Sentry\SentryServiceProvider',
             //'YourProject\YourPackage\YourPackageServiceProvider',
         ];
+    }
+
+    public function assertArraysAreEqual($expected, $actual, $message = '')
+    {
+        $ex = json_encode($expected, JSON_PRETTY_PRINT);
+        $ac = json_encode($actual, JSON_PRETTY_PRINT);
+
+        return $this->assertEquals($ex, $ac, $message);
     }
 }

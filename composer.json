@@ -49,7 +49,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Baum\\Tests\\": "tests"
+            "Baum\\Tests\\": "tests/"
         }
     },
     "extra": {

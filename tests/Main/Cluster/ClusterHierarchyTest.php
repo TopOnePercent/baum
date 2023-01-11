@@ -1,11 +1,39 @@
 <?php
 
-namespace Baum\Tests\Main\Cluster;
-
 use Baum\Tests\Main\UnitAbstract;
+use Baum\Tests\Main\Models\Cluster;
 
 class ClusterHierarchyTest extends UnitAbstract
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $root_1 = Cluster::create(['name' => 'Root 1']);
+
+        $child_1 = Cluster::create(['name' => 'Child 1']);
+        $child_1->makeChildOf($root_1);
+
+        $child_2 = Cluster::create(['name' => 'Child 2']);
+        $child_2->makeChildOf($root_1);
+        $child_2_1 = Cluster::create(['name' => 'Child 2.1']);
+        $child_2_1->makeChildOf($child_2);
+
+        $child_3 = Cluster::create(['name' => 'Child 3']);
+        $child_3->makeChildOf($root_1);
+
+        $root_2 = Cluster::create(['name' => 'Root 2']);
+    }
+
+    protected function nestUptoAt(Cluster $parent, int $count)
+    {
+        for ($i = 0; $i < $count; $i++){
+            $child = Cluster::create(['name' => $parent->name . '.1']);
+            $child->makeChildOf($parent);
+            $parent = $child;
+        }
+    }
+
     public function testAllStatic()
     {
         $results = Cluster::all();
@@ -30,7 +58,7 @@ class ClusterHierarchyTest extends UnitAbstract
 
     public function testRootStatic()
     {
-        $this->assertEquals(Cluster::root(), $this->clusters('Root 1'));
+        $this->assertEquals(Cluster::root(), Cluster::clusters('Root 1'));
     }
 
     public function testAllLeavesStatic()
@@ -59,13 +87,13 @@ class ClusterHierarchyTest extends UnitAbstract
 
     public function testGetRoot()
     {
-        $this->assertEquals($this->clusters('Root 1'), $this->clusters('Root 1')->getRoot());
-        $this->assertEquals($this->clusters('Root 2'), $this->clusters('Root 2')->getRoot());
+        $this->assertEquals(Cluster::clusters('Root 1'), Cluster::clusters('Root 1')->getRoot());
+        $this->assertEquals(Cluster::clusters('Root 2'), Cluster::clusters('Root 2')->getRoot());
 
-        $this->assertEquals($this->clusters('Root 1'), $this->clusters('Child 1')->getRoot());
-        $this->assertEquals($this->clusters('Root 1'), $this->clusters('Child 2')->getRoot());
-        $this->assertEquals($this->clusters('Root 1'), $this->clusters('Child 2.1')->getRoot());
-        $this->assertEquals($this->clusters('Root 1'), $this->clusters('Child 3')->getRoot());
+        $this->assertEquals(Cluster::clusters('Root 1'), Cluster::clusters('Child 1')->getRoot());
+        $this->assertEquals(Cluster::clusters('Root 1'), Cluster::clusters('Child 2')->getRoot());
+        $this->assertEquals(Cluster::clusters('Root 1'), Cluster::clusters('Child 2.1')->getRoot());
+        $this->assertEquals(Cluster::clusters('Root 1'), Cluster::clusters('Child 3')->getRoot());
     }
 
     public function testGetRootEqualsSelfIfUnpersisted()
@@ -87,64 +115,64 @@ class ClusterHierarchyTest extends UnitAbstract
 
     public function testIsRoot()
     {
-        $this->assertTrue($this->clusters('Root 1')->isRoot());
-        $this->assertTrue($this->clusters('Root 2')->isRoot());
+        $this->assertTrue(Cluster::clusters('Root 1')->isRoot());
+        $this->assertTrue(Cluster::clusters('Root 2')->isRoot());
 
-        $this->assertFalse($this->clusters('Child 1')->isRoot());
-        $this->assertFalse($this->clusters('Child 2')->isRoot());
-        $this->assertFalse($this->clusters('Child 2.1')->isRoot());
-        $this->assertFalse($this->clusters('Child 3')->isRoot());
+        $this->assertFalse(Cluster::clusters('Child 1')->isRoot());
+        $this->assertFalse(Cluster::clusters('Child 2')->isRoot());
+        $this->assertFalse(Cluster::clusters('Child 2.1')->isRoot());
+        $this->assertFalse(Cluster::clusters('Child 3')->isRoot());
     }
 
     public function testGetLeaves()
     {
-        $leaves = [$this->clusters('Child 1'), $this->clusters('Child 2.1'), $this->clusters('Child 3')];
+        $leaves = [Cluster::clusters('Child 1'), Cluster::clusters('Child 2.1'), Cluster::clusters('Child 3')];
 
-        $this->assertEquals($leaves, $this->clusters('Root 1')->getLeaves()->all());
+        $this->assertEquals($leaves, Cluster::clusters('Root 1')->getLeaves()->all());
     }
 
     public function testGetLeavesInIteration()
     {
-        $node = $this->clusters('Root 1');
+        $node = Cluster::clusters('Root 1');
 
-        $expectedIds = [
-            '5d7ce1fd-6151-46d3-a5b3-0ebb9988dc57',
-            '3315a297-af87-4ad3-9fa5-19785407573d',
-            '054476d2-6830-4014-a181-4de010ef7114',
+        $expectedNames = [
+            'Child 1',
+            'Child 2.1',
+            'Child 3',
         ];
 
         foreach ($node->getLeaves() as $i => $leaf) {
-            $this->assertEquals($expectedIds[$i], $leaf->getKey());
+            $this->assertEquals($expectedNames[$i], $leaf->name);
         }
     }
 
     public function testGetTrunks()
     {
-        $trunks = [$this->clusters('Child 2')];
+        $trunks = [Cluster::clusters('Child 2')];
 
-        $this->assertEquals($trunks, $this->clusters('Root 1')->getTrunks()->all());
+        $this->assertEquals($trunks, Cluster::clusters('Root 1')->getTrunks()->all());
     }
 
     public function testGetTrunksInIteration()
     {
-        $node = $this->clusters('Root 1');
+        $node = Cluster::clusters('Root 1');
 
-        $expectedIds = ['07c1fc8c-53b5-4fe7-b9c4-e09f266a455c'];
+        $expectedNames = ['Child 2'];
 
         foreach ($node->getTrunks() as $i => $trunk) {
-            $this->assertEquals($expectedIds[$i], $trunk->getKey());
+            $this->assertEquals($expectedNames[$i], $trunk->name);
         }
     }
 
     public function testIsLeaf()
     {
-        $this->assertTrue($this->clusters('Child 1')->isLeaf());
-        $this->assertTrue($this->clusters('Child 2.1')->isLeaf());
-        $this->assertTrue($this->clusters('Child 3')->isLeaf());
-        $this->assertTrue($this->clusters('Root 2')->isLeaf());
+        $this->assertTrue(Cluster::clusters('Child 1')->isLeaf());
+        $this->assertTrue(Cluster::clusters('Child 2.1')->isLeaf());
+        $this->assertTrue(Cluster::clusters('Child 3')->isLeaf());
+        $this->assertTrue(Cluster::clusters('Root 2')->isLeaf());
 
-        $this->assertFalse($this->clusters('Root 1')->isLeaf());
-        $this->assertFalse($this->clusters('Child 2')->isLeaf());
+        $this->assertFalse(Cluster::clusters('Root 1')->isLeaf());
+        $this->assertFalse(Cluster::clusters('Child 2')->isLeaf());
 
         $new = new Cluster();
         $this->assertFalse($new->isLeaf());
@@ -152,13 +180,13 @@ class ClusterHierarchyTest extends UnitAbstract
 
     public function testIsTrunk()
     {
-        $this->assertFalse($this->clusters('Child 1')->isTrunk());
-        $this->assertFalse($this->clusters('Child 2.1')->isTrunk());
-        $this->assertFalse($this->clusters('Child 3')->isTrunk());
-        $this->assertFalse($this->clusters('Root 2')->isTrunk());
+        $this->assertFalse(Cluster::clusters('Child 1')->isTrunk());
+        $this->assertFalse(Cluster::clusters('Child 2.1')->isTrunk());
+        $this->assertFalse(Cluster::clusters('Child 3')->isTrunk());
+        $this->assertFalse(Cluster::clusters('Root 2')->isTrunk());
 
-        $this->assertFalse($this->clusters('Root 1')->isTrunk());
-        $this->assertTrue($this->clusters('Child 2')->isTrunk());
+        $this->assertFalse(Cluster::clusters('Root 1')->isTrunk());
+        $this->assertTrue(Cluster::clusters('Child 2')->isTrunk());
 
         $new = new Cluster();
         $this->assertFalse($new->isTrunk());
@@ -166,36 +194,34 @@ class ClusterHierarchyTest extends UnitAbstract
 
     public function testWithoutNodeScope()
     {
-        $child = $this->clusters('Child 2.1');
+        $child = Cluster::clusters('Child 2.1');
 
-        $expected = [$this->clusters('Root 1'), $child];
+        $expected = [Cluster::clusters('Root 1'), $child];
 
-        $this->assertEquals($expected, $child->ancestorsAndSelf()->withoutNode($this->clusters('Child 2'))->get()->all());
+        $this->assertEquals($expected, $child->ancestorsAndSelf()->withoutNode(Cluster::clusters('Child 2'))->get()->all());
     }
 
     public function testWithoutSelfScope()
     {
-        $child = $this->clusters('Child 2.1');
+        $child = Cluster::clusters('Child 2.1');
 
-        $expected = [$this->clusters('Root 1'), $this->clusters('Child 2')];
+        $expected = [Cluster::clusters('Root 1'), Cluster::clusters('Child 2')];
 
         $this->assertEquals($expected, $child->ancestorsAndSelf()->withoutSelf()->get()->all());
     }
 
     public function testWithoutRootScope()
     {
-        $child = $this->clusters('Child 2.1');
+        $child = Cluster::clusters('Child 2.1');
 
-        $expected = [$this->clusters('Child 2'), $child];
+        $expected = [Cluster::clusters('Child 2'), $child];
 
         $this->assertEquals($expected, $child->ancestorsAndSelf()->withoutRoot()->get()->all());
     }
 
     public function testLimitDepthScope()
     {
-        with(new ClusterSeeder())->nestUptoAt($this->clusters('Child 2.1'), 10);
-
-        $node = $this->clusters('Child 2');
+        $node = Cluster::clusters('Child 2');
 
         $descendancy = $node->descendants()->pluck('id');
 
@@ -213,50 +239,50 @@ class ClusterHierarchyTest extends UnitAbstract
 
     public function testGetAncestorsAndSelf()
     {
-        $child = $this->clusters('Child 2.1');
+        $child = Cluster::clusters('Child 2.1');
 
-        $expected = [$this->clusters('Root 1'), $this->clusters('Child 2'), $child];
+        $expected = [Cluster::clusters('Root 1'), Cluster::clusters('Child 2'), $child];
 
         $this->assertEquals($expected, $child->getAncestorsAndSelf()->all());
     }
 
     public function testGetAncestorsAndSelfWithoutRoot()
     {
-        $child = $this->clusters('Child 2.1');
+        $child = Cluster::clusters('Child 2.1');
 
-        $expected = [$this->clusters('Child 2'), $child];
+        $expected = [Cluster::clusters('Child 2'), $child];
 
         $this->assertEquals($expected, $child->getAncestorsAndSelfWithoutRoot()->all());
     }
 
     public function testGetAncestors()
     {
-        $child = $this->clusters('Child 2.1');
+        $child = Cluster::clusters('Child 2.1');
 
-        $expected = [$this->clusters('Root 1'), $this->clusters('Child 2')];
+        $expected = [Cluster::clusters('Root 1'), Cluster::clusters('Child 2')];
 
         $this->assertEquals($expected, $child->getAncestors()->all());
     }
 
     public function testGetAncestorsWithoutRoot()
     {
-        $child = $this->clusters('Child 2.1');
+        $child = Cluster::clusters('Child 2.1');
 
-        $expected = [$this->clusters('Child 2')];
+        $expected = [Cluster::clusters('Child 2')];
 
         $this->assertEquals($expected, $child->getAncestorsWithoutRoot()->all());
     }
 
     public function testGetDescendantsAndSelf()
     {
-        $parent = $this->clusters('Root 1');
+        $parent = Cluster::clusters('Root 1');
 
         $expected = [
             $parent,
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 3'),
         ];
 
         $this->assertCount(count($expected), $parent->getDescendantsAndSelf());
@@ -266,67 +292,67 @@ class ClusterHierarchyTest extends UnitAbstract
 
     public function testGetDescendantsAndSelfWithLimit()
     {
-        with(new ClusterSeeder())->nestUptoAt($this->clusters('Child 2.1'), 3);
+        $this->nestUptoAt(Cluster::clusters('Child 2.1'), 3);
 
-        $parent = $this->clusters('Root 1');
+        $parent = Cluster::clusters('Root 1');
 
         $this->assertEquals([$parent], $parent->getDescendantsAndSelf(0)->all());
 
         $this->assertEquals([
             $parent,
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendantsAndSelf(1)->all());
 
         $this->assertEquals([
             $parent,
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendantsAndSelf(2)->all());
 
         $this->assertEquals([
             $parent,
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 2.1.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 2.1.1'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendantsAndSelf(3)->all());
 
         $this->assertEquals([
             $parent,
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 2.1.1'),
-            $this->clusters('Child 2.1.1.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 2.1.1'),
+            Cluster::clusters('Child 2.1.1.1'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendantsAndSelf(4)->all());
 
         $this->assertEquals([
             $parent,
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 2.1.1'),
-            $this->clusters('Child 2.1.1.1'),
-            $this->clusters('Child 2.1.1.1.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 2.1.1'),
+            Cluster::clusters('Child 2.1.1.1'),
+            Cluster::clusters('Child 2.1.1.1.1'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendantsAndSelf(10)->all());
     }
 
     public function testGetDescendants()
     {
-        $parent = $this->clusters('Root 1');
+        $parent = Cluster::clusters('Root 1');
 
         $expected = [
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 3'),
         ];
 
         $this->assertCount(count($expected), $parent->getDescendants());
@@ -336,60 +362,60 @@ class ClusterHierarchyTest extends UnitAbstract
 
     public function testGetDescendantsWithLimit()
     {
-        with(new ClusterSeeder())->nestUptoAt($this->clusters('Child 2.1'), 3);
+        $this->nestUptoAt(Cluster::clusters('Child 2.1'), 3);
 
-        $parent = $this->clusters('Root 1');
+        $parent = Cluster::clusters('Root 1');
 
         $this->assertEmpty($parent->getDescendants(0)->all());
 
         $this->assertEquals([
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendants(1)->all());
 
         $this->assertEquals([
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendants(2)->all());
 
         $this->assertEquals([
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 2.1.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 2.1.1'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendants(3)->all());
 
         $this->assertEquals([
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 2.1.1'),
-            $this->clusters('Child 2.1.1.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 2.1.1'),
+            Cluster::clusters('Child 2.1.1.1'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendants(4)->all());
 
         $this->assertEquals([
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 2.1.1'),
-            $this->clusters('Child 2.1.1.1'),
-            $this->clusters('Child 2.1.1.1.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 2.1.1'),
+            Cluster::clusters('Child 2.1.1.1'),
+            Cluster::clusters('Child 2.1.1.1.1'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendants(5)->all());
 
         $this->assertEquals([
-            $this->clusters('Child 1'),
-            $this->clusters('Child 2'),
-            $this->clusters('Child 2.1'),
-            $this->clusters('Child 2.1.1'),
-            $this->clusters('Child 2.1.1.1'),
-            $this->clusters('Child 2.1.1.1.1'),
-            $this->clusters('Child 3'),
+            Cluster::clusters('Child 1'),
+            Cluster::clusters('Child 2'),
+            Cluster::clusters('Child 2.1'),
+            Cluster::clusters('Child 2.1.1'),
+            Cluster::clusters('Child 2.1.1.1'),
+            Cluster::clusters('Child 2.1.1.1.1'),
+            Cluster::clusters('Child 3'),
         ], $parent->getDescendants(10)->all());
     }
 
@@ -414,147 +440,147 @@ class ClusterHierarchyTest extends UnitAbstract
 
     public function testGetImmediateDescendants()
     {
-        $expected = [$this->clusters('Child 1'), $this->clusters('Child 2'), $this->clusters('Child 3')];
+        $expected = [Cluster::clusters('Child 1'), Cluster::clusters('Child 2'), Cluster::clusters('Child 3')];
 
-        $this->assertEquals($expected, $this->clusters('Root 1')->getImmediateDescendants()->all());
+        $this->assertEquals($expected, Cluster::clusters('Root 1')->getImmediateDescendants()->all());
 
-        $this->assertEquals([$this->clusters('Child 2.1')], $this->clusters('Child 2')->getImmediateDescendants()->all());
+        $this->assertEquals([Cluster::clusters('Child 2.1')], Cluster::clusters('Child 2')->getImmediateDescendants()->all());
 
-        $this->assertEmpty($this->clusters('Root 2')->getImmediateDescendants()->all());
+        $this->assertEmpty(Cluster::clusters('Root 2')->getImmediateDescendants()->all());
     }
 
     public function testIsSelfOrAncestorOf()
     {
-        $this->assertTrue($this->clusters('Root 1')->isSelfOrAncestorOf($this->clusters('Child 1')));
-        $this->assertTrue($this->clusters('Root 1')->isSelfOrAncestorOf($this->clusters('Child 2.1')));
-        $this->assertTrue($this->clusters('Child 2')->isSelfOrAncestorOf($this->clusters('Child 2.1')));
-        $this->assertFalse($this->clusters('Child 2.1')->isSelfOrAncestorOf($this->clusters('Child 2')));
-        $this->assertFalse($this->clusters('Child 1')->isSelfOrAncestorOf($this->clusters('Child 2')));
-        $this->assertTrue($this->clusters('Child 1')->isSelfOrAncestorOf($this->clusters('Child 1')));
+        $this->assertTrue(Cluster::clusters('Root 1')->isSelfOrAncestorOf(Cluster::clusters('Child 1')));
+        $this->assertTrue(Cluster::clusters('Root 1')->isSelfOrAncestorOf(Cluster::clusters('Child 2.1')));
+        $this->assertTrue(Cluster::clusters('Child 2')->isSelfOrAncestorOf(Cluster::clusters('Child 2.1')));
+        $this->assertFalse(Cluster::clusters('Child 2.1')->isSelfOrAncestorOf(Cluster::clusters('Child 2')));
+        $this->assertFalse(Cluster::clusters('Child 1')->isSelfOrAncestorOf(Cluster::clusters('Child 2')));
+        $this->assertTrue(Cluster::clusters('Child 1')->isSelfOrAncestorOf(Cluster::clusters('Child 1')));
     }
 
     public function testIsAncestorOf()
     {
-        $this->assertTrue($this->clusters('Root 1')->isAncestorOf($this->clusters('Child 1')));
-        $this->assertTrue($this->clusters('Root 1')->isAncestorOf($this->clusters('Child 2.1')));
-        $this->assertTrue($this->clusters('Child 2')->isAncestorOf($this->clusters('Child 2.1')));
-        $this->assertFalse($this->clusters('Child 2.1')->isAncestorOf($this->clusters('Child 2')));
-        $this->assertFalse($this->clusters('Child 1')->isAncestorOf($this->clusters('Child 2')));
-        $this->assertFalse($this->clusters('Child 1')->isAncestorOf($this->clusters('Child 1')));
+        $this->assertTrue(Cluster::clusters('Root 1')->isAncestorOf(Cluster::clusters('Child 1')));
+        $this->assertTrue(Cluster::clusters('Root 1')->isAncestorOf(Cluster::clusters('Child 2.1')));
+        $this->assertTrue(Cluster::clusters('Child 2')->isAncestorOf(Cluster::clusters('Child 2.1')));
+        $this->assertFalse(Cluster::clusters('Child 2.1')->isAncestorOf(Cluster::clusters('Child 2')));
+        $this->assertFalse(Cluster::clusters('Child 1')->isAncestorOf(Cluster::clusters('Child 2')));
+        $this->assertFalse(Cluster::clusters('Child 1')->isAncestorOf(Cluster::clusters('Child 1')));
     }
 
     public function testIsChildOf()
     {
-        $this->assertTrue($this->clusters('Child 1')->isChildOf($this->clusters('Root 1')));
-        $this->assertTrue($this->clusters('Child 2')->isChildOf($this->clusters('Root 1')));
-        $this->assertTrue($this->clusters('Child 2.1')->isChildOf($this->clusters('Child 2')));
-        $this->assertFalse($this->clusters('Child 2.1')->isChildOf($this->clusters('Root 1')));
-        $this->assertFalse($this->clusters('Child 2.1')->isChildOf($this->clusters('Child 1')));
+        $this->assertTrue(Cluster::clusters('Child 1')->isChildOf(Cluster::clusters('Root 1')));
+        $this->assertTrue(Cluster::clusters('Child 2')->isChildOf(Cluster::clusters('Root 1')));
+        $this->assertTrue(Cluster::clusters('Child 2.1')->isChildOf(Cluster::clusters('Child 2')));
+        $this->assertFalse(Cluster::clusters('Child 2.1')->isChildOf(Cluster::clusters('Root 1')));
+        $this->assertFalse(Cluster::clusters('Child 2.1')->isChildOf(Cluster::clusters('Child 1')));
     }
 
     public function testIsSelfOrDescendantOf()
     {
-        $this->assertTrue($this->clusters('Child 1')->isSelfOrDescendantOf($this->clusters('Root 1')));
-        $this->assertTrue($this->clusters('Child 2.1')->isSelfOrDescendantOf($this->clusters('Root 1')));
-        $this->assertTrue($this->clusters('Child 2.1')->isSelfOrDescendantOf($this->clusters('Child 2')));
-        $this->assertFalse($this->clusters('Child 2')->isSelfOrDescendantOf($this->clusters('Child 2.1')));
-        $this->assertFalse($this->clusters('Child 2')->isSelfOrDescendantOf($this->clusters('Child 1')));
-        $this->assertTrue($this->clusters('Child 1')->isSelfOrDescendantOf($this->clusters('Child 1')));
+        $this->assertTrue(Cluster::clusters('Child 1')->isSelfOrDescendantOf(Cluster::clusters('Root 1')));
+        $this->assertTrue(Cluster::clusters('Child 2.1')->isSelfOrDescendantOf(Cluster::clusters('Root 1')));
+        $this->assertTrue(Cluster::clusters('Child 2.1')->isSelfOrDescendantOf(Cluster::clusters('Child 2')));
+        $this->assertFalse(Cluster::clusters('Child 2')->isSelfOrDescendantOf(Cluster::clusters('Child 2.1')));
+        $this->assertFalse(Cluster::clusters('Child 2')->isSelfOrDescendantOf(Cluster::clusters('Child 1')));
+        $this->assertTrue(Cluster::clusters('Child 1')->isSelfOrDescendantOf(Cluster::clusters('Child 1')));
     }
 
     public function testIsDescendantOf()
     {
-        $this->assertTrue($this->clusters('Child 1')->isDescendantOf($this->clusters('Root 1')));
-        $this->assertTrue($this->clusters('Child 2.1')->isDescendantOf($this->clusters('Root 1')));
-        $this->assertTrue($this->clusters('Child 2.1')->isDescendantOf($this->clusters('Child 2')));
-        $this->assertFalse($this->clusters('Child 2')->isDescendantOf($this->clusters('Child 2.1')));
-        $this->assertFalse($this->clusters('Child 2')->isDescendantOf($this->clusters('Child 1')));
-        $this->assertFalse($this->clusters('Child 1')->isDescendantOf($this->clusters('Child 1')));
+        $this->assertTrue(Cluster::clusters('Child 1')->isDescendantOf(Cluster::clusters('Root 1')));
+        $this->assertTrue(Cluster::clusters('Child 2.1')->isDescendantOf(Cluster::clusters('Root 1')));
+        $this->assertTrue(Cluster::clusters('Child 2.1')->isDescendantOf(Cluster::clusters('Child 2')));
+        $this->assertFalse(Cluster::clusters('Child 2')->isDescendantOf(Cluster::clusters('Child 2.1')));
+        $this->assertFalse(Cluster::clusters('Child 2')->isDescendantOf(Cluster::clusters('Child 1')));
+        $this->assertFalse(Cluster::clusters('Child 1')->isDescendantOf(Cluster::clusters('Child 1')));
     }
 
     public function testGetSiblingsAndSelf()
     {
-        $child = $this->clusters('Child 2');
+        $child = Cluster::clusters('Child 2');
 
-        $expected = [$this->clusters('Child 1'), $child, $this->clusters('Child 3')];
+        $expected = [Cluster::clusters('Child 1'), $child, Cluster::clusters('Child 3')];
         $this->assertEquals($expected, $child->getSiblingsAndSelf()->all());
 
-        $expected = [$this->clusters('Root 1'), $this->clusters('Root 2')];
-        $this->assertEquals($expected, $this->clusters('Root 1')->getSiblingsAndSelf()->all());
+        $expected = [Cluster::clusters('Root 1'), Cluster::clusters('Root 2')];
+        $this->assertEquals($expected, Cluster::clusters('Root 1')->getSiblingsAndSelf()->all());
     }
 
     public function testGetSiblings()
     {
-        $child = $this->clusters('Child 2');
+        $child = Cluster::clusters('Child 2');
 
-        $expected = [$this->clusters('Child 1'), $this->clusters('Child 3')];
+        $expected = [Cluster::clusters('Child 1'), Cluster::clusters('Child 3')];
 
         $this->assertEquals($expected, $child->getSiblings()->all());
     }
 
     public function testGetLeftSibling()
     {
-        $this->assertEquals($this->clusters('Child 1'), $this->clusters('Child 2')->getLeftSibling());
-        $this->assertEquals($this->clusters('Child 2'), $this->clusters('Child 3')->getLeftSibling());
+        $this->assertEquals(Cluster::clusters('Child 1'), Cluster::clusters('Child 2')->getLeftSibling());
+        $this->assertEquals(Cluster::clusters('Child 2'), Cluster::clusters('Child 3')->getLeftSibling());
     }
 
     public function testGetLeftSiblingOfFirstRootIsNull()
     {
-        $this->assertNull($this->clusters('Root 1')->getLeftSibling());
+        $this->assertNull(Cluster::clusters('Root 1')->getLeftSibling());
     }
 
     public function testGetLeftSiblingWithNoneIsNull()
     {
-        $this->assertNull($this->clusters('Child 2.1')->getLeftSibling());
+        $this->assertNull(Cluster::clusters('Child 2.1')->getLeftSibling());
     }
 
     public function testGetLeftSiblingOfLeftmostNodeIsNull()
     {
-        $this->assertNull($this->clusters('Child 1')->getLeftSibling());
+        $this->assertNull(Cluster::clusters('Child 1')->getLeftSibling());
     }
 
     public function testGetRightSibling()
     {
-        $this->assertEquals($this->clusters('Child 3'), $this->clusters('Child 2')->getRightSibling());
-        $this->assertEquals($this->clusters('Child 2'), $this->clusters('Child 1')->getRightSibling());
+        $this->assertEquals(Cluster::clusters('Child 3'), Cluster::clusters('Child 2')->getRightSibling());
+        $this->assertEquals(Cluster::clusters('Child 2'), Cluster::clusters('Child 1')->getRightSibling());
     }
 
     public function testGetRightSiblingOfRoots()
     {
-        $this->assertEquals($this->clusters('Root 2'), $this->clusters('Root 1')->getRightSibling());
-        $this->assertNull($this->clusters('Root 2')->getRightSibling());
+        $this->assertEquals(Cluster::clusters('Root 2'), Cluster::clusters('Root 1')->getRightSibling());
+        $this->assertNull(Cluster::clusters('Root 2')->getRightSibling());
     }
 
     public function testGetRightSiblingWithNoneIsNull()
     {
-        $this->assertNull($this->clusters('Child 2.1')->getRightSibling());
+        $this->assertNull(Cluster::clusters('Child 2.1')->getRightSibling());
     }
 
     public function testGetRightSiblingOfRightmostNodeIsNull()
     {
-        $this->assertNull($this->clusters('Child 3')->getRightSibling());
+        $this->assertNull(Cluster::clusters('Child 3')->getRightSibling());
     }
 
     public function testInsideSubtree()
     {
-        $this->assertFalse($this->clusters('Child 1')->insideSubtree($this->clusters('Root 2')));
-        $this->assertFalse($this->clusters('Child 2')->insideSubtree($this->clusters('Root 2')));
-        $this->assertFalse($this->clusters('Child 3')->insideSubtree($this->clusters('Root 2')));
+        $this->assertFalse(Cluster::clusters('Child 1')->insideSubtree(Cluster::clusters('Root 2')));
+        $this->assertFalse(Cluster::clusters('Child 2')->insideSubtree(Cluster::clusters('Root 2')));
+        $this->assertFalse(Cluster::clusters('Child 3')->insideSubtree(Cluster::clusters('Root 2')));
 
-        $this->assertTrue($this->clusters('Child 1')->insideSubtree($this->clusters('Root 1')));
-        $this->assertTrue($this->clusters('Child 2')->insideSubtree($this->clusters('Root 1')));
-        $this->assertTrue($this->clusters('Child 2.1')->insideSubtree($this->clusters('Root 1')));
-        $this->assertTrue($this->clusters('Child 3')->insideSubtree($this->clusters('Root 1')));
+        $this->assertTrue(Cluster::clusters('Child 1')->insideSubtree(Cluster::clusters('Root 1')));
+        $this->assertTrue(Cluster::clusters('Child 2')->insideSubtree(Cluster::clusters('Root 1')));
+        $this->assertTrue(Cluster::clusters('Child 2.1')->insideSubtree(Cluster::clusters('Root 1')));
+        $this->assertTrue(Cluster::clusters('Child 3')->insideSubtree(Cluster::clusters('Root 1')));
 
-        $this->assertTrue($this->clusters('Child 2.1')->insideSubtree($this->clusters('Child 2')));
-        $this->assertFalse($this->clusters('Child 2.1')->insideSubtree($this->clusters('Root 2')));
+        $this->assertTrue(Cluster::clusters('Child 2.1')->insideSubtree(Cluster::clusters('Child 2')));
+        $this->assertFalse(Cluster::clusters('Child 2.1')->insideSubtree(Cluster::clusters('Root 2')));
     }
 
     public function testGetLevel()
     {
-        $this->assertEquals(0, $this->clusters('Root 1')->getLevel());
-        $this->assertEquals(1, $this->clusters('Child 1')->getLevel());
-        $this->assertEquals(2, $this->clusters('Child 2.1')->getLevel());
+        $this->assertEquals(0, Cluster::clusters('Root 1')->getLevel());
+        $this->assertEquals(1, Cluster::clusters('Child 1')->getLevel());
+        $this->assertEquals(2, Cluster::clusters('Child 2.1')->getLevel());
     }
 
     public function testToHierarchyReturnsAnEloquentCollection()
@@ -677,27 +703,27 @@ class ClusterHierarchyTest extends UnitAbstract
         $expectedSubtreeD = ['D' => null];
 
         // Perform assertions
-        $wholeTree = hmap(Cluster::all()->toHierarchy()->toArray());
+        $wholeTree = Cluster::hmap(Cluster::all()->toHierarchy()->toArray());
         $this->assertArraysAreEqual($expectedWholeTree, $wholeTree);
 
-        $subtreeA = hmap($this->clusters('A')->getDescendantsAndSelf()->toHierarchy()->toArray());
+        $subtreeA = Cluster::hmap(Cluster::clusters('A')->getDescendantsAndSelf()->toHierarchy()->toArray());
         $this->assertArraysAreEqual($expectedSubtreeA, $subtreeA);
 
-        $subtreeB = hmap($this->clusters('B')->getDescendantsAndSelf()->toHierarchy()->toArray());
+        $subtreeB = Cluster::hmap(Cluster::clusters('B')->getDescendantsAndSelf()->toHierarchy()->toArray());
         $this->assertArraysAreEqual($expectedSubtreeB, $subtreeB);
 
-        $subtreeC = hmap($this->clusters('C')->getDescendants()->toHierarchy()->toArray());
+        $subtreeC = Cluster::hmap(Cluster::clusters('C')->getDescendants()->toHierarchy()->toArray());
         $this->assertArraysAreEqual($expectedSubtreeC, $subtreeC);
 
-        $subtreeD = hmap($this->clusters('D')->getDescendantsAndSelf()->toHierarchy()->toArray());
+        $subtreeD = Cluster::hmap(Cluster::clusters('D')->getDescendantsAndSelf()->toHierarchy()->toArray());
         $this->assertArraysAreEqual($expectedSubtreeD, $subtreeD);
 
-        $this->assertTrue($this->clusters('D')->getDescendants()->toHierarchy()->isEmpty());
+        $this->assertTrue(Cluster::clusters('D')->getDescendants()->toHierarchy()->isEmpty());
     }
 
     public function testToHierarchyNestsCorrectlyNotSequential()
     {
-        $parent = $this->clusters('Child 1');
+        $parent = Cluster::clusters('Child 1');
 
         $parent->children()->create(['name' => 'Child 1.1']);
 
@@ -713,7 +739,7 @@ class ClusterHierarchyTest extends UnitAbstract
         ];
 
         $parent->reload();
-        $this->assertArraysAreEqual($expected, hmap($parent->getDescendantsAndSelf()->toHierarchy()->toArray()));
+        $this->assertArraysAreEqual($expected, Cluster::hmap($parent->getDescendantsAndSelf()->toHierarchy()->toArray()));
     }
 
     public function testGetNestedList()
@@ -722,12 +748,12 @@ class ClusterHierarchyTest extends UnitAbstract
         $nestedList = Cluster::getNestedList('name', 'id', $seperator);
 
         $expected = [
-            '7461d8f5-2ea9-4788-99c4-9d0244f0bfb1' => str_repeat($seperator, 0).'Root 1',
-            '5d7ce1fd-6151-46d3-a5b3-0ebb9988dc57' => str_repeat($seperator, 1).'Child 1',
-            '07c1fc8c-53b5-4fe7-b9c4-e09f266a455c' => str_repeat($seperator, 1).'Child 2',
-            '3315a297-af87-4ad3-9fa5-19785407573d' => str_repeat($seperator, 2).'Child 2.1',
-            '054476d2-6830-4014-a181-4de010ef7114' => str_repeat($seperator, 1).'Child 3',
-            '3bb62314-9e1e-49c6-a5cb-17a9ab9b1b9a' => str_repeat($seperator, 0).'Root 2',
+            Cluster::clusters('Root 1')->id => str_repeat($seperator, 0).'Root 1',
+            Cluster::clusters('Child 1')->id => str_repeat($seperator, 1).'Child 1',
+            Cluster::clusters('Child 2')->id => str_repeat($seperator, 1).'Child 2',
+            Cluster::clusters('Child 2.1')->id => str_repeat($seperator, 2).'Child 2.1',
+            Cluster::clusters('Child 3')->id => str_repeat($seperator, 1).'Child 3',
+            Cluster::clusters('Root 2')->id => str_repeat($seperator, 0).'Root 2',
         ];
 
         $this->assertArraysAreEqual($expected, $nestedList);
@@ -740,12 +766,12 @@ class ClusterHierarchyTest extends UnitAbstract
         $nestedList = Cluster::getNestedList('name', 'id', $seperator, $symbol);
 
         $expected = [
-            '7461d8f5-2ea9-4788-99c4-9d0244f0bfb1' => str_repeat($seperator, 0).$symbol.'Root 1',
-            '5d7ce1fd-6151-46d3-a5b3-0ebb9988dc57' => str_repeat($seperator, 1).$symbol.'Child 1',
-            '07c1fc8c-53b5-4fe7-b9c4-e09f266a455c' => str_repeat($seperator, 1).$symbol.'Child 2',
-            '3315a297-af87-4ad3-9fa5-19785407573d' => str_repeat($seperator, 2).$symbol.'Child 2.1',
-            '054476d2-6830-4014-a181-4de010ef7114' => str_repeat($seperator, 1).$symbol.'Child 3',
-            '3bb62314-9e1e-49c6-a5cb-17a9ab9b1b9a' => str_repeat($seperator, 0).$symbol.'Root 2',
+            Cluster::clusters('Root 1')->id => str_repeat($seperator, 0).$symbol.'Root 1',
+            Cluster::clusters('Child 1')->id => str_repeat($seperator, 1).$symbol.'Child 1',
+            Cluster::clusters('Child 2')->id => str_repeat($seperator, 1).$symbol.'Child 2',
+            Cluster::clusters('Child 2.1')->id => str_repeat($seperator, 2).$symbol.'Child 2.1',
+            Cluster::clusters('Child 3')->id => str_repeat($seperator, 1).$symbol.'Child 3',
+            Cluster::clusters('Root 2')->id => str_repeat($seperator, 0).$symbol.'Root 2',
         ];
 
         $this->assertArraysAreEqual($expected, $nestedList);
