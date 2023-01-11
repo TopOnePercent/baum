@@ -1,24 +1,30 @@
 <?php
 
-namespace Baum\Tests\Main\Cluster;
-
 use Baum\Tests\Main\UnitAbstract;
+use Baum\Tests\Main\Models\Cluster;
 
 class ClusterColumnsTest extends UnitAbstract
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Cluster::create(['name' => 'A']);
+        $this->root = Cluster::root();
+
+        $this->child = Cluster::create(['name' => 'A.A']);
+        $this->child->makeChildOf($this->root);
+    }
+
     public function testKeyIsNonNumeric()
     {
-        $root = Cluster::root();
-
-        $this->assertTrue(is_string($root->getKey()));
-        $this->assertFalse(is_numeric($root->getKey()));
+        $this->assertTrue(is_string($this->root->getKey()));
+        $this->assertFalse(is_numeric($this->root->getKey()));
     }
 
     public function testParentKeyIsNonNumeric()
     {
-        $child1 = $this->clusters('Child 1');
-
-        $this->assertTrue(is_string($child1->getParentId()));
-        $this->assertFalse(is_numeric($child1->getParentId()));
+        $this->assertTrue(is_string($this->child->getParentId()));
+        $this->assertFalse(is_numeric($this->child->getParentId()));
     }
 }

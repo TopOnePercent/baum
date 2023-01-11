@@ -8,9 +8,9 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false">
+         stopOnFailure="true">
     <testsuites>
-        <testsuite name="Baseline Eloquent Test">
+        <!-- <testsuite name="Baseline Eloquent Test">
             <directory>tests/Baseline</directory>
         </testsuite>
         <testsuite name="Basic Baum Test">
@@ -23,7 +23,16 @@
             <file>tests/Main/Standard/CategoryHierarchyTest.php</file>
             <file>tests/Main/Standard/CategoryMovementTest.php</file>
             <file>tests/Main/Standard/CategoryMultiScopedTest.php</file>
+        </testsuite> -->
 
+        <testsuite name="Baseline Eloquent Test">
+            <directory suffix="Test.php">tests/Baseline</directory>
+        </testsuite>
+        <testsuite name="Basic Baum Test">
+            <directory suffix="Test.php">tests/Basic</directory>
+        </testsuite>
+        <testsuite name="Baum Main Test">
+            <directory suffix="Test.php">tests/Main</directory>
         </testsuite>
 
 
