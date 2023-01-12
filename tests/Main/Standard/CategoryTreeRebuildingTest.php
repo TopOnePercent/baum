@@ -3,9 +3,30 @@
 namespace Baum\Tests\Main\Standard;
 
 use Baum\Tests\Main\Models\Category;
+use Baum\Tests\Main\Models\MultiScopedCategory;
 
 class CategoryTreeRebuildingTest extends CategoryAbstract
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $root_1 = Category::create(['name' => 'Root 1']);
+
+        $child_1 = Category::create(['name' => 'Child 1']);
+        $child_1->makeChildOf($root_1);
+
+        $child_2 = Category::create(['name' => 'Child 2']);
+        $child_2->makeChildOf($root_1);
+        $child_2_1 = Category::create(['name' => 'Child 2.1']);
+        $child_2_1->makeChildOf($child_2);
+
+        $child_3 = Category::create(['name' => 'Child 3']);
+        $child_3->makeChildOf($root_1);
+
+        $root_2 = Category::create(['name' => 'Root 2']);
+    }
+
     public function testRebuild()
     {
         $this->assertTrue(Category::isValidNestedSet());
@@ -69,14 +90,14 @@ class CategoryTreeRebuildingTest extends CategoryAbstract
         MultiscopedCategory::rebuild();
         $this->assertTrue(MultiscopedCategory::isValidNestedSet());
 
-        $this->assertEquals($root->getAttributes(), $this->categories('A', 'MultiScopedCategory')->getAttributes());
+        $this->assertEquals($root->getAttributes(), MultiscopedCategory::categories('A')->getAttributes());
 
         // Compare attributes, not objects
         $expected = array_map(function ($item) {
             return $item->getAttributes();
         }, [$child1, $child2]);
 
-        $children = $this->categories('A', 'MultiScopedCategory')->children()->get()->all();
+        $children = MultiscopedCategory::categories('A')->children()->get()->all();
         $children = array_map(function ($item) {
             return $item->getAttributes();
         }, $children);
