@@ -10,21 +10,6 @@
          processIsolation="false"
          stopOnFailure="true">
     <testsuites>
-        <!-- <testsuite name="Baseline Eloquent Test">
-            <directory>tests/Baseline</directory>
-        </testsuite>
-        <testsuite name="Basic Baum Test">
-            <directory>tests/Basic</directory>
-        </testsuite>
-        <testsuite name="Baum Main Test">
-            <file>tests/Main/Standard/CategoryColumnsTest.php</file>
-            <file>tests/Main/Standard/CategoryCustomEventsTest.php</file>
-            <file>tests/Main/Standard/CategoryHierarchyTest.php</file>
-            <file>tests/Main/Standard/CategoryHierarchyTest.php</file>
-            <file>tests/Main/Standard/CategoryMovementTest.php</file>
-            <file>tests/Main/Standard/CategoryMultiScopedTest.php</file>
-        </testsuite> -->
-
         <testsuite name="Baseline Eloquent Test">
             <directory suffix="Test.php">tests/Baseline</directory>
         </testsuite>
@@ -34,14 +19,6 @@
         <testsuite name="Baum Main Test">
             <directory suffix="Test.php">tests/Main</directory>
         </testsuite>
-
-
-<!-- 
-        <testsuite name="Baum Under Test">
-            <file>tests/Main/Standard/CategoryMultiScopedTest.php</file>
-        </testsuite>
- -->
-
     </testsuites>
     <filter>
         <whitelist>

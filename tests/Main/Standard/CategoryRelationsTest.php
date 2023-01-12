@@ -43,9 +43,9 @@ class CategoryRelationsTest extends CategoryAbstract
 
     public function testParentRelation()
     {
-        $this->assertEquals($this->categories('Child 2.1')->parent()->first(), $this->categories('Child 2'));
-        $this->assertEquals($this->categories('Child 2')->parent()->first(), $this->categories('Root 1'));
-        $this->assertNull($this->categories('Root 1')->parent()->first());
+        $this->assertEquals(Category::categories('Child 2.1')->parent()->first(), Category::categories('Child 2'));
+        $this->assertEquals(Category::categories('Child 2')->parent()->first(), Category::categories('Root 1'));
+        $this->assertNull(Category::categories('Root 1')->parent()->first());
     }
 
     public function testChildrenRelationIsAHasMany()
@@ -64,17 +64,17 @@ class CategoryRelationsTest extends CategoryAbstract
 
     public function testChildrenRelation()
     {
-        $root = $this->categories('Root 1');
+        $root = Category::categories('Root 1');
 
         foreach ($root->children() as $child) {
             $this->assertEquals($root->getKey(), $child->getParentId());
         }
 
-        $expected = [$this->categories('Child 1'), $this->categories('Child 2'), $this->categories('Child 3')];
+        $expected = [Category::categories('Child 1'), Category::categories('Child 2'), Category::categories('Child 3')];
 
         $this->assertEquals($expected, $root->children()->get()->all());
 
-        $this->assertEmpty($this->categories('Child 3')->children()->get()->all());
+        $this->assertEmpty(Category::categories('Child 3')->children()->get()->all());
     }
 
     public function testChildrenRelationUsesDefaultOrdering()
@@ -99,18 +99,18 @@ class CategoryRelationsTest extends CategoryAbstract
 
     public function testChildrenRelationObeysDefaultOrdering()
     {
-        $children = $this->categories('Root 1')->children()->get()->all();
+        $children = Category::categories('Root 1')->children()->get()->all();
 
-        $expected = [$this->categories('Child 1'), $this->categories('Child 2'), $this->categories('Child 3')];
+        $expected = [Category::categories('Child 1'), Category::categories('Child 2'), Category::categories('Child 3')];
         $this->assertEquals($expected, $children);
 
         // Swap 2 nodes & re-test
         Category::query()->where('id', '=', 2)->update(['lft' => 8, 'rgt' => 9]);
         Category::query()->where('id', '=', 5)->update(['lft' => 2, 'rgt' => 3]);
 
-        $children = $this->categories('Root 1')->children()->get()->all();
+        $children = Category::categories('Root 1')->children()->get()->all();
 
-        $expected = [$this->categories('Child 3'), $this->categories('Child 2'), $this->categories('Child 1')];
+        $expected = [Category::categories('Child 3'), Category::categories('Child 2'), Category::categories('Child 1')];
         $this->assertEquals($expected, $children);
     }
 
@@ -118,9 +118,9 @@ class CategoryRelationsTest extends CategoryAbstract
     {
         $child = new Category(['name' => 'Child 3.1']);
 
-        $this->categories('Child 3')->children()->save($child);
+        Category::categories('Child 3')->children()->save($child);
 
         $this->assertTrue($child->exists);
-        $this->assertEquals($this->categories('Child 3')->getKey(), $child->getParentId());
+        $this->assertEquals(Category::categories('Child 3')->getKey(), $child->getParentId());
     }
 }

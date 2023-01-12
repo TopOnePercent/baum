@@ -46,7 +46,7 @@ class CategoryTreeValidationTest extends CategoryAbstract
     {
         $this->assertTrue(Category::isValidNestedSet());
 
-        $child2 = $this->categories('Child 2');
+        $child2 = Category::categories('Child 2');
         $child2->rgt = $child2->lft;
         $child2->save();
 
@@ -57,8 +57,8 @@ class CategoryTreeValidationTest extends CategoryAbstract
     {
         $this->assertTrue(Category::isValidNestedSet());
 
-        $child2 = $this->categories('Child 2');
-        $child2->lft = $this->categories('Root 1')->getLeft();
+        $child2 = Category::categories('Child 2');
+        $child2->lft = Category::categories('Root 1')->getLeft();
         $child2->save();
 
         $this->assertFalse(Category::isValidNestedSet());
@@ -68,8 +68,8 @@ class CategoryTreeValidationTest extends CategoryAbstract
     {
         $this->assertTrue(Category::isValidNestedSet());
 
-        $child2 = $this->categories('Child 2');
-        $child2->rgt = $this->categories('Root 1')->getRight();
+        $child2 = Category::categories('Child 2');
+        $child2->rgt = Category::categories('Root 1')->getRight();
         $child2->save();
 
         $this->assertFalse(Category::isValidNestedSet());
@@ -79,7 +79,7 @@ class CategoryTreeValidationTest extends CategoryAbstract
     {
         $this->assertTrue(Category::isValidNestedSet());
 
-        Category::query()->delete($this->categories('Child 2')->getKey());
+        Category::query()->delete(Category::categories('Child 2')->getKey());
         $this->assertTrue(Category::isValidNestedSet());
     }
 
@@ -88,7 +88,7 @@ class CategoryTreeValidationTest extends CategoryAbstract
         $this->assertTrue(Category::isValidNestedSet());
 
         // Force Root 2 to overlap with Root 1
-        $root = $this->categories('Root 2');
+        $root = Category::categories('Root 2');
         $root->lft = 0;
         $root->save();
 
@@ -99,10 +99,10 @@ class CategoryTreeValidationTest extends CategoryAbstract
     {
         $this->assertTrue(Category::isValidNestedSet());
 
-        $this->categories('Root 2')->delete();
+        Category::categories('Root 2')->delete();
         $this->assertTrue(Category::isValidNestedSet());
 
-        $this->categories('Child 1')->delete();
+        Category::categories('Child 1')->delete();
         $this->assertTrue(Category::isValidNestedSet());
     }
 
@@ -110,7 +110,7 @@ class CategoryTreeValidationTest extends CategoryAbstract
     {
         $this->assertTrue(Category::isValidNestedSet());
 
-        $this->categories('Child 2')->delete();
+        Category::categories('Child 2')->delete();
         $this->assertTrue(Category::isValidNestedSet());
     }
 }
