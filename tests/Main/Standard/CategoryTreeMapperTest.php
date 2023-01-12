@@ -3,6 +3,7 @@
 namespace Baum\Tests\Main\Standard;
 
 use Baum\Tests\Main\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class CategoryTreeMapperTest extends CategoryAbstract
 {
@@ -68,7 +69,7 @@ class CategoryTreeMapperTest extends CategoryAbstract
         ];
 
         $hierarchy = Category::all()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
     }
 
     public function testBuildTreeMoveNodes()
@@ -124,12 +125,18 @@ class CategoryTreeMapperTest extends CategoryAbstract
         $this->assertTrue(Category::isValidNestedSet());
 
         $hierarchy = Category::all()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($updated, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($updated, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
     }
 
     public function testMakeSubTree()
     {
-        $parent = Category::find(3);
+        $root_1 = Category::create(['name' => 'Root 1']);
+
+        $child_1 = Category::create(['name' => 'Child 1']);
+        $child_1->makeChildOf($root_1);
+
+        $parent = Category::create(['name' => 'Child 2']);
+        $parent->makeChildOf($root_1);
 
         $subtree = [
             ['id' => 4, 'name' => 'Child 2.1'],
@@ -152,27 +159,33 @@ class CategoryTreeMapperTest extends CategoryAbstract
 
         $expected = [
             ['id' => 4, 'name' => 'Child 2.1'],
-            ['id' => 7, 'name' => 'Child 2.2'],
-            ['id' => 8, 'name' => 'Child 2.3', 'children' => [
-                ['id' => 9, 'name' => 'Child 2.3.1', 'children' => [
-                    ['id' => 10, 'name' => 'Child 2.3.1.1'],
-                    ['id' => 11, 'name' => 'Child 2.3.1.1'],
+            ['id' => 5, 'name' => 'Child 2.2'],
+            ['id' => 6, 'name' => 'Child 2.3', 'children' => [
+                ['id' => 7, 'name' => 'Child 2.3.1', 'children' => [
+                    ['id' => 8, 'name' => 'Child 2.3.1.1'],
+                    ['id' => 9, 'name' => 'Child 2.3.1.1'],
                 ],
                 ],
-                ['id' => 12, 'name' => 'Child 2.3.2'],
-                ['id' => 13, 'name' => 'Child 2.3.3'],
+                ['id' => 10, 'name' => 'Child 2.3.2'],
+                ['id' => 11, 'name' => 'Child 2.3.3'],
             ],
             ],
-            ['id' => 14, 'name' => 'Child 2.4'],
+            ['id' => 12, 'name' => 'Child 2.4'],
         ];
 
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
     }
 
     public function testMakeTreePrunesAndInserts()
     {
-        $parent = Category::find(3);
+        $root_1 = Category::create(['name' => 'Root 1']);
+
+        $child_1 = Category::create(['name' => 'Child 1']);
+        $child_1->makeChildOf($root_1);
+
+        $parent = Category::create(['name' => 'Child 2']);
+        $parent->makeChildOf($root_1);
 
         $subtree = [
             ['id' => 4, 'name' => 'Child 2.1'],
@@ -193,20 +206,20 @@ class CategoryTreeMapperTest extends CategoryAbstract
 
         $expected = [
             ['id' => 4, 'name' => 'Child 2.1'],
-            ['id' => 7, 'name' => 'Child 2.2'],
-            ['id' => 8, 'name' => 'Child 2.3', 'children' => [
-                ['id' => 9, 'name' => 'Child 2.3.1', 'children' => [
-                    ['id' => 10, 'name' => 'Child 2.3.1.1'],
-                    ['id' => 11, 'name' => 'Child 2.3.1.1'],
+            ['id' => 5, 'name' => 'Child 2.2'],
+            ['id' => 6, 'name' => 'Child 2.3', 'children' => [
+                ['id' => 7, 'name' => 'Child 2.3.1', 'children' => [
+                    ['id' => 8, 'name' => 'Child 2.3.1.1'],
+                    ['id' => 9, 'name' => 'Child 2.3.1.1'],
                 ]],
-                ['id' => 12, 'name' => 'Child 2.3.2'],
-                ['id' => 13, 'name' => 'Child 2.3.3'],
+                ['id' => 10, 'name' => 'Child 2.3.2'],
+                ['id' => 11, 'name' => 'Child 2.3.3'],
             ]],
-            ['id' => 14, 'name' => 'Child 2.4'],
+            ['id' => 12, 'name' => 'Child 2.4'],
         ];
 
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
 
         $modified = [
             ['id' => 7, 'name' => 'Child 2.2'],
@@ -240,12 +253,18 @@ class CategoryTreeMapperTest extends CategoryAbstract
         ];
 
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
     }
 
     public function testMakeTreeReordesNodes()
     {
-        $parent = Category::find(3);
+        $root_1 = Category::create(['name' => 'Root 1']);
+
+        $child_1 = Category::create(['name' => 'Child 1']);
+        $child_1->makeChildOf($root_1);
+
+        $parent = Category::create(['name' => 'Child 2']);
+        $parent->makeChildOf($root_1);
 
         $subtree = [
             ['id' => 4, 'name' => 'Child 2.1'],
@@ -266,20 +285,20 @@ class CategoryTreeMapperTest extends CategoryAbstract
 
         $expected = [
             ['id' => 4, 'name' => 'Child 2.1'],
-            ['id' => 7, 'name' => 'Child 2.2'],
-            ['id' => 8, 'name' => 'Child 2.3', 'children' => [
-                ['id' => 9, 'name' => 'Child 2.3.1', 'children' => [
-                    ['id' => 10, 'name' => 'Child 2.3.1.1'],
-                    ['id' => 11, 'name' => 'Child 2.3.1.1'],
+            ['id' => 5, 'name' => 'Child 2.2'],
+            ['id' => 6, 'name' => 'Child 2.3', 'children' => [
+                ['id' => 7, 'name' => 'Child 2.3.1', 'children' => [
+                    ['id' => 8, 'name' => 'Child 2.3.1.1'],
+                    ['id' => 9, 'name' => 'Child 2.3.1.1'],
                 ]],
-                ['id' => 12, 'name' => 'Child 2.3.2'],
-                ['id' => 13, 'name' => 'Child 2.3.3'],
+                ['id' => 10, 'name' => 'Child 2.3.2'],
+                ['id' => 11, 'name' => 'Child 2.3.3'],
             ]],
-            ['id' => 14, 'name' => 'Child 2.4'],
+            ['id' => 12, 'name' => 'Child 2.4'],
         ];
 
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
 
         $modified = [
             ['id' => 7, 'name' => 'Child 2.2'],
@@ -313,7 +332,7 @@ class CategoryTreeMapperTest extends CategoryAbstract
         ];
 
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, array_ints_keys(hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
     }
 
     protected function getDefaultTree()

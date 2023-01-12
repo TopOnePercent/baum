@@ -4,6 +4,7 @@ namespace Baum\Tests\Main\Models;
 
 use Baum\Node;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 
 class Cluster extends Node
 {

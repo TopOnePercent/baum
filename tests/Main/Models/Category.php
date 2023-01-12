@@ -3,6 +3,7 @@
 namespace Baum\Tests\Main\Models;
 
 use Baum\Node;
+use Illuminate\Support\Arr;
 
 class Category extends Node
 {
@@ -11,6 +12,33 @@ class Category extends Node
     protected $fillable = ['name'];
 
     public $timestamps = false;
+
+    public static function categories(string $name)
+    {
+        return Category::where('name', $name)->first();
+    }
+
+    /**
+     * Cast provided keys's values into ints. This is to wrestle with PDO driver
+     * inconsistencies.
+     *
+     * @param array $input
+     * @param mixed $keys
+     *
+     * @return array
+     */
+    public static function array_ints_keys(array $input, $keys = 'id')
+    {
+        $keys = is_string($keys) ? [$keys] : $keys;
+
+        array_walk_recursive($input, function (&$value, $key) use ($keys) {
+            if (array_search($key, $keys) !== false) {
+                $value = (int) $value;
+            }
+        });
+
+        return $input;
+    }
 
     /**
      * Simple function which aids in converting the tree hierarchy into something
@@ -26,7 +54,7 @@ class Category extends Node
 
         foreach ($nodes as $node) {
             if (is_null($preserve)) {
-                $output[$node['name']] = empty($node['children']) ? null : hmap($node['children']);
+                $output[$node['name']] = empty($node['children']) ? null : self::hmap($node['children']);
             } else {
                 $preserve = is_string($preserve) ? [$preserve] : $preserve;
 
@@ -35,7 +63,7 @@ class Category extends Node
                     $children = $node['children'];
 
                     if (count($children) > 0) {
-                        $current['children'] = hmap($children, $preserve);
+                        $current['children'] = self::hmap($children, $preserve);
                     }
                 }
 
