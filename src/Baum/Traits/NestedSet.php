@@ -905,6 +905,7 @@ trait NestedSet
      */
     public function isChildOf($other)
     {
+        //TODO ids that area really a string should be compared as such
         return
             intval($this->parent_id) === intval($other->id) &&
             $this->inSameScope($other);
