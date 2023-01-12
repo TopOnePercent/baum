@@ -1,9 +1,31 @@
 <?php
 
 namespace Baum\Tests\Main\Standard;
+use Baum\Tests\Main\Models\OrderedCategory;
 
 class CategoryOrderingTest extends CategoryAbstract
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $root_z = OrderedCategory::create(['name' => 'Root Z']);
+
+        $child_c = OrderedCategory::create(['name' => 'Child C']);
+        $child_c->makeChildOf($root_z);
+
+        $child_g = OrderedCategory::create(['name' => 'Child G']);
+        $child_g->makeChildOf($root_z);
+
+        $child_g_1 = OrderedCategory::create(['name' => 'Child G.1']);
+        $child_g_1->makeChildOf($child_g);
+
+        $child_a = OrderedCategory::create(['name' => 'Child A']);
+        $child_a->makeChildOf($root_z);
+
+        $root_a = OrderedCategory::create(['name' => 'Root A']);
+    }
+
     public function testAllStaticWithCustomOrder()
     {
         $results = OrderedCategory::all();
@@ -27,7 +49,7 @@ class CategoryOrderingTest extends CategoryAbstract
 
         $this->assertArraysAreEqual(
             $expectedWhole,
-            hmap(OrderedCategory::all()->toHierarchy()->toArray())
+            OrderedCategory::hmap(OrderedCategory::all()->toHierarchy()->toArray())
         );
 
         $expectedSubtreeZ = [
@@ -42,7 +64,7 @@ class CategoryOrderingTest extends CategoryAbstract
 
         $this->assertArraysAreEqual(
             $expectedSubtreeZ,
-            hmap($this->categories('Root Z', 'OrderedCategory')
+            OrderedCategory::hmap(OrderedCategory::categories('Root Z')
                 ->getDescendantsAndSelf()
                 ->toHierarchy()
                 ->toArray()
