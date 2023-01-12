@@ -1,7 +1,7 @@
 # Baum v2
 
 [![Tests](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml/badge.svg?branch=master)](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml)
-[![Coverage Status](https://img.shields.io/badge/coverage-40.11%25-red)](https://github.com/TopOnePercent/baum)
+[![Coverage Status](https://img.shields.io/badge/coverage-90.63%25-brightgreen)](https://github.com/TopOnePercent/baum)
 
 ## Nested Set implementation for Laravel
 
