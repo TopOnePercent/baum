@@ -6,6 +6,26 @@ use Baum\Tests\Main\Models\Category;
 
 class CategoryTreeValidationTest extends CategoryAbstract
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $root_1 = Category::create(['name' => 'Root 1']);
+
+        $child_1 = Category::create(['name' => 'Child 1']);
+        $child_1->makeChildOf($root_1);
+
+        $child_2 = Category::create(['name' => 'Child 2']);
+        $child_2->makeChildOf($root_1);
+        $child_2_1 = Category::create(['name' => 'Child 2.1']);
+        $child_2_1->makeChildOf($child_2);
+
+        $child_3 = Category::create(['name' => 'Child 3']);
+        $child_3->makeChildOf($root_1);
+
+        $root_2 = Category::create(['name' => 'Root 2']);
+    }
+    
     public function testTreeIsNotValidWithNullLefts()
     {
         $this->assertTrue(Category::isValidNestedSet());
