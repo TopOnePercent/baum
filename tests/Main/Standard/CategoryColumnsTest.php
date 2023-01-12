@@ -101,11 +101,9 @@ class CategoryColumnsTest extends UnitAbstract
 
     public function testGetOrder()
     {
-        $this->markTestSkipped();
-
-//         $build = Category::buildTree(PopulateData::basicTree());
-//         $category = $this->categories('Root 1');
-//         $this->assertEquals($category->getOrder(), $category->getLeft());
+        $build = Category::buildTree(PopulateData::basicTree());
+        $category = Category::categories('A1');
+        $this->assertEquals($category->getOrder(), $category->getLeft());
     }
 
     public function testGetOrderColumnNameNonDefault()
