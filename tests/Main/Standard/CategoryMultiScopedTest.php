@@ -212,51 +212,49 @@ class CategoryMultiScopedTest extends UnitAbstract
         $this->assertEquals($expected, $root2->getDescendants()->all());
     }
 
-    public function testToHierarchyNestsCorrectlyWithScopedOrder()
-    {
-        $this->markTestSkipped();
-        $build = OrderedScopedCategory::buildTree(PopulateData::multiScoped());
-//
-//         $expectedWhole1 = [
-//             'Root 1' => [
-//                 'Child 1' => null,
-//                 'Child 2' => [
-//                     'Child 2.1' => null,
-//                 ],
-//                 'Child 3' => null,
-//             ],
-//         ];
-//
-//         $expectedWhole2 = [
-//             'Root 2' => [
-//                 'Child 4' => null,
-//                 'Child 5' => [
-//                     'Child 5.1' => null,
-//                 ],
-//                 'Child 6' => null,
-//             ],
-//         ];
-//
-// //         $this->assertArraysAreEqual($expectedWhole1, $this->hmap(OrderedScopedCategory::where('company_id', 1)->get()->toHierarchy()->toArray()));
-// //         $this->assertArraysAreEqual($expectedWhole2, $this->hmap(OrderedScopedCategory::where('company_id', 2)->get()->toHierarchy()->toArray()));
-//
-// 		$parent = $this->categories('Root 1', OrderedScopedCategory::class);
-//
-//         $expected = [
-//             $parent,
-//             $this->categories('Child 1', OrderedScopedCategory::class),
-//             $this->categories('Child 2', OrderedScopedCategory::class),
-//             $this->categories('Child 2.1', OrderedScopedCategory::class),
-//             $this->categories('Child 3', OrderedScopedCategory::class),
-//
-//         ];
-//
-//         $this->assertEquals($expected, $parent->getDescendantsAndSelf()->all());
-//
-// 		//$parent->getDescendantsAndSelf()->all()
-//
-//
-    }
+    // //TODO FIX TEST
+    // public function testToHierarchyNestsCorrectlyWithScopedOrder()
+    // {
+    //     $build = OrderedScopedCategory::buildTree(PopulateData::multiScoped());
+
+    //         $expectedWhole1 = [
+    //             'Root 1' => [
+    //                 'Child 1' => null,
+    //                 'Child 2' => [
+    //                     'Child 2.1' => null,
+    //                 ],
+    //                 'Child 3' => null,
+    //             ],
+    //         ];
+
+    //         $expectedWhole2 = [
+    //             'Root 2' => [
+    //                 'Child 4' => null,
+    //                 'Child 5' => [
+    //                     'Child 5.1' => null,
+    //                 ],
+    //                 'Child 6' => null,
+    //             ],
+    //         ];
+
+    //         $this->assertArraysAreEqual($expectedWhole1, $this->hmap(OrderedScopedCategory::where('company_id', 1)->get()->toHierarchy()->toArray()));
+    //         $this->assertArraysAreEqual($expectedWhole2, $this->hmap(OrderedScopedCategory::where('company_id', 2)->get()->toHierarchy()->toArray()));
+
+    // 		$parent = $this->categories('Root 1', OrderedScopedCategory::class);
+
+    //         $expected = [
+    //             $parent,
+    //             $this->categories('Child 1', OrderedScopedCategory::class),
+    //             $this->categories('Child 2', OrderedScopedCategory::class),
+    //             $this->categories('Child 2.1', OrderedScopedCategory::class),
+    //             $this->categories('Child 3', OrderedScopedCategory::class),
+
+    //         ];
+
+    //         $this->assertEquals($expected, $parent->getDescendantsAndSelf()->all());
+
+    // 		$parent->getDescendantsAndSelf()->all();
+    // }
 
     /**
      * expectedException Baum\Exceptions\MoveNotPossibleException.
@@ -302,38 +300,36 @@ class CategoryMultiScopedTest extends UnitAbstract
     }
 
     // TODO: Moving nodes between scopes is problematic ATM. Fix it or find a work-around.
-    public function testMoveNodeBetweenScopes()
-    {
-        $this->markTestSkipped();
+    // public function testMoveNodeBetweenScopes()
+    // {
+    //     $root1    = Menu::create(array('caption' => 'TL1', 'site_id' => 1, 'language' => 'en'));
+    //     $child11  = Menu::create(array('caption' => 'C11', 'site_id' => 1, 'language' => 'en'));
+    //     $child12  = Menu::create(array('caption' => 'C12', 'site_id' => 1, 'language' => 'en'));
 
-        // $root1    = Menu::create(array('caption' => 'TL1', 'site_id' => 1, 'language' => 'en'));
-    // $child11  = Menu::create(array('caption' => 'C11', 'site_id' => 1, 'language' => 'en'));
-    // $child12  = Menu::create(array('caption' => 'C12', 'site_id' => 1, 'language' => 'en'));
+    //     $this->assertTrue(Menu::isValidNestedSet());
 
-    // $this->assertTrue(Menu::isValidNestedSet());
+    //     $child11->makeChildOf($root1);
+    //     $child12->makeChildOf($root1);
 
-    // $child11->makeChildOf($root1);
-    // $child12->makeChildOf($root1);
+    //     $this->assertTrue(Menu::isValidNestedSet());
 
-    // $this->assertTrue(Menu::isValidNestedSet());
+    //     $root2    = Menu::create(array('caption' => 'TL2', 'site_id' => 2, 'language' => 'en'));
+    //     $child21  = Menu::create(array('caption' => 'C21', 'site_id' => 2, 'language' => 'en'));
+    //     $child22  = Menu::create(array('caption' => 'C22', 'site_id' => 2, 'language' => 'en'));
+    //     $child21->makeChildOf($root2);
+    //     $child22->makeChildOf($root2);
 
-    // $root2    = Menu::create(array('caption' => 'TL2', 'site_id' => 2, 'language' => 'en'));
-    // $child21  = Menu::create(array('caption' => 'C21', 'site_id' => 2, 'language' => 'en'));
-    // $child22  = Menu::create(array('caption' => 'C22', 'site_id' => 2, 'language' => 'en'));
-    // $child21->makeChildOf($root2);
-    // $child22->makeChildOf($root2);
+    //     $this->assertTrue(Menu::isValidNestedSet());
 
-    // $this->assertTrue(Menu::isValidNestedSet());
+    //     $child11->update(array('site_id' => 2));
+    //     $child11->makeChildOf($root2);
 
-    // $child11->update(array('site_id' => 2));
-    // $child11->makeChildOf($root2);
+    //     $this->assertTrue(Menu::isValidNestedSet());
 
-    // $this->assertTrue(Menu::isValidNestedSet());
+    //     $expected = array($this->menus('C12'));
+    //     $this->assertEquals($expected, $root1->children()->get()->all());
 
-    // $expected = array($this->menus('C12'));
-    // $this->assertEquals($expected, $root1->children()->get()->all());
-
-    // $expected = array($this->menus('C21'), $this->menus('C22'), $this->menus('C11'));
-    // $this->assertEquals($expected, $root2->children()->get()->all());
-    }
+    //     $expected = array($this->menus('C21'), $this->menus('C22'), $this->menus('C11'));
+    //     $this->assertEquals($expected, $root2->children()->get()->all());
+    // }
 }
