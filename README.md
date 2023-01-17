@@ -9,7 +9,7 @@ Baum is an implementation of the [Nested Set](http://en.wikipedia.org/wiki/Neste
 
 Supported Versions:
 
-[![Laravel 5.8](https://img.shields.io/badge/Laravel-5.8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 6](https://img.shields.io/badge/Laravel-6-informational)](https://github.com/TopOnePercent/baum) [![Laravel 7](https://img.shields.io/badge/Laravel-7-informational)](https://github.com/TopOnePercent/baum)
+[![Laravel 5.8](https://img.shields.io/badge/Laravel-5.8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 6](https://img.shields.io/badge/Laravel-6-informational)](https://github.com/TopOnePercent/baum) [![Laravel 7](https://img.shields.io/badge/Laravel-7-informational)](https://github.com/TopOnePercent/baum) [![Laravel 8](https://img.shields.io/badge/Laravel-8-informational)](https://github.com/TopOnePercent/baum)
 
 [![PHP Version](https://img.shields.io/badge/PHP-7.3|^8.0-informational)](https://github.com/TopOnePercent/baum)
 
