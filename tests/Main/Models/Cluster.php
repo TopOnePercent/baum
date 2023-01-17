@@ -88,27 +88,3 @@ class Cluster extends Node
         return $output;
     }
 }
-
-class ScopedCluster extends Cluster
-{
-    protected $scoped = ['company_id'];
-}
-
-class MultiScopedCluster extends Cluster
-{
-    protected $scoped = ['company_id', 'language'];
-}
-
-class OrderedCluster extends Cluster
-{
-    protected $orderColumn = 'name';
-}
-
-class SoftCluster extends Cluster
-{
-    use SoftDeletes;
-
-    public $timestamps = true;
-
-    protected $dates = ['deleted_at'];
-}
