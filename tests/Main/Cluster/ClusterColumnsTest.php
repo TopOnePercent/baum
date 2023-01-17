@@ -3,6 +3,7 @@
 use Baum\Tests\Main\UnitAbstract;
 use Baum\Tests\Main\Models\Cluster;
 
+// @codingStandardsIgnoreLine
 class ClusterColumnsTest extends UnitAbstract
 {
     protected function setUp(): void

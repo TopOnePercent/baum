@@ -5,6 +5,7 @@ use Baum\Tests\Main\UnitAbstract;
 use Illuminate\Database\Query\Grammars\Grammar;
 use Baum\Extensions\Query\Builder as QueryBuilder;
 
+// @codingStandardsIgnoreLine
 class QueryBuilderExtensionTest extends UnitAbstract
 {
     protected function getBuilder()

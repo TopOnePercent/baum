@@ -1,5 +1,6 @@
 <?php
 
+// @codingStandardsIgnoreLine
 class CategoryTestCase extends BaumTestCase
 {
     public function setUp()

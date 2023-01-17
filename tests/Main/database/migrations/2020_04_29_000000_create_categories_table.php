@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
+// @codingStandardsIgnoreLine
 class CreateCategoriesTable extends Migration
 {
     public function up()

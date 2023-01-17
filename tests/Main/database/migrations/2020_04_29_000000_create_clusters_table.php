@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
+// @codingStandardsIgnoreLine
 class CreateClustersTable extends Migration
 {
     public function up()
