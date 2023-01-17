@@ -11,6 +11,8 @@ Supported Versions:
 
 [![Laravel 5.8](https://img.shields.io/badge/Laravel-5.8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 6](https://img.shields.io/badge/Laravel-6-informational)](https://github.com/TopOnePercent/baum) [![Laravel 7](https://img.shields.io/badge/Laravel-7-informational)](https://github.com/TopOnePercent/baum)
 
+[![PHP Version](https://img.shields.io/badge/PHP-7.3|^8.0-informational)](https://github.com/TopOnePercent/baum)
+
 ### Key Considerations for using a Nested Set Pattern:
 
 1. The Nested Set pattern is appropriate where the tree element and one or two attributes are the only data.
