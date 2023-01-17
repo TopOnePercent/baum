@@ -1,12 +1,17 @@
-# Baum v2
+# Baum
 
 [![Tests](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml/badge.svg?branch=master)](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml)
-[![Coverage Status](https://img.shields.io/badge/coverage-40.11%25-red)](https://github.com/TopOnePercent/baum)
+[![Coverage Status](https://img.shields.io/badge/coverage-90.68%25-brightgreen)](https://github.com/TopOnePercent/baum)
 
 ## Nested Set implementation for Laravel
 
-Baum is an implementation of the [Nested Set](http://en.wikipedia.org/wiki/Nested_set_model)
-pattern for the [Laravel](http://laravel.com/) Eloquent ORM.
+Baum is an implementation of the [Nested Set](http://en.wikipedia.org/wiki/Nested_set_model) pattern for the [Laravel](http://laravel.com/) Eloquent ORM.
+
+Supported Versions:
+
+[![Laravel 5.8](https://img.shields.io/badge/Laravel-5.8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 6](https://img.shields.io/badge/Laravel-6-informational)](https://github.com/TopOnePercent/baum) [![Laravel 7](https://img.shields.io/badge/Laravel-7-informational)](https://github.com/TopOnePercent/baum) [![Laravel 8](https://img.shields.io/badge/Laravel-8-informational)](https://github.com/TopOnePercent/baum)
+
+[![PHP Version](https://img.shields.io/badge/PHP-7.3|^8.0-informational)](https://github.com/TopOnePercent/baum)
 
 ### Key Considerations for using a Nested Set Pattern:
 
@@ -19,13 +24,6 @@ pattern for the [Laravel](http://laravel.com/) Eloquent ORM.
 *If you find a bug*, **please** file an issue and submit a pull request with a failing unit test.
 
 ---
-
-## Installation
-
-Baum v2 works with Laravel 5.8 (and PHP 7.2) and above. You can add it to your own project with:
-```
-composer require gazsp/baum
-```
 
 ## Documentation
 
@@ -114,9 +112,9 @@ ordinary trees are suddenly quite fast. Nifty, isn't it?
 <a name="installation"></a>
 ## Installation
 
-Baum works with Laravel 5.8 (and PHP 7.2) and above. You can add it to your project with:
+You can add it to your project with:
 ```
-composer require gazsp/baum:2.*
+composer require toponepercent/baum
 ```
 
 <a name="getting-started"></a>

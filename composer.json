@@ -16,14 +16,19 @@
             "homepage": "http://red-robot.co.uk"
         },
         {
-            "name": "TOP ONE PERCENT LTD",
+            "name": "Brian LaVallee",
+            "email": "brian.lavallee@invite-comm.jp",
+            "homepage": "https://invite-comm.jp"
+        },
+        {
+            "name": "Top One Percent LTD",
             "email": "developers@theforesight.co.uk",
-            "homepage": "http://theforesight.co.uk"
+            "homepage": "https://theforesight.co.uk"
         }
     ],
     "prefer-stable": true,
     "require": {
-        "php": "^7.2|^8.0",
+        "php": "^7.3|^8.0",
         "illuminate/console": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
         "illuminate/database": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
         "illuminate/events": "~5.8.0|^6.0|^7.0|^8.0|^9.0",
@@ -31,7 +36,8 @@
         "illuminate/support": "~5.8.0|^6.0|^7.0|^8.0|^9.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^5"
+        "orchestra/testbench": "^5",
+        "squizlabs/php_codesniffer": "^3.7"
     },
     "autoload": {
         "psr-0": {
@@ -43,7 +49,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Baum\\Tests\\": "tests"
+            "Baum\\Tests\\": "tests/"
         }
     },
     "extra": {

@@ -158,7 +158,7 @@ trait NestedSet
      */
     public function getQualifiedParentColumnName()
     {
-        return $this->getTable().'.'.$this->getParentColumnName();
+        return $this->getTable() . '.' . $this->getParentColumnName();
     }
 
     /**
@@ -188,7 +188,7 @@ trait NestedSet
      */
     public function getQualifiedLeftColumnName()
     {
-        return $this->getTable().'.'.$this->getLeftColumnName();
+        return $this->getTable() . '.' . $this->getLeftColumnName();
     }
 
     /**
@@ -218,7 +218,7 @@ trait NestedSet
      */
     public function getQualifiedRightColumnName()
     {
-        return $this->getTable().'.'.$this->getRightColumnName();
+        return $this->getTable() . '.' . $this->getRightColumnName();
     }
 
     /**
@@ -248,7 +248,7 @@ trait NestedSet
      */
     public function getQualifiedDepthColumnName()
     {
-        return $this->getTable().'.'.$this->getDepthColumnName();
+        return $this->getTable() . '.' . $this->getDepthColumnName();
     }
 
     /**
@@ -278,7 +278,7 @@ trait NestedSet
      */
     public function getQualifiedOrderColumnName()
     {
-        return $this->getTable().'.'.$this->getOrderColumnName();
+        return $this->getTable() . '.' . $this->getOrderColumnName();
     }
 
     /**
@@ -312,10 +312,10 @@ trait NestedSet
             return $this->getScopedColumns();
         }
 
-        $prefix = $this->getTable().'.';
+        $prefix = $this->getTable() . '.';
 
         return array_map(function ($c) use ($prefix) {
-            return $prefix.$c;
+            return $prefix . $c;
         }, $this->getScopedColumns());
     }
 
@@ -437,7 +437,7 @@ trait NestedSet
         $lftCol = $grammar->wrap($instance->getQualifiedLeftColumnName());
 
         return $instance->newQuery()
-                        ->whereRaw($rgtCol.' - '.$lftCol.' = 1')
+                        ->whereRaw($rgtCol . ' - ' . $lftCol . ' = 1')
                         ->orderBy($instance->getQualifiedOrderColumnName());
     }
 
@@ -458,7 +458,7 @@ trait NestedSet
 
         return $instance->newQuery()
                         ->whereNotNull($instance->getParentColumnName())
-                        ->whereRaw($rgtCol.' - '.$lftCol.' != 1')
+                        ->whereRaw($rgtCol . ' - ' . $lftCol . ' != 1')
                         ->orderBy($instance->getQualifiedOrderColumnName());
     }
 
@@ -739,7 +739,7 @@ trait NestedSet
         $lftCol = $grammar->wrap($this->getQualifiedLeftColumnName());
 
         return $this->descendants()
-                    ->whereRaw($rgtCol.' - '.$lftCol.' = 1');
+                    ->whereRaw($rgtCol . ' - ' . $lftCol . ' = 1');
     }
 
     /**
@@ -769,7 +769,7 @@ trait NestedSet
 
         return $this->descendants()
                     ->whereNotNull($this->getQualifiedParentColumnName())
-                    ->whereRaw($rgtCol.' - '.$lftCol.' != 1');
+                    ->whereRaw($rgtCol . ' - ' . $lftCol . ' != 1');
     }
 
     /**
@@ -905,6 +905,7 @@ trait NestedSet
      */
     public function isChildOf($other)
     {
+        //TODO ids that are really a string should be compared as such as intval wont always return a correct value for a non numeric string based ID
         return
             intval($this->parent_id) === intval($other->id) &&
             $this->inSameScope($other);
@@ -1395,7 +1396,7 @@ trait NestedSet
         return array_combine(array_map(function ($node) use ($key) {
             return $node[$key];
         }, $nodes), array_map(function ($node) use ($seperator, $depthColumn, $column, $symbol) {
-            return str_repeat($seperator, $node[$depthColumn]).$symbol.$node[$column];
+            return str_repeat($seperator, $node[$depthColumn]) . $symbol . $node[$column];
         }, $nodes));
     }
 

@@ -254,22 +254,22 @@ class Move
         }
 
         switch ($this->position) {
-        case 'child':
-            $this->_bound1 = $this->target->getRight();
-            break;
+            case 'child':
+                $this->_bound1 = $this->target->getRight();
+                break;
 
-        case 'left':
-            $this->_bound1 = $this->target->getLeft();
-            break;
+            case 'left':
+                $this->_bound1 = $this->target->getLeft();
+                break;
 
-        case 'right':
-            $this->_bound1 = $this->target->getRight() + 1;
-            break;
+            case 'right':
+                $this->_bound1 = $this->target->getRight() + 1;
+                break;
 
-        case 'root':
-            $this->_bound1 = $this->node->newNestedSetQuery()->max($this->node->getRightColumnName()) + 1;
-            break;
-    }
+            case 'root':
+                $this->_bound1 = $this->node->newNestedSetQuery()->max($this->node->getRightColumnName()) + 1;
+                break;
+        }
 
         $this->_bound1 = (($this->_bound1 > $this->node->getRight()) ? $this->_bound1 - 1 : $this->_bound1);
 
@@ -325,15 +325,15 @@ class Move
     protected function parentId()
     {
         switch ($this->position) {
-    case 'root':
-      return;
+            case 'root':
+                return;
 
-    case 'child':
-      return $this->target->getKey();
+            case 'child':
+                return $this->target->getKey();
 
-    default:
-      return $this->target->getParentId();
-    }
+            default:
+                return $this->target->getParentId();
+        }
     }
 
     /**
@@ -394,7 +394,7 @@ class Move
 
         // Basically the same as \Illuminate\Database\Eloquent\Model->fireModelEvent
         // but we relay the event into the node instance.
-        $event = "eloquent.{$event}: ".get_class($this->node);
+        $event = "eloquent.{$event}: " . get_class($this->node);
 
         $method = $halt ? 'until' : (method_exists($this->getEventDispatcher(), 'fire') ? 'fire' : 'dispatch');
 
@@ -432,10 +432,10 @@ class Move
     protected function applyLockBetween($lft, $rgt)
     {
         $this->node->newQuery()
-    ->where($this->node->getLeftColumnName(), '>=', $lft)
-    ->where($this->node->getRightColumnName(), '<=', $rgt)
-    ->select($this->node->getKeyName())
-    ->lockForUpdate()
-    ->get();
+        ->where($this->node->getLeftColumnName(), '>=', $lft)
+        ->where($this->node->getRightColumnName(), '<=', $rgt)
+        ->select($this->node->getKeyName())
+        ->lockForUpdate()
+        ->get();
     }
 }

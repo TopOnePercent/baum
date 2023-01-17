@@ -9,13 +9,13 @@ class BaselineTest extends TestCase
     use MyTrait;
 
     /** @test */
-    public function true_is_true()
+    public function trueIsTrue()
     {
         $this->assertTrue(true);
     }
 
     /** @test */
-    public function trait_test()
+    public function traitTest()
     {
         $this->assertTrue($this->stub());
     }

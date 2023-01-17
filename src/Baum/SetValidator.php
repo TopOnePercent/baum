@@ -31,7 +31,7 @@ class SetValidator
     public function passes()
     {
         return $this->validateBounds() && $this->validateDuplicates() &&
-      $this->validateRoots();
+        $this->validateRoots();
     }
 
     /**
@@ -75,10 +75,14 @@ class SetValidator
           $qualifiedRgtCol >= parent.$rgtCol)))";
 
         $query = $this->node->newQuery()
-      ->join($connection->raw($grammar->wrapTable($tableName).' parent'),
-             $parentColumn, '=', $connection->raw('parent.'.$grammar->wrap($primaryKeyName)),
-             'left outer')
-      ->whereRaw($whereStm);
+        ->join(
+            $connection->raw($grammar->wrapTable($tableName) . ' parent'),
+            $parentColumn,
+            '=',
+            $connection->raw('parent.' . $grammar->wrap($primaryKeyName)),
+            'left outer'
+        )
+        ->whereRaw($whereStm);
 
         return $query->count() == 0;
     }
@@ -91,8 +95,8 @@ class SetValidator
     protected function validateDuplicates()
     {
         return
-      ! $this->duplicatesExistForColumn($this->node->getQualifiedLeftColumnName()) &&
-      ! $this->duplicatesExistForColumn($this->node->getQualifiedRightColumnName());
+        ! $this->duplicatesExistForColumn($this->node->getQualifiedLeftColumnName()) &&
+        ! $this->duplicatesExistForColumn($this->node->getQualifiedRightColumnName());
     }
 
     /**
@@ -136,8 +140,8 @@ class SetValidator
         $wrappedColumn = $grammar->wrap($column);
 
         $query = $this->node->newQuery()
-      ->select($connection->raw("$columnsForSelect, COUNT($wrappedColumn)"))
-      ->havingRaw("COUNT($wrappedColumn) > 1");
+        ->select($connection->raw("$columnsForSelect, COUNT($wrappedColumn)"))
+        ->havingRaw("COUNT($wrappedColumn) > 1");
 
         foreach ($columns as $col) {
             $query->groupBy($col);
