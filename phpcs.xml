@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="Standard">
     <rule ref="PSR12">
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace" />
     </rule>
 </ruleset>

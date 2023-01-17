@@ -13,7 +13,7 @@ class CategoryAbstract extends UnitAbstract
 //     protected function setUp(): void
 //     {
 //         parent::setUp();
-//         $this->catagory_create();
+//         $this->catagoryCreate();
 //     }
 
     protected function categories($name, $className = Category::class)
@@ -21,7 +21,7 @@ class CategoryAbstract extends UnitAbstract
         return forward_static_call_array([$className, 'where'], ['name', '=', $name])->first();
     }
 
-    public function catagory_create()
+    public function catagoryCreate()
     {
         //Category::unguard();
 
