@@ -14,7 +14,7 @@ class Cluster extends Node
 
     public $timestamps = false;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['id', 'name'];
 
     protected static function boot()
     {

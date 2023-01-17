@@ -9,20 +9,20 @@ class ClusterHierarchyTest extends UnitAbstract
     {
         parent::setUp();
 
-        $root_1 = Cluster::create(['name' => 'Root 1']);
+        $root_1 = Cluster::create(['id' => '7461d8f5-2ea9-4788-99c4-9d0244f0bfb1', 'name' => 'Root 1']);
 
-        $child_1 = Cluster::create(['name' => 'Child 1']);
+        $child_1 = Cluster::create(['id' => '5d7ce1fd-6151-46d3-a5b3-0ebb9988dc57','name' => 'Child 1']);
         $child_1->makeChildOf($root_1);
 
-        $child_2 = Cluster::create(['name' => 'Child 2']);
+        $child_2 = Cluster::create(['id' => '07c1fc8c-53b5-4fe7-b9c4-e09f266a455c', 'name' => 'Child 2']);
         $child_2->makeChildOf($root_1);
-        $child_2_1 = Cluster::create(['name' => 'Child 2.1']);
+        $child_2_1 = Cluster::create(['id' => '3315a297-af87-4ad3-9fa5-19785407573d', 'name' => 'Child 2.1']);
         $child_2_1->makeChildOf($child_2);
 
-        $child_3 = Cluster::create(['name' => 'Child 3']);
+        $child_3 = Cluster::create(['id' => '054476d2-6830-4014-a181-4de010ef7114', 'name' => 'Child 3']);
         $child_3->makeChildOf($root_1);
 
-        $root_2 = Cluster::create(['name' => 'Root 2']);
+        $root_2 = Cluster::create(['id' => '3bb62314-9e1e-49c6-a5cb-17a9ab9b1b9a', 'name' => 'Root 2']);
     }
 
     protected function nestUptoAt(Cluster $parent, int $count)
@@ -468,7 +468,7 @@ class ClusterHierarchyTest extends UnitAbstract
         $this->assertFalse(Cluster::clusters('Child 1')->isAncestorOf(Cluster::clusters('Child 2')));
         $this->assertFalse(Cluster::clusters('Child 1')->isAncestorOf(Cluster::clusters('Child 1')));
     }
-
+    
     public function testIsChildOf()
     {
         $this->assertTrue(Cluster::clusters('Child 1')->isChildOf(Cluster::clusters('Root 1')));
