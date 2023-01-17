@@ -27,7 +27,7 @@ class ClusterHierarchyTest extends UnitAbstract
 
     protected function nestUptoAt(Cluster $parent, int $count)
     {
-        for ($i = 0; $i < $count; $i++){
+        for ($i = 0; $i < $count; $i++) {
             $child = Cluster::create(['name' => $parent->name . '.1']);
             $child->makeChildOf($parent);
             $parent = $child;
@@ -468,7 +468,7 @@ class ClusterHierarchyTest extends UnitAbstract
         $this->assertFalse(Cluster::clusters('Child 1')->isAncestorOf(Cluster::clusters('Child 2')));
         $this->assertFalse(Cluster::clusters('Child 1')->isAncestorOf(Cluster::clusters('Child 1')));
     }
-    
+
     public function testIsChildOf()
     {
         $this->assertTrue(Cluster::clusters('Child 1')->isChildOf(Cluster::clusters('Root 1')));
@@ -748,12 +748,12 @@ class ClusterHierarchyTest extends UnitAbstract
         $nestedList = Cluster::getNestedList('name', 'id', $seperator);
 
         $expected = [
-            Cluster::clusters('Root 1')->id => str_repeat($seperator, 0).'Root 1',
-            Cluster::clusters('Child 1')->id => str_repeat($seperator, 1).'Child 1',
-            Cluster::clusters('Child 2')->id => str_repeat($seperator, 1).'Child 2',
-            Cluster::clusters('Child 2.1')->id => str_repeat($seperator, 2).'Child 2.1',
-            Cluster::clusters('Child 3')->id => str_repeat($seperator, 1).'Child 3',
-            Cluster::clusters('Root 2')->id => str_repeat($seperator, 0).'Root 2',
+            Cluster::clusters('Root 1')->id => str_repeat($seperator, 0) . 'Root 1',
+            Cluster::clusters('Child 1')->id => str_repeat($seperator, 1) . 'Child 1',
+            Cluster::clusters('Child 2')->id => str_repeat($seperator, 1) . 'Child 2',
+            Cluster::clusters('Child 2.1')->id => str_repeat($seperator, 2) . 'Child 2.1',
+            Cluster::clusters('Child 3')->id => str_repeat($seperator, 1) . 'Child 3',
+            Cluster::clusters('Root 2')->id => str_repeat($seperator, 0) . 'Root 2',
         ];
 
         $this->assertArraysAreEqual($expected, $nestedList);
@@ -766,12 +766,12 @@ class ClusterHierarchyTest extends UnitAbstract
         $nestedList = Cluster::getNestedList('name', 'id', $seperator, $symbol);
 
         $expected = [
-            Cluster::clusters('Root 1')->id => str_repeat($seperator, 0).$symbol.'Root 1',
-            Cluster::clusters('Child 1')->id => str_repeat($seperator, 1).$symbol.'Child 1',
-            Cluster::clusters('Child 2')->id => str_repeat($seperator, 1).$symbol.'Child 2',
-            Cluster::clusters('Child 2.1')->id => str_repeat($seperator, 2).$symbol.'Child 2.1',
-            Cluster::clusters('Child 3')->id => str_repeat($seperator, 1).$symbol.'Child 3',
-            Cluster::clusters('Root 2')->id => str_repeat($seperator, 0).$symbol.'Root 2',
+            Cluster::clusters('Root 1')->id => str_repeat($seperator, 0) . $symbol . 'Root 1',
+            Cluster::clusters('Child 1')->id => str_repeat($seperator, 1) . $symbol . 'Child 1',
+            Cluster::clusters('Child 2')->id => str_repeat($seperator, 1) . $symbol . 'Child 2',
+            Cluster::clusters('Child 2.1')->id => str_repeat($seperator, 2) . $symbol . 'Child 2.1',
+            Cluster::clusters('Child 3')->id => str_repeat($seperator, 1) . $symbol . 'Child 3',
+            Cluster::clusters('Root 2')->id => str_repeat($seperator, 0) . $symbol . 'Root 2',
         ];
 
         $this->assertArraysAreEqual($expected, $nestedList);

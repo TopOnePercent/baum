@@ -1,6 +1,7 @@
 <?php
 
 namespace Baum\Tests\Main\Standard;
+
 use Baum\Tests\Main\Models\OrderedCategory;
 
 class CategoryOrderingTest extends CategoryAbstract
@@ -67,8 +68,7 @@ class CategoryOrderingTest extends CategoryAbstract
             OrderedCategory::hmap(OrderedCategory::categories('Root Z')
                 ->getDescendantsAndSelf()
                 ->toHierarchy()
-                ->toArray()
-            )
+                ->toArray())
         );
     }
 

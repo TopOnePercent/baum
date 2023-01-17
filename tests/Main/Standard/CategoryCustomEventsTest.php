@@ -23,7 +23,7 @@ class CategoryCustomEventsTest extends UnitAbstract
         $node->makeRoot();
         $node->reload();
 
-        Event::assertDispatched('eloquent.moving: '.get_class($node), function ($event, $object) use ($node) {
+        Event::assertDispatched('eloquent.moving: ' . get_class($node), function ($event, $object) use ($node) {
             return $object->id == $node->id;
         });
     }

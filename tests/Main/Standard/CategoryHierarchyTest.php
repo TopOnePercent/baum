@@ -11,7 +11,8 @@ use Baum\Tests\Main\UnitAbstract;
 
 class CategoryHierarchyTest extends UnitAbstract
 {
-    use MyTrait, NodeModelExtensionsTest;
+    use MyTrait;
+    use NodeModelExtensionsTest;
 
     public function testAllStatic()
     {
@@ -1006,15 +1007,15 @@ class CategoryHierarchyTest extends UnitAbstract
         $nestedList = Category::getNestedList('name', 'id', $seperator);
 
         $expected = [
-            1 => str_repeat($seperator, 0).'A1',
-            2 => str_repeat($seperator, 1).'A2',
-            3 => str_repeat($seperator, 1).'A3',
-            4 => str_repeat($seperator, 0).'B1',
-            5 => str_repeat($seperator, 1).'B2',
-            7 => str_repeat($seperator, 2).'B2.1',
-            8 => str_repeat($seperator, 2).'B2.2',
-            9 => str_repeat($seperator, 2).'B2.3',
-            6 => str_repeat($seperator, 1).'B3',
+            1 => str_repeat($seperator, 0) . 'A1',
+            2 => str_repeat($seperator, 1) . 'A2',
+            3 => str_repeat($seperator, 1) . 'A3',
+            4 => str_repeat($seperator, 0) . 'B1',
+            5 => str_repeat($seperator, 1) . 'B2',
+            7 => str_repeat($seperator, 2) . 'B2.1',
+            8 => str_repeat($seperator, 2) . 'B2.2',
+            9 => str_repeat($seperator, 2) . 'B2.3',
+            6 => str_repeat($seperator, 1) . 'B3',
         ];
 
         $this->assertArraysAreEqual($expected, $nestedList);
@@ -1029,15 +1030,15 @@ class CategoryHierarchyTest extends UnitAbstract
         $nestedList = Category::getNestedList('name', 'id', $seperator, $symbol);
 
         $expected = [
-            1 => str_repeat($seperator, 0).$symbol.'A1',
-            2 => str_repeat($seperator, 1).$symbol.'A2',
-            3 => str_repeat($seperator, 1).$symbol.'A3',
-            4 => str_repeat($seperator, 0).$symbol.'B1',
-            5 => str_repeat($seperator, 1).$symbol.'B2',
-            7 => str_repeat($seperator, 2).$symbol.'B2.1',
-            8 => str_repeat($seperator, 2).$symbol.'B2.2',
-            9 => str_repeat($seperator, 2).$symbol.'B2.3',
-            6 => str_repeat($seperator, 1).$symbol.'B3',
+            1 => str_repeat($seperator, 0) . $symbol . 'A1',
+            2 => str_repeat($seperator, 1) . $symbol . 'A2',
+            3 => str_repeat($seperator, 1) . $symbol . 'A3',
+            4 => str_repeat($seperator, 0) . $symbol . 'B1',
+            5 => str_repeat($seperator, 1) . $symbol . 'B2',
+            7 => str_repeat($seperator, 2) . $symbol . 'B2.1',
+            8 => str_repeat($seperator, 2) . $symbol . 'B2.2',
+            9 => str_repeat($seperator, 2) . $symbol . 'B2.3',
+            6 => str_repeat($seperator, 1) . $symbol . 'B3',
         ];
 
         $this->assertArraysAreEqual($expected, $nestedList);

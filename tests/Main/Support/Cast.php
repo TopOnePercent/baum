@@ -13,7 +13,7 @@ trait Cast
      *
      * @return array
      */
-    public function array_ints_keys(array $input, $keys = 'id')
+    public function arrayIntsKeys(array $input, $keys = 'id')
     {
         $keys = is_string($keys) ? [$keys] : $keys;
         array_walk_recursive($input, function (&$value, $key) use ($keys) {

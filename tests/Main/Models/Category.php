@@ -27,7 +27,7 @@ class Category extends Node
      *
      * @return array
      */
-    public static function array_ints_keys(array $input, $keys = 'id')
+    public static function arrayIntsKeys(array $input, $keys = 'id')
     {
         $keys = is_string($keys) ? [$keys] : $keys;
 

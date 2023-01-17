@@ -2,7 +2,7 @@
 
 use Mockery as m;
 use Baum\Tests\Main\UnitAbstract;
-use \Illuminate\Database\Query\Grammars\Grammar;
+use Illuminate\Database\Query\Grammars\Grammar;
 use Baum\Extensions\Query\Builder as QueryBuilder;
 
 class QueryBuilderExtensionTest extends UnitAbstract

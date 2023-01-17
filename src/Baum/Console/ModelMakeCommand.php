@@ -42,11 +42,11 @@ class ModelMakeCommand extends GeneratorCommand
         }
 
 //         if ($this->option('all')) {
-// 			$this->input->setOption('factory', true);
-// 			$this->input->setOption('seed', true);
-// 			$this->input->setOption('migration', true);
-// 			$this->input->setOption('controller', true);
-// 			$this->input->setOption('resource', true);
+//          $this->input->setOption('factory', true);
+//          $this->input->setOption('seed', true);
+//          $this->input->setOption('migration', true);
+//          $this->input->setOption('controller', true);
+//          $this->input->setOption('resource', true);
 //         }
 //
 //         if ($this->option('factory')) {
@@ -156,7 +156,7 @@ class ModelMakeCommand extends GeneratorCommand
 //         return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
 //                         ? $customPath
 //                         : __DIR__.$stub;
-        return __DIR__.$stub;
+        return __DIR__ . $stub;
     }
 
     /**

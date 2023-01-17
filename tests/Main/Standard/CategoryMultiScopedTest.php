@@ -20,8 +20,8 @@ class CategoryMultiScopedTest extends UnitAbstract
 //         with(new CategoryMigrator())->up();
 //         with(new MultiScopedCategorySeeder())->run();
 //     }
-
-    use MyTrait, NodeModelExtensionsTest;
+    use MyTrait;
+    use NodeModelExtensionsTest;
 
     public function testInSameScope()
     {
@@ -240,7 +240,7 @@ class CategoryMultiScopedTest extends UnitAbstract
     //         $this->assertArraysAreEqual($expectedWhole1, $this->hmap(OrderedScopedCategory::where('company_id', 1)->get()->toHierarchy()->toArray()));
     //         $this->assertArraysAreEqual($expectedWhole2, $this->hmap(OrderedScopedCategory::where('company_id', 2)->get()->toHierarchy()->toArray()));
 
-    // 		$parent = $this->categories('Root 1', OrderedScopedCategory::class);
+    //      $parent = $this->categories('Root 1', OrderedScopedCategory::class);
 
     //         $expected = [
     //             $parent,
@@ -253,7 +253,7 @@ class CategoryMultiScopedTest extends UnitAbstract
 
     //         $this->assertEquals($expected, $parent->getDescendantsAndSelf()->all());
 
-    // 		$parent->getDescendantsAndSelf()->all();
+    //      $parent->getDescendantsAndSelf()->all();
     // }
 
     /**

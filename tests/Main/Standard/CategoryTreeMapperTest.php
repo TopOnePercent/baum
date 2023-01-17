@@ -30,8 +30,8 @@ class CategoryTreeMapperTest extends CategoryAbstract
         // Postgres fix
         if (DB::connection()->getDriverName() === 'pgsql') {
             $tablePrefix = DB::connection()->getTablePrefix();
-            $sequenceName = $tablePrefix.'categories_id_seq';
-            DB::connection()->statement('ALTER SEQUENCE '.$sequenceName.' RESTART WITH 10');
+            $sequenceName = $tablePrefix . 'categories_id_seq';
+            DB::connection()->statement('ALTER SEQUENCE ' . $sequenceName . ' RESTART WITH 10');
         }
 
         $updated = [
@@ -69,7 +69,7 @@ class CategoryTreeMapperTest extends CategoryAbstract
         ];
 
         $hierarchy = Category::all()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::arrayIntsKeys(Category::hmap($hierarchy, ['id', 'name'])));
     }
 
     public function testBuildTreeMoveNodes()
@@ -125,7 +125,7 @@ class CategoryTreeMapperTest extends CategoryAbstract
         $this->assertTrue(Category::isValidNestedSet());
 
         $hierarchy = Category::all()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($updated, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($updated, Category::arrayIntsKeys(Category::hmap($hierarchy, ['id', 'name'])));
     }
 
     public function testMakeSubTree()
@@ -174,7 +174,7 @@ class CategoryTreeMapperTest extends CategoryAbstract
         ];
 
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::arrayIntsKeys(Category::hmap($hierarchy, ['id', 'name'])));
     }
 
     public function testMakeTreePrunesAndInserts()
@@ -219,7 +219,7 @@ class CategoryTreeMapperTest extends CategoryAbstract
         ];
 
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::arrayIntsKeys(Category::hmap($hierarchy, ['id', 'name'])));
 
         $modified = [
             ['id' => 7, 'name' => 'Child 2.2'],
@@ -253,7 +253,7 @@ class CategoryTreeMapperTest extends CategoryAbstract
         ];
 
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::arrayIntsKeys(Category::hmap($hierarchy, ['id', 'name'])));
     }
 
     public function testMakeTreeReordesNodes()
@@ -298,7 +298,7 @@ class CategoryTreeMapperTest extends CategoryAbstract
         ];
 
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::arrayIntsKeys(Category::hmap($hierarchy, ['id', 'name'])));
 
         $modified = [
             ['id' => 7, 'name' => 'Child 2.2'],
@@ -332,7 +332,7 @@ class CategoryTreeMapperTest extends CategoryAbstract
         ];
 
         $hierarchy = $parent->reload()->getDescendants()->toHierarchy()->toArray();
-        $this->assertArraysAreEqual($expected, Category::array_ints_keys(Category::hmap($hierarchy, ['id', 'name'])));
+        $this->assertArraysAreEqual($expected, Category::arrayIntsKeys(Category::hmap($hierarchy, ['id', 'name'])));
     }
 
     protected function getDefaultTree()

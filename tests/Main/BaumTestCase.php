@@ -101,9 +101,9 @@ class BaumTestCase extends TestCase
                 $ends = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'];
 
                 if ((($number % 100) >= 11) && (($number % 100) <= 13)) {
-                    return $number.'th';
+                    return $number . 'th';
                 } else {
-                    return $number.$ends[$number % 10];
+                    return $number . $ends[$number % 10];
                 }
             };
 
@@ -114,7 +114,7 @@ class BaumTestCase extends TestCase
             }
 
             echo "\n/* Query $number */";
-            echo "\n/*".str_repeat('-', 256).'*/';
+            echo "\n/*" . str_repeat('-', 256) . '*/';
             echo "\n{$result}";
             // echo "\n- {$query->time}mS{$queryRepeatCount}\n";
 
@@ -127,7 +127,7 @@ class BaumTestCase extends TestCase
                             $a['class'] = '';
                         }
 
-                        $function = sprintf('%-50s', $a['class'].'#'.$a['function']);
+                        $function = sprintf('%-50s', $a['class'] . '#' . $a['function']);
                         $string = "$function | {$a['file']}:{$a['line']}";
                         array_push($result, $string);
                     }

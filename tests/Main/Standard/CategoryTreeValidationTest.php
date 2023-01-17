@@ -25,7 +25,7 @@ class CategoryTreeValidationTest extends CategoryAbstract
 
         $root_2 = Category::create(['name' => 'Root 2']);
     }
-    
+
     public function testTreeIsNotValidWithNullLefts()
     {
         $this->assertTrue(Category::isValidNestedSet());

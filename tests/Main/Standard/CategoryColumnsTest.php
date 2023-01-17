@@ -61,7 +61,7 @@ class CategoryColumnsTest extends UnitAbstract
     public function testGetLeft()
     {
         $build = Category::buildTree(PopulateData::basicTree());
-//     	$child = Category::find(3);
+//      $child = Category::find(3);
         $this->assertEquals(4, Category::find(3)->getLeft());
         $this->assertEquals(7, Category::find(4)->getLeft());
     }
@@ -82,7 +82,7 @@ class CategoryColumnsTest extends UnitAbstract
     public function testGetRight()
     {
         $build = Category::buildTree(PopulateData::basicTree());
-//     	$child = Category::find(5);
+//      $child = Category::find(5);
         $this->assertEquals(5, Category::find(3)->getRight());
         $this->assertEquals(11, Category::find(6)->getRight());
     }

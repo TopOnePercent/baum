@@ -114,7 +114,7 @@ trait NodeModelExtensionsTest
 
 //     public function testReloadThrowsExceptionIfNodeCannotBeLocated()
 //     {
-    // 		$build = Category::buildTree(PopulateData::basicTree());
+    //      $build = Category::buildTree(PopulateData::basicTree());
 //
 //         $node = Category::create(['name' => 'Some node']);
 //         $this->expectException($node->getKey());

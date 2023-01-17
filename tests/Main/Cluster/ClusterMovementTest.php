@@ -24,7 +24,7 @@ class ClusterMovementTest extends UnitAbstract
 
         $root_2 = Cluster::create(['name' => 'Root 2']);
     }
-    
+
     public function testMoveLeft()
     {
         Cluster::clusters('Child 2')->moveLeft();

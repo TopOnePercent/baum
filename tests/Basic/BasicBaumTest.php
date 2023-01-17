@@ -7,21 +7,21 @@ use Baum\Tests\Basic\Models\BasicBaum;
 class BasicBaumTest extends UnitAbstract
 {
     /** @test */
-    public function no_records_test()
+    public function noRecordsTest()
     {
         //factory(BasicBaum::class, 50)->create();
         $this->assertEquals(BasicBaum::count(), 0);
     }
 
     /** @test */
-    public function root_test()
+    public function rootTest()
     {
         $root = BasicBaum::create(['name' => 'Root category']);
         $this->assertEquals(BasicBaum::count(), 1);
     }
 
     /** @test */
-    public function parent_child_test()
+    public function parentChildTest()
     {
         $parent = factory(BasicBaum::class)->create();
 
@@ -49,7 +49,7 @@ class BasicBaumTest extends UnitAbstract
     }
 
     /** @test */
-    public function root_count_test()
+    public function rootCountTest()
     {
         $rand = rand(2, 5);
         factory(BasicBaum::class, $rand)->states('root')->create();
@@ -57,7 +57,7 @@ class BasicBaumTest extends UnitAbstract
     }
 
     /** @test */
-    public function get_root_test()
+    public function getRootTest()
     {
         $root = factory(BasicBaum::class)->create();
         $child1 = $root->children()->create(factory(BasicBaum::class)->raw());
@@ -73,9 +73,9 @@ class BasicBaumTest extends UnitAbstract
         $this->assertEquals($root->name, $child5->getRoot()->name);
         $this->assertEquals($root->name, $root->getRoot()->name);
 
-        //  		$rand = rand(2,5);
-//  		factory(BasicBaum::class, $rand)->states('root')->create();
-//  		$this->assertEquals($rand, BasicBaum::roots()->count());
+        //          $rand = rand(2,5);
+//          factory(BasicBaum::class, $rand)->states('root')->create();
+//          $this->assertEquals($rand, BasicBaum::roots()->count());
     }
 
     /** @test */

@@ -60,11 +60,11 @@ class SetBuilder
     public function roots()
     {
         return $this->node->newQuery()
-      ->whereNull($this->node->getQualifiedParentColumnName())
-      ->orderBy($this->node->getQualifiedLeftColumnName())
-      ->orderBy($this->node->getQualifiedRightColumnName())
-      ->orderBy($this->node->getQualifiedKeyName())
-      ->get();
+        ->whereNull($this->node->getQualifiedParentColumnName())
+        ->orderBy($this->node->getQualifiedLeftColumnName())
+        ->orderBy($this->node->getQualifiedRightColumnName())
+        ->orderBy($this->node->getQualifiedKeyName())
+        ->get();
     }
 
     /**
@@ -150,7 +150,7 @@ class SetBuilder
         $output = [];
 
         foreach ($attributes as $fld => $value) {
-            $output[] = $this->qualify($fld).'='.(is_null($value) ? 'NULL' : $value);
+            $output[] = $this->qualify($fld) . '=' . (is_null($value) ? 'NULL' : $value);
         }
 
         // NOTE: Maybe an md5 or something would be better. Should be unique though.
@@ -182,6 +182,6 @@ class SetBuilder
      */
     protected function qualify($column)
     {
-        return $this->node->getTable().'.'.$column;
+        return $this->node->getTable() . '.' . $column;
     }
 }
