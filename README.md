@@ -1,17 +1,21 @@
 # Baum
 
+Supported Laravel Versions:
+
+[![Laravel 5.8](https://img.shields.io/badge/Laravel-5.8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 6](https://img.shields.io/badge/Laravel-6-informational)](https://github.com/TopOnePercent/baum) [![Laravel 7](https://img.shields.io/badge/Laravel-7-informational)](https://github.com/TopOnePercent/baum) [![Laravel 8](https://img.shields.io/badge/Laravel-8-informational)](https://github.com/TopOnePercent/baum)
+
+Package Info:
+
+[![Latest Stable Version](http://poser.pugx.org/toponepercent/baum/v)](https://packagist.org/packages/toponepercent/baum) [![Total Downloads](http://poser.pugx.org/toponepercent/baum/downloads)](https://packagist.org/packages/toponepercent/baum) [![Latest Unstable Version](http://poser.pugx.org/toponepercent/baum/v/unstable)](https://packagist.org/packages/toponepercent/baum) [![License](http://poser.pugx.org/toponepercent/baum/license)](https://packagist.org/packages/toponepercent/baum) [![PHP Version Require](http://poser.pugx.org/toponepercent/baum/require/php)](https://packagist.org/packages/toponepercent/baum)
+
+Build/Code Coverage:
+
 [![Tests](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml/badge.svg?branch=master)](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml)
 [![Coverage Status](https://img.shields.io/badge/coverage-90.68%25-brightgreen)](https://github.com/TopOnePercent/baum)
 
 ## Nested Set implementation for Laravel
 
 Baum is an implementation of the [Nested Set](http://en.wikipedia.org/wiki/Nested_set_model) pattern for the [Laravel](http://laravel.com/) Eloquent ORM.
-
-Supported Versions:
-
-[![Laravel 5.8](https://img.shields.io/badge/Laravel-5.8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 6](https://img.shields.io/badge/Laravel-6-informational)](https://github.com/TopOnePercent/baum) [![Laravel 7](https://img.shields.io/badge/Laravel-7-informational)](https://github.com/TopOnePercent/baum) [![Laravel 8](https://img.shields.io/badge/Laravel-8-informational)](https://github.com/TopOnePercent/baum)
-
-[![PHP Version](https://img.shields.io/badge/PHP-7.3|^8.0-informational)](https://github.com/TopOnePercent/baum)
 
 ### Key Considerations for using a Nested Set Pattern:
 
