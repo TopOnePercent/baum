@@ -20,9 +20,6 @@ jobs:
     strategy:
       matrix:
         php: [8.0, 7.4, 7.3]
-        dependency-versions:
-          - "lowest"
-          - "highest"
 
     name: P${{ matrix.php }}
 
@@ -44,6 +41,9 @@ jobs:
       run: |
         composer install -o --quiet
 
+    - name: Ensure coding standards are met
+      run: composer coding_standard
+
     - name: Execute Tests
-      run: composer test
+      run: composer tests
       

@@ -60,8 +60,11 @@
         }
     },
     "scripts": {
-        "test": [
+        "tests": [
             "@php ./vendor/bin/phpunit"
+        ],
+        "coding_standard": [
+            "@php ./vendor/bin/phpcs -p -n src tests"
         ]
     }
 }
