@@ -36,14 +36,14 @@ class Move
      *
      * @var int
      */
-    protected $_bound1 = null;
+    protected $_initialBoundary = null;
 
     /**
      * Memoized 2nd boundary.
      *
      * @var int
      */
-    protected $_bound2 = null;
+    protected $_finalBoundary = null;
 
     /**
      * Memoized boundaries array.
@@ -247,50 +247,49 @@ class Move
      *
      * @return int
      */
-    protected function bound1()
+    protected function initialBoundary()
     {
-        if (! is_null($this->_bound1)) {
-            return $this->_bound1;
+        if (! is_null($this->_initialBoundary)) {
+            return $this->_initialBoundary;
         }
 
         switch ($this->position) {
             case 'child':
-                $this->_bound1 = $this->target->getRight();
+                $this->_initialBoundary = $this->target->getRight();
                 break;
 
             case 'left':
-                $this->_bound1 = $this->target->getLeft();
+                $this->_initialBoundary = $this->target->getLeft();
                 break;
 
             case 'right':
-                $this->_bound1 = $this->target->getRight() + 1;
+                $this->_initialBoundary = $this->target->getRight() + 1;
                 break;
 
             case 'root':
-                $this->_bound1 = $this->node->newNestedSetQuery()->max($this->node->getRightColumnName()) + 1;
+                $this->_initialBoundary = $this->node->newNestedSetQuery()->max($this->node->getRightColumnName()) + 1;
                 break;
         }
 
-        $this->_bound1 = (($this->_bound1 > $this->node->getRight()) ? $this->_bound1 - 1 : $this->_bound1);
+        $this->_initialBoundary = (($this->_initialBoundary > $this->node->getRight()) ? $this->_initialBoundary - 1 : $this->_initialBoundary);
 
-        return $this->_bound1;
+        return $this->_initialBoundary;
     }
 
     /**
      * Computes the other boundary.
-     * TODO: Maybe find a better name for this... ¿?
      *
      * @return int
      */
-    protected function bound2()
+    protected function finalBoundary()
     {
-        if (! is_null($this->_bound2)) {
-            return $this->_bound2;
+        if (! is_null($this->_finalBoundary)) {
+            return $this->_finalBoundary;
         }
 
-        $this->_bound2 = (($this->bound1() > $this->node->getRight()) ? $this->node->getRight() + 1 : $this->node->getLeft() - 1);
+        $this->_finalBoundary = (($this->initialBoundary() > $this->node->getRight()) ? $this->node->getRight() + 1 : $this->node->getLeft() - 1);
 
-        return $this->_bound2;
+        return $this->_finalBoundary;
     }
 
     /**
@@ -309,8 +308,8 @@ class Move
         $this->_boundaries = [
             $this->node->getLeft(),
             $this->node->getRight(),
-            $this->bound1(),
-            $this->bound2(),
+            $this->initialBoundary(),
+            $this->finalBoundary(),
         ];
         sort($this->_boundaries);
 
@@ -343,7 +342,7 @@ class Move
      */
     protected function hasChange()
     {
-        return ! ($this->bound1() == $this->node->getRight() || $this->bound1() == $this->node->getLeft());
+        return ! ($this->initialBoundary() == $this->node->getRight() || $this->initialBoundary() == $this->node->getLeft());
     }
 
     /**
