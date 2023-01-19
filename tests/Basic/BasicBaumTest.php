@@ -21,6 +21,18 @@ class BasicBaumTest extends UnitAbstract
     }
 
     /** @test */
+    public function isChildTest()
+    {
+        $parent = factory(BasicBaum::class)->create();
+
+        $child1 = factory(BasicBaum::class)->create();
+        $child1->makeChildOf($parent);
+
+        $this->assertTrue($child1->isChild());
+        $this->assertFalse($parent->isChild());
+    }
+
+    /** @test */
     public function parentChildTest()
     {
         $parent = factory(BasicBaum::class)->create();
