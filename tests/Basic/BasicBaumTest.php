@@ -26,10 +26,16 @@ class BasicBaumTest extends UnitAbstract
         $parent = factory(BasicBaum::class)->create();
 
         $child1 = factory(BasicBaum::class)->create();
-        $child1->makeChildOf($parent);
+        $parent->addChild($child1);
 
         $this->assertTrue($child1->isChild());
         $this->assertFalse($parent->isChild());
+    }
+
+    /** @test */
+    public function getQualifiedDepthColumnNameTest()
+    {
+        $this->assertTrue(factory(BasicBaum::class)->create()->getQualifiedDepthColumnName() == 'basic_baums.depth');
     }
 
     /** @test */
@@ -256,6 +262,20 @@ class BasicBaumTest extends UnitAbstract
         $data = BasicBaum::first();
 
         $this->assertEquals(3, $data->getImmediateDescendants()->count());
+    }
+
+    /** @test */
+    public function immediateDescendantsTest()
+    {
+        $root = factory(BasicBaum::class)->create();
+        $child1 = $root->children()->create(factory(BasicBaum::class)->raw());
+        $child2 = $root->children()->create(factory(BasicBaum::class)->raw());
+        $child3 = $child1->children()->create(factory(BasicBaum::class)->raw());
+        $child4 = $child2->children()->create(factory(BasicBaum::class)->raw());
+        $child5 = $root->children()->create(factory(BasicBaum::class)->raw());
+
+        $this->assertEquals(3, $root->immediateDescendants()->count());
+        $this->assertEquals(0, $root->immediateDescendants()->where('parent_id', '!=', $root->id)->count());
     }
 
     /** @test */
