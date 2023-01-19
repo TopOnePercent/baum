@@ -2,7 +2,7 @@
 
 Supported Laravel Versions:
 
-[![Laravel 5.8](https://img.shields.io/badge/Laravel-5.8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 6](https://img.shields.io/badge/Laravel-6-informational)](https://github.com/TopOnePercent/baum) [![Laravel 7](https://img.shields.io/badge/Laravel-7-informational)](https://github.com/TopOnePercent/baum) [![Laravel 8](https://img.shields.io/badge/Laravel-8-informational)](https://github.com/TopOnePercent/baum)
+[![Laravel 5.8](https://img.shields.io/badge/Laravel-5.8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 6](https://img.shields.io/badge/Laravel-6-informational)](https://github.com/TopOnePercent/baum) [![Laravel 7](https://img.shields.io/badge/Laravel-7-informational)](https://github.com/TopOnePercent/baum) [![Laravel 8](https://img.shields.io/badge/Laravel-8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 9](https://img.shields.io/badge/Laravel-9-informational)](https://github.com/TopOnePercent/baum)
 
 Package Info:
 
