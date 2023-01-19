@@ -1082,8 +1082,7 @@ trait NestedSet
      *
      * @param [type] $node [description]
      */
-    public function addChild($node)
-    {
+    public function addChild($node) {
         $parentIdKey = $this->getparentColumnName();
 
         $node->$parentIdKey = $this->getKey();
