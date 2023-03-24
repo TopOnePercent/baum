@@ -12,7 +12,7 @@ use Baum\Tests\Main\Models\ScopedCategory;
 use Baum\Tests\Main\Models\SoftCategory;
 use Baum\Tests\Main\Support\PopulateData;
 
-trait NodeModelExtensionsTest
+trait NodeModelExtensionsTestTrait
 {
     protected function categories($name, $className = Category::class)
     {

@@ -3,7 +3,7 @@
 namespace Baum\Tests\Main\Standard;
 
 use Baum\Exceptions\MoveNotPossibleException;
-use Baum\Tests\Main\Concerns\NodeModelExtensionsTest;
+use Baum\Tests\Main\Concerns\NodeModelExtensionsTestTrait;
 use Baum\Tests\Main\Models\MultiScopedCategory;
 use Baum\Tests\Main\Models\OrderedScopedCategory;
 use Baum\Tests\Main\Models\ScopedCategory;
@@ -21,7 +21,7 @@ class CategoryMultiScopedTest extends UnitAbstract
 //         with(new MultiScopedCategorySeeder())->run();
 //     }
     use MyTrait;
-    use NodeModelExtensionsTest;
+    use NodeModelExtensionsTestTrait;
 
     public function testInSameScope()
     {

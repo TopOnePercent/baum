@@ -2,7 +2,7 @@
 
 namespace Baum\Tests\Main\Standard;
 
-use Baum\Tests\Main\Concerns\NodeModelExtensionsTest;
+use Baum\Tests\Main\Concerns\NodeModelExtensionsTestTrait;
 use Baum\Tests\Main\Models\Category;
 use Baum\Tests\Main\Support\MyTrait;
 use Baum\Tests\Main\Support\PopulateData;
@@ -12,7 +12,7 @@ use Baum\Tests\Main\UnitAbstract;
 class CategoryHierarchyTest extends UnitAbstract
 {
     use MyTrait;
-    use NodeModelExtensionsTest;
+    use NodeModelExtensionsTestTrait;
 
     public function testAllStatic()
     {

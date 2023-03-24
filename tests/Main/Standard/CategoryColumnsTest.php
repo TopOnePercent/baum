@@ -2,7 +2,7 @@
 
 namespace Baum\Tests\Main\Standard;
 
-use Baum\Tests\Main\Concerns\NodeModelExtensionsTest;
+use Baum\Tests\Main\Concerns\NodeModelExtensionsTestTrait;
 use Baum\Tests\Main\Models\Category;
 use Baum\Tests\Main\Models\MultiScopedCategory;
 use Baum\Tests\Main\Models\OrderedCategory;
@@ -16,7 +16,7 @@ use Baum\Tests\Main\UnitAbstract;
 class CategoryColumnsTest extends UnitAbstract
 {
     //use Cast, Testable;
-    use NodeModelExtensionsTest;
+    use NodeModelExtensionsTestTrait;
 
     public function testGetParentColumnName()
     {
