@@ -23,8 +23,8 @@ The more information you provide, the easier it is to validate that there is a b
 
 1. Fork & clone the project: `git clone git@github.com:your-username/baum.git`.
 2. Run the tests and coding standard checks to make sure that they pass with your setup: `./vendor/bin/phpcs -p -n src tests && phpunit`.
-3. Create your bugfix/feature branch and code away your changes. Add tests for your changes. If you're adding functionality or fixing a bug, tests make it easier for the merge to be possible. Also, they make sure we don't break your changes accidentally.
-4. Make sure all the tests and coding standard checks still pass: `./vendor/bin/phpcs -p -n src tests && phpunit`.
+3. Create your bugfix/feature branch and code away! Add tests for your changes. If you're adding functionality or fixing a bug, tests make it easier for the merge to be possible. Also, they make sure we don't break your changes accidentally.
+4. Make sure all the tests and coding standard checks still pass and manually update the Code Coverage % in README.md: `./vendor/bin/phpcs -p -n src tests && phpunit`.
 5. Commit your changes. If your pull request fixes an specific issue make sure you say so in the commit message. For example: `git commit -m "Fix auto-imploding nasty bug. Fixes #90."`.
 6. Push to your fork and submit a pull request. Please provide some explanation as to why you made the changes you made. For new features make sure to explain a standard use case.
 
