@@ -133,7 +133,7 @@ php artisan make:baum {model_name}
 
 Replace model by the class name you plan to use for your Nested Set model.
 
-The generator will install a migration and a model file into your application
+The generator will create a model file in your application
 configured to work with the Nested Set behaviour provided by Baum. You SHOULD
 take a look at those files, as each of them describes how they can be customized.
 
@@ -422,8 +422,8 @@ object where appropiate):
 * `getAncestorsAndSelfWithoutRoot()`: All ancestors (including the current node) except the root node.
 * `getAncestors()`: Get all of the ancestor chain from the database excluding the current node.
 * `getAncestorsWithoutRoot()`: All ancestors except the current node and the root node.
-* `getSiblingsAndSelf()`: Get all children of the parent, including self.
-* `getSiblings()`: Return all children of the parent, except self.
+* `getSiblingsAndSelf()`: Get all siblings of the node, including the node itself.
+* `getSiblings()`: Get all siblings of the node, excluding the current node.
 * `getLeaves()`: Return all of its nested children which do not have children.
 * `getDescendantsAndSelf()`: Retrieve all nested children and self.
 * `getDescendants()`: Retrieve all of its children & nested children.
