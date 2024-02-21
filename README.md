@@ -19,7 +19,7 @@ Baum is an implementation of the [Nested Set](http://en.wikipedia.org/wiki/Neste
 
 ### Key Considerations for using a Nested Set Pattern:
 
-1. The Nested Set pattern is appropriate where the tree element and one or two attributes are the only data.
+1. The Nested Set pattern is appropriate when the tree element and one or two attributes are the only data.
 1. The Nested Set pattern is a **poor choice** when more complex relational data exists for the elements in the tree.
 1. The Nested Set pattern is **best when** you need to query a tree more frequently than you need to modify the tree.
 
