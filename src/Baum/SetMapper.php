@@ -4,7 +4,7 @@ namespace Baum;
 
 use Closure;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Contracts\ArrayableInterface;
+use Illuminate\Contracts\Support\Arrayable;
 
 class SetMapper
 {
@@ -39,7 +39,7 @@ class SetMapper
     /**
      * Maps a tree structure into the database. Unguards & wraps in transaction.
      *
-     * @param   array|\Illuminate\Support\Contracts\ArrayableInterface
+     * @param $nodeList array|\Illuminate\Contracts\Support\Arrayable
      *
      * @return bool
      */
@@ -60,14 +60,14 @@ class SetMapper
      * Maps a tree structure into the database without unguarding nor wrapping
      * inside a transaction.
      *
-     * @param   array|\Illuminate\Support\Contracts\ArrayableInterface
+     * @param $nodeList array|\Illuminate\Contracts\Support\Arrayable
      *
      * @return bool
      */
     public function mapTree($nodeList)
     {
         $affectedKeys = [];
-        $tree = $nodeList instanceof ArrayableInterface ? $nodeList->toArray() : $nodeList;
+        $tree = $nodeList instanceof Arrayable ? $nodeList->toArray() : $nodeList;
 
         $result = $this->mapTreeRecursive($tree, $this->node, $affectedKeys);
 

@@ -488,7 +488,7 @@ trait NestedSet
     /**
      * Maps the provided tree structure into the database.
      *
-     * @param   array|\Illuminate\Support\Contracts\ArrayableInterface
+     * @param $nodeList array|\Illuminate\Contracts\Support\Arrayable
      *
      * @return bool
      */
@@ -1405,7 +1405,7 @@ trait NestedSet
      * as the parent. The provided tree structure will be inserted/updated as the
      * descendancy subtree of the current node instance.
      *
-     * @param   array|\Illuminate\Support\Contracts\ArrayableInterface
+     * @param $nodeList array|\Illuminate\Contracts\Support\Arrayable
      *
      * @return bool
      */
