@@ -6,11 +6,11 @@ Thinking of contributing? Maybe you've found some nasty bug? That's great news!
 
 1. Update to the most recent *master release* if possible. The bug you're experiencing may have already been fixed.
 2. Search for similar issues. It's possible somebody has encountered the same bug already.
-3. If you keep experiencing the issue and cannot find a similar bug report: Open a new issue and report the bug as explicitly as you can.
+3. If you keep experiencing the issue and cannot find a similar bug report: Open a new issue and report the bug as specific as you can.
 4. If possible, try to add a link to a gist with some failing code and/or stack traces or submit a Pull Request with a failing test. Better yet, take
 a stab at fixing the bug yourself if you can!
 
-The more information you provide, the easier it is to validate that there is a bug and the faster it is for me or anyone to provide a fix.
+The more information you provide, the easier it is to validate that there is a bug and the faster it is for someone to provide a fix.
 
 ## Requesting a Feature
 
