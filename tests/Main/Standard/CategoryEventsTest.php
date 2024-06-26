@@ -22,7 +22,6 @@ class CategoryEventsTest extends UnitAbstract
         } catch (\Exception $e) {
             $this->fail();
         }
-
     }
 
     public function testShiftsSiblingsForRestore()
@@ -35,7 +34,6 @@ class CategoryEventsTest extends UnitAbstract
         } catch (\Exception $e) {
             $this->fail();
         }
-
     }
 
     public function testRestoresDescendants()
@@ -48,6 +46,5 @@ class CategoryEventsTest extends UnitAbstract
         } catch (\Exception $e) {
             $this->fail();
         }
-
     }
 }
