@@ -198,7 +198,7 @@ trait NestedSet
      */
     public function getLeft()
     {
-        return $this->getAttribute($this->getLeftColumnName());
+        return (int) $this->getAttribute($this->getLeftColumnName());
     }
 
     /**
@@ -228,7 +228,7 @@ trait NestedSet
      */
     public function getRight()
     {
-        return $this->getAttribute($this->getRightColumnName());
+        return (int) $this->getAttribute($this->getRightColumnName());
     }
 
     /**
@@ -1288,7 +1288,7 @@ trait NestedSet
      */
     public function destroyDescendants()
     {
-        if (is_null($this->getRight()) || is_null($this->getLeft())) {
+        if ($this->getRight() === 0 || $this->getLeft() === 0) {
             return;
         }
 
@@ -1335,7 +1335,7 @@ trait NestedSet
      */
     public function shiftSiblingsForRestore()
     {
-        if (is_null($this->getRight()) || is_null($this->getLeft())) {
+        if ($this->getRight() === 0 || $this->getLeft() === 0) {
             return;
         }
 
@@ -1361,7 +1361,7 @@ trait NestedSet
      */
     public function restoreDescendants()
     {
-        if (is_null($this->getRight()) || is_null($this->getLeft())) {
+        if ($this->getRight() === 0 || $this->getLeft() === 0) {
             return;
         }
 
