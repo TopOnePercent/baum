@@ -4,3 +4,4 @@ composer.lock
 *.cache
 .DS_Store
 /.idea
+/cc-report
