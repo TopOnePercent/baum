@@ -64,6 +64,7 @@ class ModelMakeCommand extends GeneratorCommand
 //         if ($this->option('controller') || $this->option('resource') || $this->option('api')) {
 //             $this->createController();
 //         }
+return null;
     }
 
     /**
@@ -147,11 +148,8 @@ class ModelMakeCommand extends GeneratorCommand
 
     /**
      * Resolve the fully-qualified path to the stub.
-     *
-     * @param  string  $stub
-     * @return string
      */
-    protected function resolveStubPath($stub)
+    protected function resolveStubPath(string $stub): string
     {
 //         return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
 //                         ? $customPath
