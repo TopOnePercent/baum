@@ -28,7 +28,10 @@ class QueryBuilderExtensionTest extends UnitAbstract
     {
         $builder = $this->getBuilder();
         $builder->getConnection()->shouldReceive('select')->once()->andReturn([['aggregate' => 1]]);
-        $builder->getProcessor()->shouldReceive('processSelect')->once()->andReturnUsing(function($builder, $results) {return $results;});
+        $builder->getProcessor()->shouldReceive('processSelect')->once()
+            ->andReturnUsing(function ($builder, $results) {
+                return $results;
+            });
         $results = $builder->from('users')->orderBy('age', 'desc')->count();
         $this->assertEquals(1, $results);
 
@@ -39,19 +42,28 @@ class QueryBuilderExtensionTest extends UnitAbstract
 
         $builder = $this->getBuilder();
         $builder->getConnection()->shouldReceive('select')->once()->andReturn(array(array('aggregate' => 1)));
-        $builder->getProcessor()->shouldReceive('processSelect')->once()->andReturnUsing(function($builder, $results) { return $results; });
+        $builder->getProcessor()->shouldReceive('processSelect')->once()
+            ->andReturnUsing(function ($builder, $results) {
+                return $results;
+            });
         $results = $builder->from('users')->orderBy('age', 'desc')->max('id');
         $this->assertEquals(1, $results);
 
         $builder = $this->getBuilder();
         $builder->getConnection()->shouldReceive('select')->once()->andReturn(array(array('aggregate' => 1)));
-        $builder->getProcessor()->shouldReceive('processSelect')->once()->andReturnUsing(function($builder, $results) { return $results; });
+        $builder->getProcessor()->shouldReceive('processSelect')->once()
+            ->andReturnUsing(function ($builder, $results) {
+                return $results;
+            });
         $results = $builder->from('users')->orderBy('age', 'desc')->min('id');
         $this->assertEquals(1, $results);
 
         $builder = $this->getBuilder();
         $builder->getConnection()->shouldReceive('select')->once()->andReturn(array(array('aggregate' => 1)));
-        $builder->getProcessor()->shouldReceive('processSelect')->once()->andReturnUsing(function($builder, $results) { return $results; });
+        $builder->getProcessor()->shouldReceive('processSelect')->once()
+            ->andReturnUsing(function ($builder, $results) {
+                return $results;
+            });
         $results = $builder->from('users')->orderBy('age', 'desc')->sum('id');
         $this->assertEquals(1, $results);
     }
