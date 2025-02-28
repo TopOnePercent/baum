@@ -64,7 +64,7 @@ class ModelMakeCommand extends GeneratorCommand
 //         if ($this->option('controller') || $this->option('resource') || $this->option('api')) {
 //             $this->createController();
 //         }
-return null;
+        return null;
     }
 
     /**
