@@ -15,42 +15,42 @@ class Move
      *
      * @var \Baum\Node
      */
-    protected $node = null;
+    protected $node;
 
     /**
      * Destination node.
      *
      * @var \Baum\Node | int
      */
-    protected $target = null;
+    protected $target;
 
     /**
      * Move target position, one of: child, left, right, root.
      *
      * @var string
      */
-    protected $position = null;
+    protected $position;
 
     /**
      * Memoized 1st boundary.
      *
      * @var int
      */
-    protected $_initialBoundary = null;
+    protected $_initialBoundary;
 
     /**
      * Memoized 2nd boundary.
      *
      * @var int
      */
-    protected $_finalBoundary = null;
+    protected $_finalBoundary;
 
     /**
      * Memoized boundaries array.
      *
      * @var array
      */
-    protected $_boundaries = null;
+    protected $_boundaries;
 
     /**
      * The event dispatcher instance.
@@ -109,7 +109,7 @@ class Move
         if ($this->hasChange()) {
             $self = $this;
 
-            $this->node->getConnection()->transaction(function () use ($self) {
+            $this->node->getConnection()->transaction(function () use ($self): void {
                 $self->updateStructure();
             });
 
@@ -179,7 +179,7 @@ class Move
 
         return $this->node
             ->newNestedSetQuery()
-            ->where(function ($query) use ($leftColumn, $rightColumn, $a, $d) {
+            ->where(function ($query) use ($leftColumn, $rightColumn, $a, $d): void {
                 $query->whereBetween($leftColumn, [$a, $d])
                 ->orWhereBetween($rightColumn, [$a, $d]);
             })
@@ -215,7 +215,7 @@ class Move
             throw new MoveNotPossibleException('A new node cannot be moved.');
         }
 
-        if (array_search($this->position, ['child', 'left', 'right', 'root']) === false) {
+        if (!in_array($this->position, ['child', 'left', 'right', 'root'])) {
             throw new MoveNotPossibleException("Position should be one of ['child', 'left', 'right'] but is {$this->position}.");
         }
 
@@ -325,7 +325,7 @@ class Move
     {
         switch ($this->position) {
             case 'root':
-                return;
+                return null;
 
             case 'child':
                 return $this->target->getKey();
@@ -337,20 +337,16 @@ class Move
 
     /**
      * Check wether there should be changes in the downward tree structure.
-     *
-     * @return bool
      */
-    protected function hasChange()
+    protected function hasChange(): bool
     {
-        return ! ($this->initialBoundary() == $this->node->getRight() || $this->initialBoundary() == $this->node->getLeft());
+        return $this->initialBoundary() != $this->node->getRight() && $this->initialBoundary() != $this->node->getLeft();
     }
 
     /**
      * Check if we are promoting the provided instance to a root node.
-     *
-     * @return bool
      */
-    protected function promotingToRoot()
+    protected function promotingToRoot(): bool
     {
         return $this->position == 'root';
     }
@@ -369,10 +365,8 @@ class Move
      * Set the event dispatcher instance.
      *
      * @param  \Illuminate\Events\Dispatcher
-     *
-     * @return void
      */
-    public static function setEventDispatcher(Dispatcher $dispatcher)
+    public static function setEventDispatcher(Dispatcher $dispatcher): void
     {
         static::$dispatcher = $dispatcher;
     }
@@ -404,10 +398,8 @@ class Move
      * Quotes an identifier for being used in a database query.
      *
      * @param mixed $value
-     *
-     * @return string
      */
-    protected function quoteIdentifier($value)
+    protected function quoteIdentifier($value): string
     {
         if (is_null($value)) {
             return 'NULL';

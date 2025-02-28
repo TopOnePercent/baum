@@ -36,7 +36,7 @@ class Builder extends BaseBuilder
     public function aggregate($function, $columns = ['*'])
     {
         // Postgres doesn't like ORDER BY when there's no GROUP BY clause
-        if (! isset($this->groups)) {
+        if ($this->groups === null) {
             $this->reOrderBy(null);
         }
 

@@ -9,7 +9,7 @@ class SetBuilder
      *
      * @var \Baum\Node
      */
-    protected $node = null;
+    protected $node;
 
     /**
      * Array which will hold temporary lft, rgt index values for each scope.
@@ -33,10 +33,8 @@ class SetBuilder
     /**
      * Perform the re-calculation of the left and right indexes of the whole
      * nested set tree structure.
-     *
-     * @return void
      */
-    public function rebuild()
+    public function rebuild(): void
     {
         // Rebuild lefts and rights for each root node and its children (recursively).
         // We go by setting left (and keep track of the current left bound), then
@@ -45,7 +43,7 @@ class SetBuilder
         // setting the right indexes and saving the nodes...
         $self = $this;
 
-        $this->node->getConnection()->transaction(function () use ($self) {
+        $this->node->getConnection()->transaction(function () use ($self): void {
             foreach ($self->roots() as $root) {
                 $self->rebuildBounds($root, 0);
             }
@@ -71,7 +69,7 @@ class SetBuilder
      * Recompute left and right index bounds for the specified node and its
      * children (recursive call). Fill the depth column too.
      */
-    public function rebuildBounds($node, $depth = 0)
+    public function rebuildBounds($node, $depth = 0): void
     {
         $k = $this->scopedKey($node);
 
@@ -117,10 +115,8 @@ class SetBuilder
      * Return an array of the scoped attributes of the supplied node.
      *
      * @param Baum\Node $node
-     *
-     * @return array
      */
-    protected function scopedAttributes($node)
+    protected function scopedAttributes($node): array
     {
         $keys = $this->node->getScopedColumns();
 
@@ -140,10 +136,8 @@ class SetBuilder
      * computing when a scope is defined (acsts as an scope identifier).
      *
      * @param Baum\Node $node
-     *
-     * @return string
      */
-    protected function scopedKey($node)
+    protected function scopedKey($node): string
     {
         $attributes = $this->scopedAttributes($node);
 
@@ -170,17 +164,15 @@ class SetBuilder
             $this->bounds[$key] = 0;
         }
 
-        $this->bounds[$key] = $this->bounds[$key] + 1;
+        $this->bounds[$key] += 1;
 
         return $this->bounds[$key];
     }
 
     /**
      * Get the fully qualified value for the specified column.
-     *
-     * @return string
      */
-    protected function qualify($column)
+    protected function qualify(string $column): string
     {
         return $this->node->getTable() . '.' . $column;
     }
