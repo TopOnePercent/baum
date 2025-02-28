@@ -9,7 +9,7 @@ class SetValidator
      *
      * @var \Baum\Node
      */
-    protected $node = null;
+    protected $node;
 
     /**
      * Create a new \Baum\SetValidator class instance.
@@ -25,10 +25,8 @@ class SetValidator
 
     /**
      * Determine if the validation passes.
-     *
-     * @return bool
      */
-    public function passes()
+    public function passes(): bool
     {
         return $this->validateBounds() && $this->validateDuplicates() &&
         $this->validateRoots();
@@ -36,10 +34,8 @@ class SetValidator
 
     /**
      * Determine if validation fails.
-     *
-     * @return bool
      */
-    public function fails()
+    public function fails(): bool
     {
         return ! $this->passes();
     }
@@ -48,10 +44,8 @@ class SetValidator
      * Validates bounds of the nested tree structure. It will perform checks on
      * the `lft`, `rgt` and `parent_id` columns. Mainly that they're not null,
      * rights greater than lefts, and that they're within the bounds of the parent.
-     *
-     * @return bool
      */
-    protected function validateBounds()
+    protected function validateBounds(): bool
     {
         $connection = $this->node->getConnection();
         $grammar = $connection->getQueryGrammar();
@@ -89,10 +83,8 @@ class SetValidator
 
     /**
      * Checks that there are no duplicates for the `lft` and `rgt` columns.
-     *
-     * @return bool
      */
-    protected function validateDuplicates()
+    protected function validateDuplicates(): bool
     {
         return
         ! $this->duplicatesExistForColumn($this->node->getQualifiedLeftColumnName()) &&
@@ -123,10 +115,8 @@ class SetValidator
      * the Nested Set scope columns into account (if appropiate).
      *
      * @param string $column
-     *
-     * @return bool
      */
-    protected function duplicatesExistForColumn($column)
+    protected function duplicatesExistForColumn($column): bool
     {
         $connection = $this->node->getConnection();
         $grammar = $connection->getQueryGrammar();
@@ -157,10 +147,8 @@ class SetValidator
      * values (lft, rgt indexes) are less than the next.
      *
      * @param mixed $roots
-     *
-     * @return bool
      */
-    protected function isEachRootValid($roots)
+    protected function isEachRootValid($roots): bool
     {
         $left = $right = 0;
 
@@ -184,12 +172,10 @@ class SetValidator
      * values (lft, rgt indexes) are less than the next *within each scope*.
      *
      * @param mixed $roots
-     *
-     * @return bool
      */
-    protected function validateRootsByScope($roots)
+    protected function validateRootsByScope($roots): bool
     {
-        foreach ($this->groupRootsByScope($roots) as $scope => $groupedRoots) {
+        foreach ($this->groupRootsByScope($roots) as $groupedRoots) {
             $valid = $this->isEachRootValid($groupedRoots);
 
             if (! $valid) {
@@ -206,10 +192,8 @@ class SetValidator
      * inside that scope themselves.
      *
      * @param mixed $roots
-     *
-     * @return array
      */
-    protected function groupRootsByScope($roots)
+    protected function groupRootsByScope($roots): array
     {
         $rootsGroupedByScope = [];
 
@@ -231,10 +215,8 @@ class SetValidator
      * making array keys for grouping.
      *
      * @param Baum\Node $node
-     *
-     * @return string
      */
-    protected function keyForScope($node)
+    protected function keyForScope($node): string
     {
         return implode('-', array_map(function ($column) use ($node) {
             $value = $node->getAttribute($column);
