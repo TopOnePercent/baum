@@ -25,7 +25,7 @@ Baum is an implementation of the [Nested Set](http://en.wikipedia.org/wiki/Neste
 
 ---
 
-*If you find a bug*, **please** file an issue and submit a pull request with a failing unit test.
+*If you find a bug* **please** file an issue and submit a pull request with a failing unit test.
 
 ---
 
