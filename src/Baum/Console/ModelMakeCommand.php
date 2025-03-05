@@ -33,7 +33,7 @@ class ModelMakeCommand extends GeneratorCommand
      * Execute the console command.
      *
      * @codeCoverageIgnore
-     * @return void
+     * @return mixed
      */
     public function handle()
     {
