@@ -1165,7 +1165,7 @@ trait NestedSet
 
         // Should we actually move?
         if ($oldParentId == $newParentId) {
-            return null;
+            return;
         }
 
         if (! $newParentId) {
@@ -1173,7 +1173,6 @@ trait NestedSet
         } elseif ($oldParentId != $newParentId) {
             return $this->makeChildOf($newParentId);
         }
-        return null;
     }
 
     /**
