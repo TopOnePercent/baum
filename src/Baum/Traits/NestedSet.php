@@ -1159,9 +1159,11 @@ trait NestedSet
     {
         $parentColumnKey = $this->getParentColumnName();
 
-        $oldParentId = $this->original[$parentColumnKey] ?? null;
+        $oldParentId = array_key_exists($parentColumnKey, $this->original)
+            ? $this->original[$parentColumnKey] : null;
 
-        $newParentId = $this->attributes[$parentColumnKey] ?? null;
+        $newParentId = array_key_exists($parentColumnKey, $this->attributes)
+            ? $this->attributes[$parentColumnKey] : null;
 
         // Should we actually move?
         if ($oldParentId == $newParentId) {
