@@ -13,7 +13,7 @@ class SetMapper
      *
      * @var \Baum\Node
      */
-    protected $node = null;
+    protected $node;
 
     /**
      * Children key name.
@@ -91,12 +91,10 @@ class SetMapper
     /**
      * Maps a tree structure into the database.
      *
-     * @param array $tree
      * @param mixed $parent
      *
-     * @return bool
      */
-    protected function mapTreeRecursive(array $tree, $parent = null, &$affectedKeys = [])
+    protected function mapTreeRecursive(array $tree, $parent = null, &$affectedKeys = []): bool
     {
         // For every attribute entry: We'll need to instantiate a new node either
         // from the database (if the primary key was supplied) or a new instance. Then,

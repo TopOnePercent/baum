@@ -12,9 +12,9 @@ if (! function_exists('flatten_tree')) {
      * @param  array        &$result  Recursion temporary variable
      * @return array                  Flattened array
      */
-    function flatten_tree($tree, $only = [], &$result = [])
+    function flatten_tree($tree, $only = [], array &$result = []): array
     {
-        foreach ($tree as $k => $v) {
+        foreach ($tree as $v) {
             $result[$v['id']] = $only ? Arr::only($v, $only) : $v;
 
             if (isset($v['children'])) {

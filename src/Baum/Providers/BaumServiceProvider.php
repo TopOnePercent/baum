@@ -8,10 +8,8 @@ class BaumServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
 
         // Load Commands

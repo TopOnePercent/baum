@@ -2,16 +2,16 @@
 
 Supported Laravel Versions:
 
-[![Laravel 5.8](https://img.shields.io/badge/Laravel-5.8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 6](https://img.shields.io/badge/Laravel-6-informational)](https://github.com/TopOnePercent/baum) [![Laravel 7](https://img.shields.io/badge/Laravel-7-informational)](https://github.com/TopOnePercent/baum) [![Laravel 8](https://img.shields.io/badge/Laravel-8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 9](https://img.shields.io/badge/Laravel-9-informational)](https://github.com/TopOnePercent/baum) [![Laravel 10](https://img.shields.io/badge/Laravel-10-informational)](https://github.com/TopOnePercent/baum) [![Laravel 11](https://img.shields.io/badge/Laravel-11-informational)](https://github.com/TopOnePercent/baum)
+[![Laravel 5.8](https://img.shields.io/badge/Laravel-5.8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 6](https://img.shields.io/badge/Laravel-6-informational)](https://github.com/TopOnePercent/baum) [![Laravel 7](https://img.shields.io/badge/Laravel-7-informational)](https://github.com/TopOnePercent/baum) [![Laravel 8](https://img.shields.io/badge/Laravel-8-informational)](https://github.com/TopOnePercent/baum) [![Laravel 9](https://img.shields.io/badge/Laravel-9-informational)](https://github.com/TopOnePercent/baum) [![Laravel 10](https://img.shields.io/badge/Laravel-10-informational)](https://github.com/TopOnePercent/baum) [![Laravel 11](https://img.shields.io/badge/Laravel-11-informational)](https://github.com/TopOnePercent/baum) [![Laravel 12](https://img.shields.io/badge/Laravel-12-informational)](https://github.com/TopOnePercent/baum)
 
 Package Info:
 
-[![Latest Stable Version](http://poser.pugx.org/toponepercent/baum/v)](https://packagist.org/packages/toponepercent/baum) [![Total Downloads](http://poser.pugx.org/toponepercent/baum/downloads)](https://packagist.org/packages/toponepercent/baum) [![Latest Unstable Version](http://poser.pugx.org/toponepercent/baum/v/unstable)](https://packagist.org/packages/toponepercent/baum) [![License](http://poser.pugx.org/toponepercent/baum/license)](https://packagist.org/packages/toponepercent/baum) [![PHP Version Require](http://poser.pugx.org/toponepercent/baum/require/php)](https://packagist.org/packages/toponepercent/baum)
+[![Latest Stable Version](https://poser.pugx.org/toponepercent/baum/v)](https://packagist.org/packages/toponepercent/baum) [![Total Downloads](https://poser.pugx.org/toponepercent/baum/downloads)](https://packagist.org/packages/toponepercent/baum) [![Latest Unstable Version](https://poser.pugx.org/toponepercent/baum/v/unstable)](https://packagist.org/packages/toponepercent/baum) [![License](https://poser.pugx.org/toponepercent/baum/license)](https://packagist.org/packages/toponepercent/baum) [![PHP Version Require](https://poser.pugx.org/toponepercent/baum/require/php)](https://packagist.org/packages/toponepercent/baum)
 
 Build/Code Coverage:
 
 [![Tests](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml/badge.svg?branch=master)](https://github.com/TopOnePercent/baum/actions/workflows/run_tests.yml)
-[![Coverage Status](https://img.shields.io/badge/coverage-92.29%25-brightgreen)](https://github.com/TopOnePercent/baum)
+[![Coverage Status](https://img.shields.io/badge/coverage-93%25-brightgreen)](https://github.com/TopOnePercent/baum)
 
 ## Nested Set implementation for Laravel
 
@@ -225,25 +225,40 @@ migration and the model.
 After you've configured your model and run the migration, you are now ready
 to use Baum with your model. Below are some examples.
 
-* [Creating a root node](#creating-root-node)
-* [Inserting nodes](#inserting-nodes)
-* [Deleting nodes](#deleting-nodes)
-* [Getting the nesting level of a node](#node-level)
-* [Moving nodes around](#moving-nodes)
-* [Asking questions to your nodes](#node-questions)
-* [Relations](#node-relations)
-* [Root and Leaf scopes](#node-basic-scopes)
-* [Accessing the ancestry/descendancy chain](#node-chains)
-* [Limiting levels of children returned](#limiting-depth)
-* [Custom sorting column](#custom-sorting-column)
-* [Dumping the hierarchy tree](#hierarchy-tree)
-* [Model events: `moving` and `moved`](#node-model-events)
-* [Scope support](#scope-support)
-* [Validation](#validation)
-* [Tree rebuilding](#rebuilding)
-* [Soft deletes](#soft-deletes)
-* [Seeding/Mass assignment](#seeding)
-* [Misc/Utility functions](#misc-utilities)
+- [Baum](#baum)
+  - [Nested Set implementation for Laravel](#nested-set-implementation-for-laravel)
+    - [Key Considerations for using a Nested Set Pattern:](#key-considerations-for-using-a-nested-set-pattern)
+  - [Documentation](#documentation)
+  - [About Nested Sets](#about-nested-sets)
+  - [The theory behind, a TL;DR version](#the-theory-behind-a-tldr-version)
+  - [Installation](#installation)
+  - [Getting started](#getting-started)
+    - [Model configuration](#model-configuration)
+    - [Migration configuration](#migration-configuration)
+  - [Usage](#usage)
+    - [Creating a root node](#creating-a-root-node)
+    - [Inserting nodes](#inserting-nodes)
+    - [Deleting nodes](#deleting-nodes)
+    - [Getting the nesting level of a node](#getting-the-nesting-level-of-a-node)
+    - [Moving nodes around](#moving-nodes-around)
+    - [Asking questions to your nodes](#asking-questions-to-your-nodes)
+    - [Relations](#relations)
+    - [Root and Leaf scopes](#root-and-leaf-scopes)
+    - [Accessing the ancestry/descendancy chain](#accessing-the-ancestrydescendancy-chain)
+    - [Limiting the levels of children returned](#limiting-the-levels-of-children-returned)
+    - [Custom sorting column](#custom-sorting-column)
+    - [Dumping the hierarchy tree](#dumping-the-hierarchy-tree)
+    - [Model events: `moving` and `moved`](#model-events-moving-and-moved)
+    - [Scope support](#scope-support)
+    - [Validation](#validation)
+    - [Tree rebuilding](#tree-rebuilding)
+    - [Soft deletes](#soft-deletes)
+    - [Seeding/Mass-assignment](#seedingmass-assignment)
+    - [Misc/Utility functions](#miscutility-functions)
+      - [Node extraction query scopes](#node-extraction-query-scopes)
+      - [Get a nested list of column values](#get-a-nested-list-of-column-values)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 <a name="creating-root-node"></a>
 ### Creating a root node
