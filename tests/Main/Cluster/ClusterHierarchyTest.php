@@ -586,9 +586,12 @@ class ClusterHierarchyTest extends UnitAbstract
 
     public function testToHierarchyReturnsAnEloquentCollection()
     {
-        $categories = Cluster::all()->toHierarchy();
+        $categories = Cluster::all();
+        $toHierarchy = $categories->toHierarchy();
+        $toSortedHierarchy = $categories->toSortedHierarchy();
 
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $categories);
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $toHierarchy);
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $toSortedHierarchy);
     }
 
     public function testToHierarchyReturnsHierarchicalData()
